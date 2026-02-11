@@ -86,6 +86,12 @@ const toggleMobileMenu = () => {
 (() => {
   if (!mobileMenuButton || !mobileMenu) return;
   mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+  // Close menu when clicking a link
+  const menuLinks = mobileMenu.querySelectorAll('a');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
 })();
 
 // Smooth scrolling with offset
