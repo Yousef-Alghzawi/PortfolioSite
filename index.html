@@ -1184,16 +1184,21 @@
           particleCount: { mobile: 40, desktop: 100 },
 
           speed: 0.4,
-
           verticalDrift: -0.2,
-
           graphLines: { count: 3, amplitude: 50, color: '#CEDC57', opacity: 0.1, thickness: 2 },
-
-          equations: ["E = mc²", "f(x) = ? e??² dx", "s = v(S(x?-µ)²/(n-1))", "P(A|B) = P(AnB)/P(B)", "?·E = ?/e0", "i? ??/?t = H?"],
-
-          greek: ['a', 'ß', '?', '?', '?', 'µ', 'p', 'S', 'O', '?'],
-
-          numbers: ['0', '1', '1.618', '3.14', 'e', '10', '01']
+          equations: [
+            "HR = 0.72 [0.58–0.89]", 
+            "p < 0.001", 
+            "I² = 42%", 
+            "n = 1,420", 
+            "h(t) = h₀(t)exp(βX)", 
+            "P(Y=1) = 1/(1+e⁻ᶻ)",
+            "RR = 1.15",
+            "95% CI",
+            "log(it)"
+          ],
+          greek: ['α', 'β', 'γ', 'Δ', 'θ', 'μ', 'π', 'σ', 'Σ', 'τ', 'χ²'],
+          numbers: ['0.05', '1.96', '0.001', '3.14', '0.84', 'Q1', 'Q3', 'IQR']
 
         };
 
@@ -1340,8 +1345,7 @@
 
             else this.type = 'number', this.content = CONFIG.numbers[Math.random() * CONFIG.numbers.length | 0];
 
-            this.font = this.type === 'equation' ? 'italic 16px "Times New Roman", serif' : '14px "Segoe UI", sans-serif';
-
+            this.font = this.type === 'equation' ? '700 14px "Space Mono", monospace' : '400 13px "Space Mono", monospace';
           }
 
           update(w, h) {
