@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Case study: Survival analysis with competing risks in hematologic malignancies, published in Blood." />
+    <title>Case Study: HCT Survival Analysis — Yousef Alghzawi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Project.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(122, 91, 146, 0.2);
+            color: #7A5B92;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #8650AB;
+        }
+
+        .pub-badge {
+            display: inline-flex;
+            padding: 0.35rem 0.75rem;
+            background: rgba(206, 220, 87, 0.1);
+            border: 1px solid rgba(206, 220, 87, 0.25);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #CEDC57;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col gap-4">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+                <!-- Header -->
+                <header>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="text-xs uppercase tracking-widest text-brandGreen">Survival Analysis</span>
+                        <span class="text-uiGray">•</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">Blood (ASH)</span>
+                        <span class="text-uiGray">•</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">2024</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Survival Outcomes Following Second
+                        Hematopoietic Cell Transplantation</h1>
+                    <span class="pub-badge">Published in Blood</span>
+                </header>
+
+        <!-- Case Summary -->
+        <section class="mb-12 grid gap-6 md:grid-cols-2">
+            <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                <p class="section-label">Problem</p>
+                <p class="text-uiGray text-sm leading-relaxed">Single-center retrospective survival analysis with
+                    competing risks (relapse vs. non-relapse mortality) in patients receiving second HCT for lymphoma
+                    and leukemia.</p>
+            </div>
+            <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                <p class="section-label">Outcome</p>
+                <p class="text-uiGray text-sm leading-relaxed"><strong class="text-white">Presented at ASH Annual
+                        Meeting 2024. Published in Blood.</strong> Reviewers praised the handling of competing risks.
+                </p>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="w-full h-px bg-white/10 my-12"></div>
+
+        <!-- Analysis Code -->
+        <section class="mb-12">
+            <h2 class="font-display text-2xl mb-8">Complete Analysis Code</h2>
+
+            <!-- 1. DATA CLEANING -->
+            <div class="code-section">
+                <div class="code-section-title cleaning">
+                    <span class="icon">1</span>
+                    <h3 class="font-display text-lg text-white">Data Cleaning</h3>
+                </div>
+                <div class="code-wrap">
+                    <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre class="language-r"><code class="language-r"># ============================================
+# DATA CLEANING
+# ============================================
+
+# Load required packages
+library(readxl)
+library(dplyr)
+library(lubridate)
+
+# Import raw data
+raw_data <- read_excel("data/hct_registry.xlsx")
+
+# --- Variable-by-variable cleaning ---
+
+# Clean patient_id
+raw_data$pt_id <- trimws(raw_data$pt_id)
+raw_data$pt_id <- toupper(raw_data$pt_id)
+
+# Clean age_at_transplant
+raw_data$age_tx <- as.numeric(raw_data$age_tx)
+raw_data$age_tx[raw_data$age_tx < 0] <- NA
+raw_data$age_tx[raw_data$age_tx > 120] <- NA
+
+# Clean sex
+raw_data$sex <- trimws(raw_data$sex)
+raw_data$sex <- tolower(raw_data$sex)
+raw_data$sex[raw_data$sex == "m"] <- "male"
+raw_data$sex[raw_data$sex == "f"] <- "female"
+raw_data$sex <- factor(raw_data$sex, levels = c("male", "female"))
+
+# Clean disease_type
+raw_data$dx_type <- trimws(raw_data$dx_type)
+raw_data$dx_type <- tolower(raw_data$dx_type)
+raw_data$dx_type[raw_data$dx_type == "aml"] <- "leukemia_acute"
+raw_data$dx_type[raw_data$dx_type == "all"] <- "leukemia_acute"
+raw_data$dx_type[raw_data$dx_type == "cml"] <- "leukemia_chronic"
+raw_data$dx_type[raw_data$dx_type == "cll"] <- "leukemia_chronic"
+raw_data$dx_type[raw_data$dx_type == "hodgkin"] <- "lymphoma_hl"
+raw_data$dx_type[raw_data$dx_type == "nhl"] <- "lymphoma_nhl"
+raw_data$dx_type <- factor(raw_data$dx_type)
+
+# Clean conditioning_intensity
+raw_data$cond_int <- trimws(raw_data$cond_int)
+raw_data$cond_int <- tolower(raw_data$cond_int)
+raw_data$cond_int[raw_data$cond_int == "mac"] <- "myeloablative"
+raw_data$cond_int[raw_data$cond_int == "ric"] <- "reduced"
+raw_data$cond_int[raw_data$cond_int == "nma"] <- "nonmyeloablative"
+raw_data$cond_int <- factor(raw_data$cond_int, levels = c("myeloablative", "reduced", "nonmyeloablative"))
+
+# Clean donor_type
+raw_data$donor_type <- trimws(raw_data$donor_type)
+raw_data$donor_type <- tolower(raw_data$donor_type)
+raw_data$donor_type[raw_data$donor_type == "mrd"] <- "matched_related"
+raw_data$donor_type[raw_data$donor_type == "mud"] <- "matched_unrelated"
+raw_data$donor_type[raw_data$donor_type == "haplo"] <- "haploidentical"
+raw_data$donor_type <- factor(raw_data$donor_type)
+
+# Clean graft_source
+raw_data$graft_src <- trimws(raw_data$graft_src)
+raw_data$graft_src <- tolower(raw_data$graft_src)
+raw_data$graft_src[raw_data$graft_src == "pbsc"] <- "peripheral_blood"
+raw_data$graft_src[raw_data$graft_src == "bm"] <- "bone_marrow"
+raw_data$graft_src[raw_data$graft_src == "cb"] <- "cord_blood"
+raw_data$graft_src <- factor(raw_data$graft_src)
+
+# Clean disease_status_at_hct
+raw_data$dx_status <- trimws(raw_data$dx_status)
+raw_data$dx_status <- tolower(raw_data$dx_status)
+raw_data$dx_status[raw_data$dx_status == "cr1"] <- "complete_remission"
+raw_data$dx_status[raw_data$dx_status == "cr2"] <- "complete_remission"
+raw_data$dx_status[raw_data$dx_status == "pr"] <- "partial_remission"
+raw_data$dx_status[raw_data$dx_status == "rel"] <- "relapsed"
+raw_data$dx_status[raw_data$dx_status == "ref"] <- "refractory"
+raw_data$dx_status <- factor(raw_data$dx_status)
+
+# Clean hct_comorbidity_index
+raw_data$hct_ci <- as.numeric(raw_data$hct_ci)
+raw_data$hct_ci[raw_data$hct_ci < 0] <- NA
+raw_data$hct_ci[raw_data$hct_ci > 20] <- NA
+
+# Clean time_to_second_hct (months from first to second HCT)
+raw_data$time_to_hct2 <- as.numeric(raw_data$time_to_hct2)
+raw_data$time_to_hct2[raw_data$time_to_hct2 < 0] <- NA
+
+# Clean date variables
+raw_data$date_hct2 <- as.Date(raw_data$date_hct2)
+raw_data$date_last_fu <- as.Date(raw_data$date_last_fu)
+raw_data$date_relapse <- as.Date(raw_data$date_relapse)
+raw_data$date_death <- as.Date(raw_data$date_death)
+
+# Calculate follow-up time (days from HCT2)
+raw_data$fu_days <- as.numeric(raw_data$date_last_fu - raw_data$date_hct2)
+raw_data$fu_days[raw_data$fu_days < 0] <- NA
+
+# Create event indicators
+# Overall survival event
+raw_data$os_event <- ifelse(!is.na(raw_data$date_death), 1, 0)
+
+# Relapse event
+raw_data$rel_event <- ifelse(!is.na(raw_data$date_relapse), 1, 0)
+
+# Non-relapse mortality event
+raw_data$nrm_event <- ifelse(raw_data$os_event == 1 & raw_data$rel_event == 0, 1, 0)
+
+# Calculate time to event for OS
+raw_data$os_time <- raw_data$fu_days
+raw_data$os_time[raw_data$os_event == 1] <- as.numeric(raw_data$date_death[raw_data$os_event == 1] - raw_data$date_hct2[raw_data$os_event == 1])
+
+# Calculate time to relapse
+raw_data$rel_time <- raw_data$fu_days
+raw_data$rel_time[raw_data$rel_event == 1] <- as.numeric(raw_data$date_relapse[raw_data$rel_event == 1] - raw_data$date_hct2[raw_data$rel_event == 1])
+
+# Convert to months
+raw_data$os_time_mo <- raw_data$os_time / 30.44
+raw_data$rel_time_mo <- raw_data$rel_time / 30.44
+
+# Create competing risk status (for cumulative incidence)
+# 0 = censored, 1 = relapse, 2 = NRM
+raw_data$cr_status <- 0
+raw_data$cr_status[raw_data$rel_event == 1] <- 1
+raw_data$cr_status[raw_data$nrm_event == 1] <- 2
+
+# Time to first event (relapse or death)
+raw_data$cr_time <- pmin(raw_data$os_time, raw_data$rel_time, na.rm = TRUE)
+raw_data$cr_time_mo <- raw_data$cr_time / 30.44
+
+# Create stratification variables
+raw_data$age_group <- cut(raw_data$age_tx, breaks = c(0, 40, 60, 120), labels = c("<=40", "41-60", ">60"))
+raw_data$hctci_group <- cut(raw_data$hct_ci, breaks = c(-1, 2, 4, 20), labels = c("low", "intermediate", "high"))
+
+# Remove patients with missing essential data
+clean_data <- raw_data[!is.na(raw_data$os_time), ]
+clean_data <- clean_data[!is.na(raw_data$os_event), ]
+clean_data <- clean_data[clean_data$os_time > 0, ]
+
+# Save cleaned data
+write.csv(clean_data, "data/clean_survival.csv", row.names = FALSE)</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. ANALYSIS -->
+            <div class="code-section">
+                <div class="code-section-title analysis">
+                    <span class="icon">2</span>
+                    <h3 class="font-display text-lg text-white">Analysis</h3>
+                </div>
+                <div class="code-wrap">
+                    <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre class="language-r"><code class="language-r"># ============================================
+# ANALYSIS
+# ============================================
+
+# Load required packages
+library(survival)
+library(cmprsk)
+library(survminer)
+
+# Load cleaned data
+clean_data <- read.csv("data/clean_survival.csv")
+
+# --- OVERALL SURVIVAL ANALYSIS ---
+
+# Kaplan-Meier: Overall (entire cohort)
+km_os_all <- survfit(Surv(os_time_mo, os_event) ~ 1, data = clean_data)
+print(summary(km_os_all, times = c(12, 24, 36, 60)))
+
+# Kaplan-Meier: By disease type
+km_os_disease <- survfit(Surv(os_time_mo, os_event) ~ dx_type, data = clean_data)
+print(summary(km_os_disease, times = c(12, 24, 36)))
+
+# Log-rank test: Disease type
+logrank_disease <- survdiff(Surv(os_time_mo, os_event) ~ dx_type, data = clean_data)
+print(logrank_disease)
+
+# Kaplan-Meier: By conditioning intensity
+km_os_cond <- survfit(Surv(os_time_mo, os_event) ~ cond_int, data = clean_data)
+print(summary(km_os_cond, times = c(12, 24, 36)))
+
+# Log-rank test: Conditioning intensity
+logrank_cond <- survdiff(Surv(os_time_mo, os_event) ~ cond_int, data = clean_data)
+print(logrank_cond)
+
+# Kaplan-Meier: By donor type
+km_os_donor <- survfit(Surv(os_time_mo, os_event) ~ donor_type, data = clean_data)
+print(summary(km_os_donor, times = c(12, 24, 36)))
+
+# Log-rank test: Donor type
+logrank_donor <- survdiff(Surv(os_time_mo, os_event) ~ donor_type, data = clean_data)
+print(logrank_donor)
+
+# Kaplan-Meier: By disease status at HCT
+km_os_status <- survfit(Surv(os_time_mo, os_event) ~ dx_status, data = clean_data)
+print(summary(km_os_status, times = c(12, 24, 36)))
+
+# Log-rank test: Disease status
+logrank_status <- survdiff(Surv(os_time_mo, os_event) ~ dx_status, data = clean_data)
+print(logrank_status)
+
+# Kaplan-Meier: By age group
+km_os_age <- survfit(Surv(os_time_mo, os_event) ~ age_group, data = clean_data)
+print(summary(km_os_age, times = c(12, 24, 36)))
+
+# Log-rank test: Age group
+logrank_age <- survdiff(Surv(os_time_mo, os_event) ~ age_group, data = clean_data)
+print(logrank_age)
+
+# Kaplan-Meier: By HCT-CI group
+km_os_hctci <- survfit(Surv(os_time_mo, os_event) ~ hctci_group, data = clean_data)
+print(summary(km_os_hctci, times = c(12, 24, 36)))
+
+# Log-rank test: HCT-CI
+logrank_hctci <- survdiff(Surv(os_time_mo, os_event) ~ hctci_group, data = clean_data)
+print(logrank_hctci)
+
+# --- COX PROPORTIONAL HAZARDS ---
+
+# Univariate Cox: Age
+cox_uni_age <- coxph(Surv(os_time_mo, os_event) ~ age_tx, data = clean_data)
+print(summary(cox_uni_age))
+
+# Univariate Cox: Sex
+cox_uni_sex <- coxph(Surv(os_time_mo, os_event) ~ sex, data = clean_data)
+print(summary(cox_uni_sex))
+
+# Univariate Cox: Disease type
+cox_uni_disease <- coxph(Surv(os_time_mo, os_event) ~ dx_type, data = clean_data)
+print(summary(cox_uni_disease))
+
+# Univariate Cox: Conditioning intensity
+cox_uni_cond <- coxph(Surv(os_time_mo, os_event) ~ cond_int, data = clean_data)
+print(summary(cox_uni_cond))
+
+# Univariate Cox: Donor type
+cox_uni_donor <- coxph(Surv(os_time_mo, os_event) ~ donor_type, data = clean_data)
+print(summary(cox_uni_donor))
+
+# Univariate Cox: Graft source
+cox_uni_graft <- coxph(Surv(os_time_mo, os_event) ~ graft_src, data = clean_data)
+print(summary(cox_uni_graft))
+
+# Univariate Cox: Disease status
+cox_uni_status <- coxph(Surv(os_time_mo, os_event) ~ dx_status, data = clean_data)
+print(summary(cox_uni_status))
+
+# Univariate Cox: HCT-CI
+cox_uni_hctci <- coxph(Surv(os_time_mo, os_event) ~ hct_ci, data = clean_data)
+print(summary(cox_uni_hctci))
+
+# Univariate Cox: Time to second HCT
+cox_uni_time <- coxph(Surv(os_time_mo, os_event) ~ time_to_hct2, data = clean_data)
+print(summary(cox_uni_time))
+
+# Multivariable Cox model
+cox_multi <- coxph(
+  Surv(os_time_mo, os_event) ~ 
+    age_tx + 
+    sex + 
+    dx_type + 
+    cond_int + 
+    donor_type + 
+    dx_status + 
+    hct_ci,
+  data = clean_data
+)
+print(summary(cox_multi))
+
+# Proportional hazards test
+ph_test <- cox.zph(cox_multi)
+print(ph_test)
+
+# --- COMPETING RISKS ANALYSIS ---
+
+# Cumulative incidence: Relapse
+ci_relapse <- cuminc(
+  ftime = clean_data$cr_time_mo,
+  fstatus = clean_data$cr_status,
+  cencode = 0
+)
+print(ci_relapse)
+
+# Cumulative incidence by disease type
+ci_disease <- cuminc(
+  ftime = clean_data$cr_time_mo,
+  fstatus = clean_data$cr_status,
+  group = clean_data$dx_type,
+  cencode = 0
+)
+print(ci_disease)
+
+# Gray's test for relapse by disease type
+print(ci_disease$Tests)
+
+# Cumulative incidence by conditioning
+ci_cond <- cuminc(
+  ftime = clean_data$cr_time_mo,
+  fstatus = clean_data$cr_status,
+  group = clean_data$cond_int,
+  cencode = 0
+)
+print(ci_cond$Tests)
+
+# Fine-Gray competing risks regression
+library(riskRegression)
+
+# Cause-specific model for relapse
+fg_relapse <- FGR(
+  Hist(cr_time_mo, cr_status) ~ age_tx + dx_type + cond_int + dx_status,
+  data = clean_data,
+  cause = 1
+)
+print(summary(fg_relapse))
+
+# Cause-specific model for NRM
+fg_nrm <- FGR(
+  Hist(cr_time_mo, cr_status) ~ age_tx + dx_type + cond_int + dx_status,
+  data = clean_data,
+  cause = 2
+)
+print(summary(fg_nrm))</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. PLOTTING -->
+            <div class="code-section">
+                <div class="code-section-title plotting">
+                    <span class="icon">3</span>
+                    <h3 class="font-display text-lg text-white">Plotting</h3>
+                </div>
+                <div class="code-wrap">
+                    <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre class="language-r"><code class="language-r"># ============================================
+# PLOTTING
+# ============================================
+
+# Load required packages
+library(survival)
+library(survminer)
+library(cmprsk)
+library(ggplot2)
+
+# --- KAPLAN-MEIER: OVERALL SURVIVAL (ENTIRE COHORT) ---
+
+png("figures/km_os_overall.png", width = 10, height = 8, units = "in", res = 300)
+
+ggsurvplot(
+  km_os_all,
+  data = clean_data,
+  risk.table = TRUE,
+  risk.table.col = "strata",
+  risk.table.height = 0.25,
+  pval = FALSE,
+  conf.int = TRUE,
+  conf.int.alpha = 0.15,
+  xlab = "Time (months)",
+  ylab = "Overall Survival Probability",
+  title = "Overall Survival Following Second HCT",
+  palette = "#10B981",
+  ggtheme = theme_minimal() + theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.position = "none"
+  ),
+  surv.median.line = "hv",
+  break.time.by = 12,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+# --- KAPLAN-MEIER: BY DISEASE TYPE ---
+
+png("figures/km_os_disease.png", width = 10, height = 8, units = "in", res = 300)
+
+ggsurvplot(
+  km_os_disease,
+  data = clean_data,
+  risk.table = TRUE,
+  risk.table.col = "strata",
+  risk.table.height = 0.30,
+  pval = TRUE,
+  pval.coord = c(48, 0.9),
+  conf.int = FALSE,
+  xlab = "Time (months)",
+  ylab = "Overall Survival Probability",
+  title = "Overall Survival by Disease Type",
+  palette = c("#10B981", "#F97316", "#8B5CF6", "#EC4899"),
+  legend.title = "Disease Type",
+  legend.labs = c("Acute Leukemia", "Chronic Leukemia", "HL", "NHL"),
+  ggtheme = theme_minimal() + theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  ),
+  break.time.by = 12,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+# --- KAPLAN-MEIER: BY CONDITIONING INTENSITY ---
+
+png("figures/km_os_conditioning.png", width = 10, height = 8, units = "in", res = 300)
+
+ggsurvplot(
+  km_os_cond,
+  data = clean_data,
+  risk.table = TRUE,
+  risk.table.col = "strata",
+  risk.table.height = 0.30,
+  pval = TRUE,
+  pval.coord = c(48, 0.9),
+  conf.int = FALSE,
+  xlab = "Time (months)",
+  ylab = "Overall Survival Probability",
+  title = "Overall Survival by Conditioning Intensity",
+  palette = c("#10B981", "#F97316", "#64748B"),
+  legend.title = "Conditioning",
+  legend.labs = c("Myeloablative", "Reduced Intensity", "Nonmyeloablative"),
+  ggtheme = theme_minimal() + theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  ),
+  break.time.by = 12,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+# --- KAPLAN-MEIER: BY DONOR TYPE ---
+
+png("figures/km_os_donor.png", width = 10, height = 8, units = "in", res = 300)
+
+ggsurvplot(
+  km_os_donor,
+  data = clean_data,
+  risk.table = TRUE,
+  risk.table.col = "strata",
+  risk.table.height = 0.30,
+  pval = TRUE,
+  pval.coord = c(48, 0.9),
+  conf.int = FALSE,
+  xlab = "Time (months)",
+  ylab = "Overall Survival Probability",
+  title = "Overall Survival by Donor Type",
+  palette = c("#10B981", "#F97316", "#8B5CF6"),
+  legend.title = "Donor",
+  legend.labs = c("Matched Related", "Matched Unrelated", "Haploidentical"),
+  ggtheme = theme_minimal() + theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  ),
+  break.time.by = 12,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+# --- KAPLAN-MEIER: BY DISEASE STATUS ---
+
+png("figures/km_os_status.png", width = 10, height = 8, units = "in", res = 300)
+
+ggsurvplot(
+  km_os_status,
+  data = clean_data,
+  risk.table = TRUE,
+  risk.table.col = "strata",
+  risk.table.height = 0.30,
+  pval = TRUE,
+  pval.coord = c(48, 0.9),
+  conf.int = FALSE,
+  xlab = "Time (months)",
+  ylab = "Overall Survival Probability",
+  title = "Overall Survival by Disease Status at HCT",
+  palette = c("#10B981", "#F97316", "#EC4899", "#64748B"),
+  legend.title = "Status",
+  ggtheme = theme_minimal() + theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  ),
+  break.time.by = 12,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+# --- FOREST PLOT: COX MODEL ---
+
+png("figures/forest_cox.png", width = 10, height = 10, units = "in", res = 300)
+
+ggforest(
+  cox_multi,
+  data = clean_data,
+  main = "Multivariable Cox Regression: Overall Survival",
+  fontsize = 0.9,
+  refLabel = "Reference",
+  noDigits = 2
+)
+
+dev.off()
+
+# --- SCHOENFELD RESIDUALS PLOT ---
+
+png("figures/schoenfeld.png", width = 12, height = 8, units = "in", res = 300)
+
+ggcoxzph(ph_test)
+
+dev.off()
+
+# --- CUMULATIVE INCIDENCE: RELAPSE VS NRM ---
+
+png("figures/cumulative_incidence.png", width = 10, height = 8, units = "in", res = 300)
+
+plot(
+  ci_relapse,
+  xlab = "Time (months)",
+  ylab = "Cumulative Incidence",
+  main = "Cumulative Incidence of Relapse and NRM",
+  col = c("#F97316", "#10B981"),
+  lwd = 2,
+  curvlab = c("Relapse", "Non-Relapse Mortality"),
+  xlim = c(0, 60)
+)
+
+legend(
+  "topright",
+  legend = c("Relapse", "NRM"),
+  col = c("#F97316", "#10B981"),
+  lwd = 2,
+  bty = "n"
+)
+
+dev.off()
+
+# --- CUMULATIVE INCIDENCE BY DISEASE TYPE ---
+
+png("figures/ci_by_disease.png", width = 12, height = 8, units = "in", res = 300)
+
+plot(
+  ci_disease,
+  xlab = "Time (months)",
+  ylab = "Cumulative Incidence",
+  main = "Cumulative Incidence by Disease Type",
+  col = rep(c("#10B981", "#F97316", "#8B5CF6", "#EC4899"), each = 2),
+  lty = rep(c(1, 2), 4),
+  lwd = 2,
+  xlim = c(0, 60)
+)
+
+dev.off()
+
+cat("All plots saved to figures/ directory\n")</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publication Link -->
+        <section class="mb-12 p-6 bg-[rgba(15,23,42,0.5)] border border-white/10 rounded-2xl">
+            <p class="section-label">Full Publication</p>
+            <a href="https://ashpublications.org/blood/article/146/Supplement%201/7802/555052" target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-white hover:text-brandGreen transition-colors">
+                Blood: Survival Outcomes Following Second HCT
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+            </a>
+        </section>
+
+        <!-- Footer Nav -->
+        <footer class="border-t border-white/10 pt-10">
+            <nav class="flex items-center justify-between text-sm text-uiGray">
+                <a href="LVOT_TMVR.html" class="hover:text-white transition-colors">← Previous case study</a>
+                <a href="Bassel_VR.html" class="hover:text-white transition-colors">Next case study →</a>
+            </nav>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
+        crossorigin="anonymous"></script>
+    <script>
+        function copyCode(btn) {
+            const pre = btn.nextElementSibling;
+            const code = pre.querySelector('code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

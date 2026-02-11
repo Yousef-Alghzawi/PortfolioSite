@@ -1,0 +1,13 @@
+# IDE / Tools
+.claude/
+.gemini/
+.vscode/
+.idea/
+
+# OS Files
+Thumbs.db
+Desktop.ini
+nul
+
+# Local logs
+*.log

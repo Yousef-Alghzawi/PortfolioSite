@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Statistical analysis services for clinical researchers – publication-grade analysis, meta-analysis, trial strategy, and methods audit by Yousef Alghzawi." />
+    <title>Services — Yousef Alghzawi | Clinical Biostatistician</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .engagement-card {
+            background: rgba(42, 40, 43, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .engagement-card:hover {
+            border-color: #7A5B92;
+            transform: translateY(-4px);
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8B8590;
+            margin-bottom: 0.5rem;
+        }
+
+        .deliverable-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .deliverable-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #D6CBDA;
+        }
+
+        .deliverable-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #CEDC57;
+        }
+
+        .not-fit-box {
+            background: rgba(122, 91, 146, 0.08);
+            border: 1px solid rgba(122, 91, 146, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(206, 220, 87, 0.1);
+            border: 1px solid rgba(206, 220, 87, 0.25);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: #CEDC57;
+        }
+
+        .ideal-for-badge {
+            display: inline-flex;
+            padding: 0.3rem 0.6rem;
+            background: rgba(206, 220, 87, 0.06);
+            border: 1px solid rgba(206, 220, 87, 0.15);
+            border-radius: 999px;
+            font-size: 0.7rem;
+            color: #CEDC57;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col gap-4">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link active" href="services.html" aria-current="page">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link active" href="services.html" aria-current="page">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+                <header>
+                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2">Signature Engagements</p>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Services</h1>
+                    <p class="text-uiGray text-base leading-relaxed max-w-3xl">Each engagement is structured to deliver
+                        publication-ready statistical work that withstands peer review. Whether you need a complete
+                        analysis from scratch or an independent audit of existing work, the goal is the same: your
+                        statistics should never be the reason for rejection.</p>
+                </header>
+
+        <article class="engagement-card mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-brandGreen"></div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="ideal-for-badge">RCTs</span>
+                    <span class="ideal-for-badge">Cohort Studies</span>
+                    <span class="ideal-for-badge">Cross-Sectional</span>
+                    <span class="ideal-for-badge">Case-Control</span>
+                </div>
+            </div>
+            <h2 class="font-display text-2xl mb-3">Publication-Grade Statistical Analysis</h2>
+            <p class="text-uiGray mb-6">Complete statistical analysis for original research manuscripts, from study
+                design consultation through final reviewer response. You receive not just results, but a defensible methods narrative ready for submission.</p>
+            <div class="grid gap-6 md:grid-cols-2 mb-6">
+                <div>
+                    <p class="section-label">Who This Is For</p>
+                    <p class="text-uiGray text-sm">Clinical researchers and academic physicians preparing original research for peer-reviewed journals (JAMA, Lancet, specialty journals). Ideal if you have collected data and need an experienced biostatistician to run and defend the analysis.</p>
+                </div>
+                <div>
+                    <p class="section-label">Problem Solved</p>
+                    <p class="text-uiGray text-sm">Eliminates the most common reason for desk rejection and reviewer criticism: weak or inappropriate statistical methodology. Every output is designed to pre-empt statistical reviewer objections.</p>
+                </div>
+            </div>
+            <p class="section-label">Deliverables</p>
+            <ul class="deliverable-list mb-4">
+                <li>Statistical analysis plan (SAP) aligned with your study design</li>
+                <li>Complete primary and secondary endpoint analyses</li>
+                <li>Publication-ready tables (Table 1, regression tables, subgroup tables)</li>
+                <li>High-resolution figures (Kaplan&ndash;Meier curves, forest plots, scatter plots)</li>
+                <li>Methods section text ready for manuscript insertion</li>
+                <li>Reproducible R code with full documentation</li>
+                <li>Post-submission reviewer response support</li>
+            </ul>
+            <span class="timeline-badge">3&ndash;6 weeks typical</span>
+            <div class="not-fit-box">
+                <p class="text-sm text-uiGray"><strong class="text-white">Not a fit for:</strong> Turnaround under 2
+                    weeks, datasets without IRB clearance, or studies without a clear research question.</p>
+            </div>
+        </article>
+
+        <article class="engagement-card mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-brandGreen"></div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="ideal-for-badge">Systematic Reviews</span>
+                    <span class="ideal-for-badge">Meta-Analysis</span>
+                    <span class="ideal-for-badge">Evidence Synthesis</span>
+                </div>
+            </div>
+            <h2 class="font-display text-2xl mb-3">Systematic Review &amp; Meta-Analysis</h2>
+            <p class="text-uiGray mb-6">Complete evidence synthesis following PRISMA 2020 guidelines. I handle the statistical pooling, heterogeneity assessment, and publication bias analysis&mdash;you focus on the clinical interpretation.</p>
+            <div class="grid gap-6 md:grid-cols-2 mb-6">
+                <div>
+                    <p class="section-label">Who This Is For</p>
+                    <p class="text-uiGray text-sm">Research teams who have completed their literature search and data extraction and need rigorous statistical pooling, or teams planning a systematic review who want methodological guidance from the start.</p>
+                </div>
+                <div>
+                    <p class="section-label">Problem Solved</p>
+                    <p class="text-uiGray text-sm">Methodologically defensible synthesis that satisfies demanding reviewers. Handles complex scenarios: rare events, continuous outcomes, proportions, and mixed outcome types.</p>
+                </div>
+            </div>
+            <p class="section-label">Deliverables</p>
+            <ul class="deliverable-list mb-4">
+                <li>Meta-analysis protocol (PROSPERO-ready if needed)</li>
+                <li>Random-effects analysis with heterogeneity metrics (I&sup2;, Q, tau&sup2;)</li>
+                <li>Publication-quality forest plots and funnel plots</li>
+                <li>Subgroup analyses and meta-regression</li>
+                <li>Sensitivity analyses (leave-one-out, influence diagnostics)</li>
+                <li>Publication bias evaluation (Egger, Begg, trim-and-fill)</li>
+                <li>PRISMA flow diagram and checklist</li>
+                <li>Methods and results text for manuscript</li>
+            </ul>
+            <span class="timeline-badge">4&ndash;8 weeks typical</span>
+            <div class="not-fit-box">
+                <p class="text-sm text-uiGray"><strong class="text-white">Not a fit for:</strong> Reviews without
+                    completed data extraction, narrative reviews, or scoping reviews without quantitative synthesis.</p>
+            </div>
+        </article>
+
+        <article class="engagement-card mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-brandGreen"></div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="ideal-for-badge">RCTs</span>
+                    <span class="ideal-for-badge">Grant Applications</span>
+                    <span class="ideal-for-badge">Protocol Development</span>
+                </div>
+            </div>
+            <h2 class="font-display text-2xl mb-3">Clinical Trial Statistical Strategy</h2>
+            <p class="text-uiGray mb-6">Pre-trial consultation and statistical planning. Get your study design, power calculations, and analysis plan right before you enroll a single patient.</p>
+            <div class="grid gap-6 md:grid-cols-2 mb-6">
+                <div>
+                    <p class="section-label">Who This Is For</p>
+                    <p class="text-uiGray text-sm">Investigators in planning phase who need robust sample size calculations, a defensible statistical analysis plan (SAP), and mock tables for grant applications or ethics submissions.</p>
+                </div>
+                <div>
+                    <p class="section-label">Problem Solved</p>
+                    <p class="text-uiGray text-sm">Prevents underpowered studies, inappropriate endpoint choices, and analysis plans that collapse under reviewer scrutiny. Saves months of wasted data collection.</p>
+                </div>
+            </div>
+            <p class="section-label">Deliverables</p>
+            <ul class="deliverable-list mb-4">
+                <li>Sample size and power calculations with justification</li>
+                <li>Statistical analysis plan (SAP) per ICH E9 guidelines</li>
+                <li>Primary and secondary endpoint definition strategy</li>
+                <li>Mock tables and figures for grant applications</li>
+                <li>Randomization scheme recommendations</li>
+            </ul>
+            <span class="timeline-badge">2&ndash;4 weeks typical</span>
+        </article>
+
+        <article class="engagement-card mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-brandGreen"></div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="ideal-for-badge">Pre-Submission Review</span>
+                    <span class="ideal-for-badge">Resubmission</span>
+                    <span class="ideal-for-badge">Second Opinion</span>
+                </div>
+            </div>
+            <h2 class="font-display text-2xl mb-3">Methods Audit &amp; Reviewer Risk Assessment</h2>
+            <p class="text-uiGray mb-6">Independent review of your existing analyses before submission. Think of it as a statistical peer review before the actual peer review.</p>
+            <div class="grid gap-6 md:grid-cols-2 mb-6">
+                <div>
+                    <p class="section-label">Who This Is For</p>
+                    <p class="text-uiGray text-sm">Teams with completed analyses who want an independent statistical eye before submission, or teams resubmitting after reviewer concerns about methodology.</p>
+                </div>
+                <div>
+                    <p class="section-label">Problem Solved</p>
+                    <p class="text-uiGray text-sm">Identifies the exact weaknesses reviewers will flag&mdash;before they flag them. Converts a vulnerable manuscript into a defensible one.</p>
+                </div>
+            </div>
+            <p class="section-label">Deliverables</p>
+            <ul class="deliverable-list mb-4">
+                <li>Detailed statistical methods review with line-by-line feedback</li>
+                <li>Reviewer risk assessment report (what a statistical reviewer will question)</li>
+                <li>Specific recommendations with alternative approaches</li>
+                <li>Reviewer objection guide with pre-written responses</li>
+                <li>Optional: re-analysis of flagged sections</li>
+            </ul>
+            <span class="timeline-badge">1&ndash;2 weeks typical</span>
+        </article>
+
+        <!-- What You Can Expect -->
+        <section class="mb-12 mt-16">
+            <h2 class="font-display text-2xl mb-6">What Every Engagement Includes</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="engagement-card text-center">
+                    <div class="text-xl font-display text-brandGreen mb-2">NDA</div>
+                    <p class="text-uiGray text-xs">Full confidentiality agreement signed before any data is shared.</p>
+                </div>
+                <div class="engagement-card text-center">
+                    <div class="text-xl font-display text-brandGreen mb-2">R Code</div>
+                    <p class="text-uiGray text-xs">Reproducible, documented code delivered with every analysis.</p>
+                </div>
+                <div class="engagement-card text-center">
+                    <div class="text-xl font-display text-brandGreen mb-2">Revisions</div>
+                    <p class="text-uiGray text-xs">Post-submission support for reviewer queries at no extra cost.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-12 mt-12">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div>
+                    <h3 class="font-display text-xl mb-2">Ready to discuss your project?</h3>
+                    <p class="text-uiGray text-sm">Limited availability. Serious inquiries only.</p>
+                </div>
+                <a href="apply.html" class="primary-btn">Apply to Work With Me</a>
+            </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

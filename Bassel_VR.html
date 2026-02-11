@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Case study: Population-based mortality trend analysis using joinpoint regression." />
+  <title>Case Study: CNS Mortality Trends — Yousef Alghzawi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="Project.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(122, 91, 146, 0.2);
+            color: #7A5B92;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #8650AB;
+        }
+
+        .pub-badge {
+            display: inline-flex;
+            padding: 0.35rem 0.75rem;
+            background: rgba(206, 220, 87, 0.1);
+            border: 1px solid rgba(206, 220, 87, 0.25);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #CEDC57;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col gap-4">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+                <!-- Header -->
+                <header>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="text-xs uppercase tracking-widest text-brandGreen">Population Analysis</span>
+                        <span class="text-uiGray">•</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">Clinical Neurology</span>
+                        <span class="text-uiGray">•</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">2024</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Mortality Trends in CNS
+                        Inflammatory Diseases</h1>
+                    <span class="pub-badge">Published in Clinical Neurology and Neurosurgery</span>
+                </header>
+
+    <!-- Case Summary -->
+    <section class="mb-12 grid gap-6 md:grid-cols-2">
+      <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+        <p class="section-label">Problem</p>
+        <p class="text-uiGray text-sm leading-relaxed">20-year population-level mortality analysis for encephalitis,
+          myelitis, and encephalomyelitis requiring joinpoint regression and demographic stratification.</p>
+      </div>
+      <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+        <p class="section-label">Outcome</p>
+        <p class="text-uiGray text-sm leading-relaxed"><strong class="text-white">Accepted without statistical
+            revision.</strong> Published in Clinical Neurology and Neurosurgery.</p>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="w-full h-px bg-white/10 my-12"></div>
+
+    <!-- Analysis Code -->
+    <section class="mb-12">
+      <h2 class="font-display text-2xl mb-8">Complete Analysis Code</h2>
+
+      <!-- 1. DATA CLEANING -->
+      <div class="code-section">
+        <div class="code-section-title cleaning">
+          <span class="icon">1</span>
+          <h3 class="font-display text-lg text-white">Data Cleaning</h3>
+        </div>
+        <div class="code-wrap">
+          <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre class="language-r"><code class="language-r"># ============================================
+# DATA CLEANING
+# ============================================
+
+# Load required packages
+library(readr)
+library(dplyr)
+
+# Import CDC WONDER mortality data
+raw_data <- read_delim("data/cdc_wonder_extract.txt", delim = "\t")
+
+# --- Variable-by-variable cleaning ---
+
+# Clean year
+raw_data$year <- as.numeric(raw_data$year)
+raw_data$year[raw_data$year < 1999] <- NA
+raw_data$year[raw_data$year > 2020] <- NA
+
+# Clean deaths count
+raw_data$deaths <- as.numeric(raw_data$deaths)
+raw_data$deaths[raw_data$deaths < 0] <- NA
+raw_data$deaths[is.na(raw_data$deaths)] <- 0
+
+# Clean population
+raw_data$population <- as.numeric(raw_data$population)
+raw_data$population[raw_data$population < 0] <- NA
+
+# Clean age_group
+raw_data$age_grp <- trimws(raw_data$age_grp)
+raw_data$age_grp <- gsub(" years", "", raw_data$age_grp)
+raw_data$age_grp <- gsub("-", "_", raw_data$age_grp)
+
+# Standardize age groups
+raw_data$age_grp[raw_data$age_grp == "0_4"] <- "00_04"
+raw_data$age_grp[raw_data$age_grp == "5_9"] <- "05_09"
+raw_data$age_grp[raw_data$age_grp == "85+"] <- "85_plus"
+
+raw_data$age_grp <- factor(raw_data$age_grp, levels = c(
+  "00_04", "05_09", "10_14", "15_19", "20_24", "25_29", "30_34", 
+  "35_39", "40_44", "45_49", "50_54", "55_59", "60_64", "65_69", 
+  "70_74", "75_79", "80_84", "85_plus"
+))
+
+# Clean sex
+raw_data$sex <- trimws(raw_data$sex)
+raw_data$sex <- tolower(raw_data$sex)
+raw_data$sex[raw_data$sex == "m"] <- "male"
+raw_data$sex[raw_data$sex == "f"] <- "female"
+raw_data$sex <- factor(raw_data$sex, levels = c("male", "female"))
+
+# Clean race_ethnicity
+raw_data$race_eth <- trimws(raw_data$race_eth)
+raw_data$race_eth <- tolower(raw_data$race_eth)
+raw_data$race_eth[raw_data$race_eth == "white"] <- "white_nh"
+raw_data$race_eth[raw_data$race_eth == "black"] <- "black_nh"
+raw_data$race_eth[raw_data$race_eth == "hispanic"] <- "hispanic"
+raw_data$race_eth[raw_data$race_eth == "asian/pacific islander"] <- "asian_pi"
+raw_data$race_eth[raw_data$race_eth == "american indian/alaska native"] <- "aian"
+raw_data$race_eth <- factor(raw_data$race_eth)
+
+# Clean ICD code category
+raw_data$icd_cat <- trimws(raw_data$icd_cat)
+raw_data$icd_cat <- tolower(raw_data$icd_cat)
+raw_data$icd_cat[raw_data$icd_cat == "g04"] <- "encephalitis"
+raw_data$icd_cat[raw_data$icd_cat == "g05"] <- "encephalitis_secondary"
+raw_data$icd_cat[raw_data$icd_cat == "g37"] <- "demyelinating"
+raw_data$icd_cat <- factor(raw_data$icd_cat)
+
+# Calculate crude mortality rate (per 100,000)
+raw_data$crude_rate <- (raw_data$deaths / raw_data$population) * 100000
+
+# Remove rows with missing population
+raw_data <- raw_data[!is.na(raw_data$population), ]
+raw_data <- raw_data[raw_data$population > 0, ]
+
+# --- Create aggregate datasets ---
+
+# Aggregate by year (overall)
+data_year <- aggregate(
+  cbind(deaths, population) ~ year, 
+  data = raw_data, 
+  FUN = sum
+)
+data_year$crude_rate <- (data_year$deaths / data_year$population) * 100000
+
+# Aggregate by year and sex
+data_year_sex <- aggregate(
+  cbind(deaths, population) ~ year + sex, 
+  data = raw_data, 
+  FUN = sum
+)
+data_year_sex$crude_rate <- (data_year_sex$deaths / data_year_sex$population) * 100000
+
+# Aggregate by year and race/ethnicity
+data_year_race <- aggregate(
+  cbind(deaths, population) ~ year + race_eth, 
+  data = raw_data, 
+  FUN = sum
+)
+data_year_race$crude_rate <- (data_year_race$deaths / data_year_race$population) * 100000
+
+# Aggregate by year and age group
+data_year_age <- aggregate(
+  cbind(deaths, population) ~ year + age_grp, 
+  data = raw_data, 
+  FUN = sum
+)
+data_year_age$crude_rate <- (data_year_age$deaths / data_year_age$population) * 100000
+
+# --- Age-adjusted rates ---
+# Using 2000 US Standard Population
+
+std_pop_2000 <- data.frame(
+  age_grp = c("00_04", "05_09", "10_14", "15_19", "20_24", "25_29", "30_34", 
+              "35_39", "40_44", "45_49", "50_54", "55_59", "60_64", "65_69", 
+              "70_74", "75_79", "80_84", "85_plus"),
+  std_weight = c(0.069135, 0.072533, 0.073032, 0.072169, 0.066478, 0.064530,
+                 0.071044, 0.080762, 0.081851, 0.072118, 0.062716, 0.048454,
+                 0.038793, 0.034264, 0.031773, 0.026999, 0.017842, 0.015508)
+)
+
+# Merge with age-specific data
+data_merged <- merge(data_year_age, std_pop_2000, by = "age_grp")
+
+# Calculate age-specific weighted rates
+data_merged$weighted_rate <- data_merged$crude_rate * data_merged$std_weight
+
+# Aggregate to get age-adjusted rate by year
+data_aar <- aggregate(weighted_rate ~ year, data = data_merged, FUN = sum)
+names(data_aar)[2] <- "aar"
+
+# Save cleaned datasets
+write.csv(data_year, "data/clean_yearly.csv", row.names = FALSE)
+write.csv(data_year_sex, "data/clean_yearly_sex.csv", row.names = FALSE)
+write.csv(data_year_race, "data/clean_yearly_race.csv", row.names = FALSE)
+write.csv(data_aar, "data/clean_aar.csv", row.names = FALSE)</code></pre>
+        </div>
+      </div>
+
+      <!-- 2. ANALYSIS -->
+      <div class="code-section">
+        <div class="code-section-title analysis">
+          <span class="icon">2</span>
+          <h3 class="font-display text-lg text-white">Analysis</h3>
+        </div>
+        <div class="code-wrap">
+          <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre class="language-r"><code class="language-r"># ============================================
+# ANALYSIS
+# ============================================
+
+# Load required packages
+library(joinpoint)  # NCI Joinpoint package or equivalent
+library(segmented)
+
+# Load cleaned data
+data_year <- read.csv("data/clean_yearly.csv")
+data_year_sex <- read.csv("data/clean_yearly_sex.csv")
+data_year_race <- read.csv("data/clean_yearly_race.csv")
+data_aar <- read.csv("data/clean_aar.csv")
+
+# --- OVERALL TREND ANALYSIS ---
+
+# Linear regression: Overall crude rate
+lm_overall <- lm(crude_rate ~ year, data = data_year)
+print(summary(lm_overall))
+
+# Calculate Annual Percent Change (APC)
+# APC = (exp(beta) - 1) * 100
+beta_overall <- coef(lm_overall)["year"]
+apc_overall <- (exp(beta_overall) - 1) * 100
+cat("Overall APC:", round(apc_overall, 2), "%\n")
+
+# Joinpoint regression: Overall
+# Using segmented package for changepoint detection
+seg_overall <- segmented(lm_overall, seg.Z = ~year, npsi = 1)
+print(summary(seg_overall))
+
+# Extract breakpoints
+breakpoints_overall <- seg_overall$psi[, "Est."]
+cat("Joinpoint(s):", breakpoints_overall, "\n")
+
+# Calculate APC for each segment
+slope_seg1 <- slope(seg_overall)$year[1, "Est."]
+slope_seg2 <- slope(seg_overall)$year[2, "Est."]
+
+apc_seg1 <- (exp(slope_seg1) - 1) * 100
+apc_seg2 <- (exp(slope_seg2) - 1) * 100
+
+cat("APC Segment 1:", round(apc_seg1, 2), "%\n")
+cat("APC Segment 2:", round(apc_seg2, 2), "%\n")
+
+# --- TREND BY SEX ---
+
+# Male subset
+data_male <- data_year_sex[data_year_sex$sex == "male", ]
+lm_male <- lm(crude_rate ~ year, data = data_male)
+print(summary(lm_male))
+
+beta_male <- coef(lm_male)["year"]
+apc_male <- (exp(beta_male) - 1) * 100
+cat("Male APC:", round(apc_male, 2), "%\n")
+
+# Female subset
+data_female <- data_year_sex[data_year_sex$sex == "female", ]
+lm_female <- lm(crude_rate ~ year, data = data_female)
+print(summary(lm_female))
+
+beta_female <- coef(lm_female)["year"]
+apc_female <- (exp(beta_female) - 1) * 100
+cat("Female APC:", round(apc_female, 2), "%\n")
+
+# Joinpoint: Male
+seg_male <- segmented(lm_male, seg.Z = ~year, npsi = 1)
+print(summary(seg_male))
+
+# Joinpoint: Female
+seg_female <- segmented(lm_female, seg.Z = ~year, npsi = 1)
+print(summary(seg_female))
+
+# --- TREND BY RACE/ETHNICITY ---
+
+# White non-Hispanic
+data_white <- data_year_race[data_year_race$race_eth == "white_nh", ]
+lm_white <- lm(crude_rate ~ year, data = data_white)
+beta_white <- coef(lm_white)["year"]
+apc_white <- (exp(beta_white) - 1) * 100
+cat("White NH APC:", round(apc_white, 2), "%\n")
+
+# Black non-Hispanic
+data_black <- data_year_race[data_year_race$race_eth == "black_nh", ]
+lm_black <- lm(crude_rate ~ year, data = data_black)
+beta_black <- coef(lm_black)["year"]
+apc_black <- (exp(beta_black) - 1) * 100
+cat("Black NH APC:", round(apc_black, 2), "%\n")
+
+# Hispanic
+data_hispanic <- data_year_race[data_year_race$race_eth == "hispanic", ]
+lm_hispanic <- lm(crude_rate ~ year, data = data_hispanic)
+beta_hispanic <- coef(lm_hispanic)["year"]
+apc_hispanic <- (exp(beta_hispanic) - 1) * 100
+cat("Hispanic APC:", round(apc_hispanic, 2), "%\n")
+
+# Asian/Pacific Islander
+data_asian <- data_year_race[data_year_race$race_eth == "asian_pi", ]
+lm_asian <- lm(crude_rate ~ year, data = data_asian)
+beta_asian <- coef(lm_asian)["year"]
+apc_asian <- (exp(beta_asian) - 1) * 100
+cat("Asian/PI APC:", round(apc_asian, 2), "%\n")
+
+# --- AGE-ADJUSTED RATE TREND ---
+
+lm_aar <- lm(aar ~ year, data = data_aar)
+print(summary(lm_aar))
+
+beta_aar <- coef(lm_aar)["year"]
+apc_aar <- (exp(beta_aar) - 1) * 100
+cat("Age-Adjusted APC:", round(apc_aar, 2), "%\n")
+
+# Joinpoint: Age-adjusted
+seg_aar <- segmented(lm_aar, seg.Z = ~year, npsi = 1)
+print(summary(seg_aar))
+
+# --- COMPARISON TESTS ---
+
+# Compare male vs female trends (interaction test)
+data_year_sex$sex <- factor(data_year_sex$sex)
+lm_sex_interaction <- lm(crude_rate ~ year * sex, data = data_year_sex)
+print(summary(lm_sex_interaction))
+
+# Test for significant difference in slopes
+anova_sex <- anova(lm_sex_interaction)
+print(anova_sex)
+
+# --- RATE RATIOS ---
+
+# Calculate mean rates by group for comparison
+mean_rate_male <- mean(data_male$crude_rate)
+mean_rate_female <- mean(data_female$crude_rate)
+rr_sex <- mean_rate_male / mean_rate_female
+cat("Rate Ratio (M/F):", round(rr_sex, 2), "\n")
+
+mean_rate_white <- mean(data_white$crude_rate)
+mean_rate_black <- mean(data_black$crude_rate)
+rr_race <- mean_rate_black / mean_rate_white
+cat("Rate Ratio (Black/White):", round(rr_race, 2), "\n")
+
+# --- AVERAGE ANNUAL PERCENT CHANGE (AAPC) ---
+
+# For studies with joinpoints, calculate AAPC as weighted average
+# Weight = years in each segment
+
+years_seg1 <- breakpoints_overall - min(data_year$year)
+years_seg2 <- max(data_year$year) - breakpoints_overall
+total_years <- max(data_year$year) - min(data_year$year)
+
+aapc_overall <- (apc_seg1 * years_seg1 + apc_seg2 * years_seg2) / total_years
+cat("AAPC (Overall):", round(aapc_overall, 2), "%\n")</code></pre>
+        </div>
+      </div>
+
+      <!-- 3. PLOTTING -->
+      <div class="code-section">
+        <div class="code-section-title plotting">
+          <span class="icon">3</span>
+          <h3 class="font-display text-lg text-white">Plotting</h3>
+        </div>
+        <div class="code-wrap">
+          <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre class="language-r"><code class="language-r"># ============================================
+# PLOTTING
+# ============================================
+
+# Load required packages
+library(ggplot2)
+library(scales)
+
+# --- OVERALL TREND PLOT ---
+
+png("figures/trend_overall.png", width = 10, height = 6, units = "in", res = 300)
+
+# Extract fitted values from segmented model
+data_year$fitted <- predict(seg_overall)
+
+ggplot(data_year, aes(x = year, y = crude_rate)) +
+  geom_point(size = 3, color = "#10B981") +
+  geom_line(aes(y = fitted), color = "#F97316", linewidth = 1.5) +
+  geom_vline(xintercept = breakpoints_overall, linetype = "dashed", color = "#8B5CF6", linewidth = 1) +
+  scale_x_continuous(breaks = seq(1999, 2020, by = 2)) +
+  scale_y_continuous(labels = number_format(accuracy = 0.01)) +
+  labs(
+    title = "Mortality Rate Trends: CNS Inflammatory Diseases",
+    subtitle = paste("Joinpoint at", round(breakpoints_overall, 0)),
+    x = "Year",
+    y = "Crude Mortality Rate (per 100,000)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 11, color = "#64748B"),
+    axis.title = element_text(size = 12),
+    panel.grid.minor = element_blank()
+  )
+
+dev.off()
+
+# --- TREND BY SEX ---
+
+png("figures/trend_by_sex.png", width = 10, height = 6, units = "in", res = 300)
+
+# Add fitted values
+data_male$fitted <- predict(seg_male)
+data_female$fitted <- predict(seg_female)
+
+ggplot() +
+  # Male points and line
+  geom_point(data = data_male, aes(x = year, y = crude_rate), color = "#10B981", size = 3) +
+  geom_line(data = data_male, aes(x = year, y = fitted), color = "#10B981", linewidth = 1.5) +
+  # Female points and line
+  geom_point(data = data_female, aes(x = year, y = crude_rate), color = "#F97316", size = 3) +
+  geom_line(data = data_female, aes(x = year, y = fitted), color = "#F97316", linewidth = 1.5) +
+  scale_x_continuous(breaks = seq(1999, 2020, by = 2)) +
+  labs(
+    title = "Mortality Rate Trends by Sex",
+    x = "Year",
+    y = "Crude Mortality Rate (per 100,000)"
+  ) +
+  annotate("text", x = 2018, y = max(data_male$crude_rate), label = "Male", color = "#10B981", fontface = "bold") +
+  annotate("text", x = 2018, y = max(data_female$crude_rate), label = "Female", color = "#F97316", fontface = "bold") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    panel.grid.minor = element_blank()
+  )
+
+dev.off()
+
+# --- TREND BY RACE/ETHNICITY ---
+
+png("figures/trend_by_race.png", width = 12, height = 6, units = "in", res = 300)
+
+# Combine race data
+data_race_plot <- rbind(
+  data.frame(data_white, group = "White NH"),
+  data.frame(data_black, group = "Black NH"),
+  data.frame(data_hispanic, group = "Hispanic"),
+  data.frame(data_asian, group = "Asian/PI")
+)
+
+ggplot(data_race_plot, aes(x = year, y = crude_rate, color = group)) +
+  geom_point(size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1.2) +
+  scale_color_manual(values = c(
+    "White NH" = "#10B981",
+    "Black NH" = "#F97316",
+    "Hispanic" = "#8B5CF6",
+    "Asian/PI" = "#EC4899"
+  )) +
+  scale_x_continuous(breaks = seq(1999, 2020, by = 2)) +
+  labs(
+    title = "Mortality Rate Trends by Race/Ethnicity",
+    x = "Year",
+    y = "Crude Mortality Rate (per 100,000)",
+    color = "Race/Ethnicity"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  )
+
+dev.off()
+
+# --- AGE-ADJUSTED RATE TREND ---
+
+png("figures/trend_aar.png", width = 10, height = 6, units = "in", res = 300)
+
+data_aar$fitted <- predict(seg_aar)
+breakpoints_aar <- seg_aar$psi[, "Est."]
+
+ggplot(data_aar, aes(x = year, y = aar)) +
+  geom_point(size = 3, color = "#10B981") +
+  geom_line(aes(y = fitted), color = "#F97316", linewidth = 1.5) +
+  geom_vline(xintercept = breakpoints_aar, linetype = "dashed", color = "#8B5CF6", linewidth = 1) +
+  scale_x_continuous(breaks = seq(1999, 2020, by = 2)) +
+  labs(
+    title = "Age-Adjusted Mortality Rate Trends",
+    subtitle = "Standardized to 2000 US Population",
+    x = "Year",
+    y = "Age-Adjusted Rate (per 100,000)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 11, color = "#64748B"),
+    axis.title = element_text(size = 12),
+    panel.grid.minor = element_blank()
+  )
+
+dev.off()
+
+# --- BAR CHART: AVERAGE RATES BY DEMOGRAPHIC ---
+
+png("figures/bar_demographics.png", width = 10, height = 8, units = "in", res = 300)
+
+# Create summary data
+demo_summary <- data.frame(
+  group = c("Male", "Female", "White NH", "Black NH", "Hispanic", "Asian/PI"),
+  category = c("Sex", "Sex", "Race", "Race", "Race", "Race"),
+  mean_rate = c(mean_rate_male, mean_rate_female, mean_rate_white, 
+                mean_rate_black, mean(data_hispanic$crude_rate), mean(data_asian$crude_rate))
+)
+
+ggplot(demo_summary, aes(x = reorder(group, mean_rate), y = mean_rate, fill = category)) +
+  geom_col(width = 0.7) +
+  coord_flip() +
+  scale_fill_manual(values = c("Sex" = "#10B981", "Race" = "#F97316")) +
+  labs(
+    title = "Average Mortality Rate by Demographic Group",
+    subtitle = "Study Period 1999-2020",
+    x = "",
+    y = "Mean Crude Rate (per 100,000)",
+    fill = ""
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 11, color = "#64748B"),
+    axis.title = element_text(size = 12),
+    legend.position = "bottom"
+  )
+
+dev.off()
+
+# --- HEATMAP: RATES BY AGE AND YEAR ---
+
+png("figures/heatmap_age_year.png", width = 12, height = 8, units = "in", res = 300)
+
+data_year_age <- read.csv("data/clean_yearly_age.csv")
+
+ggplot(data_year_age, aes(x = year, y = age_grp, fill = crude_rate)) +
+  geom_tile(color = "white", linewidth = 0.5) +
+  scale_fill_gradient2(
+    low = "#1E293B",
+    mid = "#10B981",
+    high = "#F97316",
+    midpoint = median(data_year_age$crude_rate, na.rm = TRUE),
+    name = "Rate"
+  ) +
+  scale_x_continuous(breaks = seq(1999, 2020, by = 2)) +
+  labs(
+    title = "Mortality Rates by Age Group and Year",
+    x = "Year",
+    y = "Age Group"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    axis.text.y = element_text(size = 8)
+  )
+
+dev.off()
+
+cat("All plots saved to figures/ directory\n")</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publication Link -->
+    <section class="mb-12 p-6 bg-[rgba(15,23,42,0.5)] border border-white/10 rounded-2xl">
+      <p class="section-label">Full Publication</p>
+      <a href="https://www.sciencedirect.com/science/article/abs/pii/S0303846725004536" target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-white hover:text-brandGreen transition-colors">
+        Clinical Neurology and Neurosurgery: Mortality Trends in Encephalitis, Myelitis, and Encephalomyelitis
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </section>
+
+    <!-- Footer Nav -->
+    <footer class="border-t border-white/10 pt-10">
+      <nav class="flex items-center justify-between text-sm text-uiGray">
+        <a href="CNS_Hematology.html" class="hover:text-white transition-colors">← Previous case study</a>
+        <a href="FET_Article.html" class="hover:text-white transition-colors">Next case study →</a>
+      </nav>
+                </div>
+            </main>
+        </div>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
+    crossorigin="anonymous"></script>
+  <script>
+    function copyCode(btn) {
+      const pre = btn.nextElementSibling;
+      const code = pre.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

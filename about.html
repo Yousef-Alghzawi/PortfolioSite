@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="About Yousef Alghzawi – Clinical Biostatistician specializing in publication-grade analysis for high-impact journal submissions." />
+    <title>About — Yousef Alghzawi | Clinical Biostatistician</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .expertise-card {
+            padding: 1.5rem;
+            background: rgba(42, 40, 43, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .expertise-card:hover {
+            border-color: #7A5B92;
+            transform: translateY(-4px);
+        }
+
+        .standard-badge {
+            display: inline-flex;
+            padding: 0.5rem 1rem;
+            background: rgba(206, 220, 87, 0.1);
+            border: 1px solid rgba(206, 220, 87, 0.25);
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: #CEDC57;
+        }
+
+        .method-tag {
+            display: inline-flex;
+            padding: 0.35rem 0.75rem;
+            background: rgba(42, 40, 43, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: #D6CBDA;
+            transition: border-color 0.3s;
+        }
+
+        .method-tag:hover {
+            border-color: #CEDC57;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col gap-4">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link active" href="about.html" aria-current="page">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link active" href="about.html" aria-current="page">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+                <header>
+                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2">Clinical Research Profile</p>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight">Yousef Alghzawi</h1>
+                    <p class="text-uiGray text-lg mt-2">Clinical Biostatistician</p>
+                </header>
+
+        <section class="mb-16">
+            <div class="grid gap-10 lg:grid-cols-3">
+                <div class="lg:col-span-2 space-y-5 text-uiGray leading-relaxed">
+                    <p>I provide statistical analysis and methodological consultation for clinical research teams
+                        preparing manuscripts for peer-reviewed publication. My work focuses on ensuring that studies
+                        withstand rigorous editorial and statistical review.</p>
+                    <p>My approach prioritizes <span class="text-white">methodological transparency</span>, <span
+                            class="text-white">reproducible analysis workflows</span>, and strict adherence to
+                        established reporting guidelines. Every analysis is designed not just to answer the research
+                        question, but to survive the peer-review process.</p>
+                    <p>I work primarily with clinician-researchers, academic medical centers, and research teams who
+                        understand that statistical rigor is not optional&mdash;it is the foundation of publishable, impactful
+                        science.</p>
+                    <p>My publications span <span class="text-white">interventional cardiology</span> (JACC), <span class="text-white">hematologic oncology</span> (Blood/ASH), <span class="text-white">neurology</span>, and <span class="text-white">cardiovascular surgery</span>&mdash;giving me cross-specialty fluency that helps me anticipate the statistical expectations of different editorial boards.</p>
+                </div>
+                <figure class="relative glow-soft">
+                    <div class="absolute inset-0 rounded-[32px] bg-brandOrange/20 blur-2xl -z-10"></div>
+                    <img src="assets/PersonalPhoto.jpg" alt="Yousef Alghzawi"
+                        class="w-full aspect-[4/5] object-cover rounded-[32px] border border-white/10" loading="lazy" />
+                </figure>
+            </div>
+        </section>
+
+        <!-- Institutional Affiliations -->
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-6">Institutional Affiliations</h2>
+            <div class="flex flex-wrap gap-6 items-center">
+                <div class="logo-chip" title="University of Jordan">
+                    <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                </div>
+                <div class="logo-chip" title="Jordan University of Science and Technology">
+                    <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                </div>
+                <div class="logo-chip" title="King Hussein Cancer Center">
+                    <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                </div>
+                <div class="logo-chip" title="King Abdullah University Hospital">
+                    <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Journal Publication Track Record -->
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-6">Publication Track Record</h2>
+            <p class="text-uiGray mb-6 text-sm">Journals where my statistical contributions have been published or accepted.</p>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="expertise-card text-center">
+                    <div class="text-2xl font-display text-brandGreen mb-1">21.7</div>
+                    <div class="text-xs text-white font-display mb-1">Impact Factor</div>
+                    <div class="text-xs text-uiGray">JACC</div>
+                </div>
+                <div class="expertise-card text-center">
+                    <div class="text-2xl font-display text-brandGreen mb-1">20.3</div>
+                    <div class="text-xs text-white font-display mb-1">Impact Factor</div>
+                    <div class="text-xs text-uiGray">Blood (ASH)</div>
+                </div>
+                <div class="expertise-card text-center">
+                    <div class="text-2xl font-display text-brandGreen mb-1">2.1</div>
+                    <div class="text-xs text-white font-display mb-1">Impact Factor</div>
+                    <div class="text-xs text-uiGray">Clinical Neurology & Neurosurgery</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-6">Methodological Focus</h2>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div class="expertise-card">
+                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
+                    <h4 class="font-display text-lg text-white">Clinical Trial Analysis</h4>
+                    <p class="text-uiGray text-sm mt-2">Primary and secondary endpoint analysis for RCTs, including
+                        survival analysis and mixed-effects models.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
+                    <h4 class="font-display text-lg text-white">Evidence Synthesis</h4>
+                    <p class="text-uiGray text-sm mt-2">Systematic reviews and meta-analyses using random-effects models
+                        and publication bias evaluation.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
+                    <h4 class="font-display text-lg text-white">Reproducible Analysis</h4>
+                    <p class="text-uiGray text-sm mt-2">Fully documented workflows in R with complete audit trails and
+                        version control.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
+                    <h4 class="font-display text-lg text-white">Publication-Grade Output</h4>
+                    <p class="text-uiGray text-sm mt-2">Tables, figures, and methods text designed to address reviewer
+                        concerns before they arise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistical Methods Mastered -->
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-4">Statistical Methods</h2>
+            <p class="text-uiGray mb-6 text-sm">Methods I routinely apply in peer-reviewed publications.</p>
+
+            <div class="space-y-6">
+                <div>
+                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-3 font-medium">Survival & Time-to-Event</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="method-tag">Kaplan&ndash;Meier</span>
+                        <span class="method-tag">Cox Proportional Hazards</span>
+                        <span class="method-tag">Stratified Cox Models</span>
+                        <span class="method-tag">Competing Risks (Fine&ndash;Gray)</span>
+                        <span class="method-tag">Joinpoint Regression</span>
+                        <span class="method-tag">Log-Rank Test</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-3 font-medium">Meta-Analysis & Evidence Synthesis</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="method-tag">Random-Effects (DerSimonian&ndash;Laird)</span>
+                        <span class="method-tag">Fixed-Effects (Mantel&ndash;Haenszel)</span>
+                        <span class="method-tag">Subgroup Analysis</span>
+                        <span class="method-tag">Sensitivity Analysis</span>
+                        <span class="method-tag">Publication Bias (Egger, Begg)</span>
+                        <span class="method-tag">Rare Events (Peto OR)</span>
+                        <span class="method-tag">Leave-One-Out Analysis</span>
+                        <span class="method-tag">Heterogeneity (I&sup2;, Q)</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-3 font-medium">Regression & Predictive Modeling</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="method-tag">Logistic Regression</span>
+                        <span class="method-tag">Linear Regression</span>
+                        <span class="method-tag">Mixed-Effects Models</span>
+                        <span class="method-tag">Ordinal Regression</span>
+                        <span class="method-tag">Multivariable Adjustment</span>
+                        <span class="method-tag">Internal Validation (Bootstrap)</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-3 font-medium">Descriptive & Epidemiological</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="method-tag">Cross-Sectional Analysis</span>
+                        <span class="method-tag">Survey-Weighted Analysis</span>
+                        <span class="method-tag">Prevalence Estimation</span>
+                        <span class="method-tag">Chi-Square / Fisher Exact</span>
+                        <span class="method-tag">T-test / Mann&ndash;Whitney</span>
+                        <span class="method-tag">ANOVA / Kruskal&ndash;Wallis</span>
+                        <span class="method-tag">Correlation Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-4">Reporting Standards</h2>
+            <p class="text-uiGray mb-6">Every project follows the appropriate reporting guideline.</p>
+            <div class="flex flex-wrap gap-3">
+                <span class="standard-badge">CONSORT &mdash; Trials</span>
+                <span class="standard-badge">STROBE &mdash; Observational</span>
+                <span class="standard-badge">PRISMA &mdash; Reviews</span>
+                <span class="standard-badge">TRIPOD &mdash; Prediction</span>
+                <span class="standard-badge">MOOSE &mdash; Meta-Analysis of Observational</span>
+                <span class="standard-badge">RECORD &mdash; Routinely Collected Data</span>
+            </div>
+        </section>
+
+        <!-- Software & Tools -->
+        <section class="mb-16">
+            <h2 class="font-display text-2xl mb-4">Software & Tools</h2>
+            <div class="grid gap-4 sm:grid-cols-3">
+                <div class="expertise-card">
+                    <h4 class="font-display text-base text-white mb-2">Primary Analysis</h4>
+                    <ul class="text-uiGray text-sm space-y-1">
+                        <li>R / RStudio</li>
+                        <li>SPSS</li>
+                        <li>PostgreSQL</li>
+                    </ul>
+                </div>
+                <div class="expertise-card">
+                    <h4 class="font-display text-base text-white mb-2">Key R Packages</h4>
+                    <ul class="text-uiGray text-sm space-y-1">
+                        <li>tidyverse, ggplot2</li>
+                        <li>survival, cmprsk</li>
+                        <li>meta, metafor</li>
+                        <li>lme4, tableone</li>
+                    </ul>
+                </div>
+                <div class="expertise-card">
+                    <h4 class="font-display text-base text-white mb-2">Reporting & Review</h4>
+                    <ul class="text-uiGray text-sm space-y-1">
+                        <li>R Markdown</li>
+                        <li>RevMan / Covidence</li>
+                        <li>Joinpoint</li>
+                        <li>PRISMA Flow Generator</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-12">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div>
+                    <h3 class="font-display text-xl mb-2">Considering a collaboration?</h3>
+                    <p class="text-uiGray text-sm">Limited projects per month. Serious inquiries from clinical researchers welcome.</p>
+                </div>
+                <a href="apply.html" class="primary-btn">Apply to Work With Me</a>
+            </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

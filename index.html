@@ -1,0 +1,1452 @@
+<!-- Portrait lives at assets/portrait.jpg (4:5). Logos live directly in ./assets (UJ, KHCC, JUST, KAUH). -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="description"
+
+    content="Yousef Alghzawi – Clinical Biostatistician specializing in clinical trials, evidence synthesis, and publication-grade reporting." />
+
+  <meta property="og:title" content="Yousef Alghzawi – Clinical Biostatistician" />
+
+  <meta property="og:description"
+
+    content="Statistical analysis that survives peer review. Clinical trials, meta-analysis, and publication-grade reporting." />
+
+  <meta property="og:type" content="website" />
+
+  <!-- Replace with your actual production URL for social sharing -->
+  <meta property="og:url" content="https://your-username.github.io/your-repo-name/" />
+  <meta property="og:image" content="https://your-username.github.io/your-repo-name/assets/og-image.jpg" />
+
+  <title>Yousef Alghzawi – Clinical Biostatistician</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+
+    tailwind.config = {
+
+      theme: {
+
+        fontFamily: {
+
+          display: ['"Space Mono"', 'monospace'],
+
+          sans: ['"Space Mono"', 'monospace'],
+
+        },
+
+        extend: {
+
+          colors: {
+
+            slatebase: '#524E53',
+
+            slateDeep: '#2A282B',
+
+            uiGray: '#D6CBDA',
+
+            brandOrange: '#7A5B92',
+
+            brandGreen: '#CEDC57',
+
+          },
+
+        },
+
+      },
+
+    };
+
+  </script>
+
+  <style>
+
+    /* --- HERO HEADER ONLY --- */
+
+    #hero-header {
+
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      overflow: hidden;
+
+      z-index: 0;
+
+    }
+
+
+
+    #hero-header canvas {
+
+      position: absolute;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      pointer-events: none;
+
+    }
+
+
+
+    /* Optional vignette */
+
+    #hero-header .hero-vignette {
+
+      position: absolute;
+
+      inset: 0;
+
+      background: radial-gradient(circle, transparent 40%, rgba(10, 25, 47, 0.9) 100%);
+
+      pointer-events: none;
+
+    }
+
+
+
+    .exclusivity-note {
+
+      font-size: 0.85rem;
+
+      color: #94A3B8;
+
+      font-style: italic;
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+
+  <div class="min-h-screen flex flex-col lg:flex-row">
+
+    <header
+
+      class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+
+      <div>
+
+        <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+
+        <p class="font-display text-xl">Yousef Alghzawi</p>
+
+      </div>
+
+      <button id="mobile-menu-button"
+
+        class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+
+        aria-controls="mobile-menu" aria-expanded="false">
+
+        <span class="sr-only">Toggle navigation</span>
+
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+
+          aria-hidden="true">
+
+          <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+
+        </svg>
+
+      </button>
+
+    </header>
+
+
+
+    <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+
+      aria-label="Primary navigation">
+
+      <nav class="flex flex-col gap-4">
+
+        <a class="nav-link" href="#home">Home</a>
+
+        <a class="nav-link" href="services.html">Services</a>
+
+        <a class="nav-link" href="#work">Work</a>
+
+        <a class="nav-link" href="#publications">Publications</a>
+
+        <a class="nav-link" href="about.html">About</a>
+
+        <a class="nav-link" href="apply.html">Apply</a>
+
+      </nav>
+
+    </div>
+
+
+
+    <aside
+
+      class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+
+      <div>
+
+        <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+
+        <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+
+        <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+
+      </div>
+
+      <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+
+        <a class="nav-link active" href="#home">Home</a>
+
+        <a class="nav-link" href="services.html">Services</a>
+
+        <a class="nav-link" href="#work">Work</a>
+
+        <a class="nav-link" href="#publications">Publications</a>
+
+        <a class="nav-link" href="about.html">About</a>
+
+        <a class="nav-link" href="apply.html">Apply</a>
+
+      </nav>
+
+    </aside>
+
+
+
+    <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+
+      <div class="max-w-[1200px] mx-auto space-y-20">
+
+        <section id="home"
+
+          class="relative rounded-[32px] overflow-hidden bg-[#2A282B] border border-white/5 shadow-2xl isolate content-section"
+
+          aria-label="Intro">
+
+          <!-- Animation Container (Background) -->
+
+          <div id="hero-header" class="absolute inset-0 -z-10">
+
+            <canvas id="hero-canvas"></canvas>
+
+            <div class="hero-vignette"></div>
+
+          </div>
+
+
+
+          <!-- Content Wrapper -->
+
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-8 md:p-16">
+
+            <div class="space-y-6">
+
+              <p class="text-brandGreen uppercase tracking-[0.25em] text-sm">Clinical Biostatistics</p>
+
+              <h2 class="font-display text-3xl md:text-4xl leading-tight accent-underline tracking-tighter">Statistical
+
+                analysis that survives peer review</h2>
+
+              <p class="text-gray-400 text-base leading-relaxed max-w-2xl">I deliver publication-grade analysis, tables,
+
+                figures, and methods text—designed to reduce rejection risk and withstand rigorous reviewer scrutiny.
+
+              </p>
+
+              <div class="flex flex-wrap gap-4">
+
+                <a href="apply.html" class="primary-btn" role="button">Apply to Work With Me</a>
+
+                <a href="#work" class="secondary-link">See selected work ?</a>
+
+              </div>
+
+              <div class="flex flex-wrap gap-6 pt-2 text-sm">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-brandGreen inline-block"></span>
+                  <span class="text-gray-400"><span class="text-white font-bold" data-target="5" data-decimals="0">0</span>+ Peer-Reviewed Publications</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-brandGreen inline-block"></span>
+                  <span class="text-gray-400"><span class="text-white font-bold">0</span> Statistical Rejections</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-brandGreen inline-block"></span>
+                  <span class="text-gray-400">JACC · Blood · Thieme</span>
+                </div>
+              </div>
+              <p class="exclusivity-note">Limited projects per month. Not a fit for rushed or template-based work.</p>
+
+            </div>
+
+            <figure class="relative glow-soft w-full max-w-sm ml-auto">
+
+              <div class="absolute inset-0 rounded-[32px] bg-brandOrange/20 blur-2xl -z-10"></div>
+
+              <img src="assets/PersonalPhoto.jpg" width="640" height="800" alt="Portrait of Yousef Alghzawi"
+
+                loading="lazy" class="w-full h-full object-cover rounded-[32px] shadow-xl border border-white/10" />
+
+            </figure>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- Services Preview Section -->
+
+        <section id="services-preview" class="space-y-8 content-section" aria-label="Services Preview">
+
+          <div class="text-center space-y-3">
+
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Signature Engagements</p>
+
+            <h3 class="font-display text-3xl">How I Work</h3>
+
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+
+            <article class="skill-card reveal-on-scroll" role="listitem">
+
+              <div class="skill-accent" aria-hidden="true"></div>
+
+              <h4 class="font-display text-xl">Publication Analysis</h4>
+
+              <p class="text-uiGray mt-2">Complete statistical analysis for original research manuscripts, from design
+
+                through reviewer response.</p>
+
+            </article>
+
+            <article class="skill-card reveal-on-scroll" role="listitem">
+
+              <div class="skill-accent" aria-hidden="true"></div>
+
+              <h4 class="font-display text-xl">Meta-Analysis</h4>
+
+              <p class="text-uiGray mt-2">Systematic reviews with PRISMA-compliant synthesis, heterogeneity assessment,
+
+                and publication bias evaluation.</p>
+
+            </article>
+
+            <article class="skill-card reveal-on-scroll" role="listitem">
+
+              <div class="skill-accent" aria-hidden="true"></div>
+
+              <h4 class="font-display text-xl">Trial Strategy</h4>
+
+              <p class="text-uiGray mt-2">Pre-trial statistical planning, sample size calculations, and analysis plan
+
+                development.</p>
+
+            </article>
+
+            <article class="skill-card reveal-on-scroll" role="listitem">
+
+              <div class="skill-accent" aria-hidden="true"></div>
+
+              <h4 class="font-display text-xl">Methods Audit</h4>
+
+              <p class="text-uiGray mt-2">Independent review to identify methodological vulnerabilities before journal
+
+                submission.</p>
+
+            </article>
+
+          </div>
+
+          <div class="text-center">
+
+            <a href="services.html" class="secondary-link">View all services ?</a>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- Trust Signals: Why Researchers Choose Me -->
+        <section id="why-me" class="space-y-8 content-section" aria-label="Why Researchers Choose Me">
+          <div class="text-center space-y-3">
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Why Researchers Choose Me</p>
+            <h3 class="font-display text-3xl">Built for High-Impact Submissions</h3>
+          </div>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2" data-target="100" data-decimals="0">0</div>
+              <div class="text-sm font-display text-white mb-1">% Acceptance Rate</div>
+              <p class="text-uiGray text-xs">Every manuscript I have contributed statistical analysis to has been accepted for publication.</p>
+            </div>
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2">Q1</div>
+              <div class="text-sm font-display text-white mb-1">Journal Quartile</div>
+              <p class="text-uiGray text-xs">Published in top-quartile journals including JACC (IF: 21.7) and Blood (IF: 20.3).</p>
+            </div>
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2">R</div>
+              <div class="text-sm font-display text-white mb-1">Reproducible Code</div>
+              <p class="text-uiGray text-xs">Every analysis ships with documented, reproducible R code and a complete audit trail.</p>
+            </div>
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2">&lt;48h</div>
+              <div class="text-sm font-display text-white mb-1">Reviewer Turnaround</div>
+              <p class="text-uiGray text-xs">Post-review statistical queries addressed within 48 hours during active projects.</p>
+            </div>
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2">NDA</div>
+              <div class="text-sm font-display text-white mb-1">Confidentiality</div>
+              <p class="text-uiGray text-xs">Full NDA and data handling agreements. Your data, your IP, your study—protected.</p>
+            </div>
+            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <div class="text-3xl font-display text-brandGreen mb-2">IRB</div>
+              <div class="text-sm font-display text-white mb-1">Compliance Aware</div>
+              <p class="text-uiGray text-xs">Experienced with IRB protocols, HIPAA considerations, and data de-identification workflows.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="work" class="space-y-8 content-section" aria-label="Selected Work">
+
+          <div class="text-center space-y-3">
+
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Selected Case Studies</p>
+
+            <h3 class="font-display text-3xl">Recent Work</h3>
+
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="LVOT_TMVR.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <line x1="100" y1="10" x2="100" y2="110" stroke="currentColor" stroke-width="2"
+
+                        stroke-dasharray="4 4" class="text-uiGray" />
+
+                      <line x1="40" y1="30" x2="120" y2="30" stroke="#7A5B92" stroke-width="2" />
+
+                      <rect x="75" y="26" width="8" height="8" fill="#7A5B92" />
+
+                      <line x1="60" y1="50" x2="140" y2="50" stroke="#CEDC57" stroke-width="2" />
+
+                      <rect x="95" y="46" width="8" height="8" fill="#CEDC57" />
+
+                      <line x1="80" y1="70" x2="110" y2="70" stroke="#7A5B92" stroke-width="2" />
+
+                      <rect x="90" y="66" width="8" height="8" fill="#7A5B92" />
+
+                      <polygon points="85,100 100,90 115,100 100,110" fill="white" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">JACC • Meta-Analysis</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">LVOTO Prevention in
+
+                  TMVR</h4>
+
+                <p class="text-uiGray text-sm mt-2">Comparative meta-analysis of hemodynamic and clinical outcomes.
+
+                  Published in JACC.</p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="CNS_Hematology.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <path d="M 20 20 H 50 V 40 H 80 V 55 H 120 V 80 H 160 V 100 H 180" stroke="#CEDC57"
+
+                        stroke-width="3" fill="none" />
+
+                      <path d="M 20 30 H 45 V 50 H 70 V 70 H 110 V 90 H 150 V 110" stroke="#7A5B92" stroke-width="3"
+
+                        fill="none" stroke-dasharray="4 4" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">Blood (ASH) • Survival</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">Second HCT Outcomes
+
+                </h4>
+
+                <p class="text-uiGray text-sm mt-2">Survival analysis with competing risks in hematologic malignancies.
+
+                  Published in Blood.</p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="KHCC_Articles.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <path d="M 20 20 H 60 V 38 H 105 V 62 H 150 V 86 H 180" stroke="#CEDC57" stroke-width="3"
+
+                        fill="none" />
+
+                      <path d="M 20 32 H 50 V 58 H 95 V 76 H 140 V 104 H 180" stroke="#7A5B92" stroke-width="3"
+
+                        fill="none" stroke-dasharray="4 4" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">KHCC • Survival</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">Stratified Cox
+
+                  Regression</h4>
+
+                <p class="text-uiGray text-sm mt-2">Kaplan–Meier curves and stratified Cox modeling with diagnostics and
+
+                  adjusted survival curves.</p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="Bassel_VR.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <line x1="100" y1="10" x2="100" y2="110" stroke="currentColor" stroke-width="2"
+
+                        stroke-dasharray="4 4" class="text-uiGray" />
+
+                      <line x1="50" y1="30" x2="130" y2="30" stroke="#7A5B92" stroke-width="2" />
+
+                      <rect x="85" y="26" width="8" height="8" fill="#7A5B92" />
+
+                      <line x1="70" y1="50" x2="150" y2="50" stroke="#CEDC57" stroke-width="2" />
+
+                      <rect x="105" y="46" width="8" height="8" fill="#CEDC57" />
+
+                      <line x1="30" y1="70" x2="90" y2="70" stroke="#7A5B92" stroke-width="2" />
+
+                      <rect x="55" y="66" width="8" height="8" fill="#7A5B92" />
+
+                      <polygon points="80,100 95,90 110,100 95,110" fill="white" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">Clinical Neurology</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">CNS Mortality Trends
+
+                </h4>
+
+                <p class="text-uiGray text-sm mt-2">Population-based mortality analysis with joinpoint regression.</p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="FET_Article.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <line x1="50" y1="10" x2="50" y2="110" stroke="currentColor" stroke-width="2"
+
+                        stroke-dasharray="4 4" class="text-uiGray" />
+
+                      <circle cx="50" cy="30" r="4" fill="#7A5B92" />
+
+                      <circle cx="50" cy="50" r="4" fill="#CEDC57" />
+
+                      <circle cx="55" cy="70" r="4" fill="#7A5B92" />
+
+                      <circle cx="50" cy="90" r="4" fill="#7A5B92" />
+
+                      <polygon points="45,100 55,95 65,100 55,105" fill="white" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">Thoracic Surgery</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">Stent vs. FET
+
+                  Meta-Analysis</h4>
+
+                <p class="text-uiGray text-sm mt-2">Systematic review with rare events handling for Type A dissection.
+
+                </p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="IUA_Article.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <circle cx="40" cy="90" r="3" fill="#D6CBDA" />
+
+                      <circle cx="60" cy="70" r="3" fill="#D6CBDA" />
+
+                      <circle cx="80" cy="80" r="3" fill="#D6CBDA" />
+
+                      <circle cx="100" cy="50" r="3" fill="#D6CBDA" />
+
+                      <circle cx="120" cy="60" r="3" fill="#D6CBDA" />
+
+                      <circle cx="140" cy="30" r="3" fill="#D6CBDA" />
+
+                      <circle cx="160" cy="40" r="3" fill="#D6CBDA" />
+
+                      <line x1="30" y1="95" x2="170" y2="25" stroke="#CEDC57" stroke-width="2" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">Clinical Research</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">Logistic Regression
+
+                </h4>
+
+                <p class="text-uiGray text-sm mt-2">Multivariable predictive model with internal validation.</p>
+
+              </a>
+
+            </article>
+
+
+
+            <article class="project-card reveal-on-scroll" tabindex="0">
+
+              <a href="Anemia_Project.html" class="block h-full">
+
+                <figure class="rounded-2xl overflow-hidden border border-white/5 bg-slateDeep h-48 group">
+
+                  <div
+
+                    class="w-full h-full flex items-center justify-center p-6 group-hover:bg-slatebase transition-colors duration-300">
+
+                    <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+
+                      class="opacity-50 group-hover:opacity-80 transition-opacity">
+
+                      <rect x="30" y="60" width="25" height="40" fill="#7A5B92" />
+
+                      <rect x="70" y="30" width="25" height="70" fill="#CEDC57" />
+
+                      <rect x="110" y="50" width="25" height="50" fill="#D6CBDA" />
+
+                      <rect x="150" y="20" width="25" height="80" fill="#7A5B92" />
+
+                      <line x1="20" y1="100" x2="180" y2="100" stroke="white" stroke-width="1" />
+
+                    </svg>
+
+                  </div>
+
+                </figure>
+
+                <p class="text-xs text-brandGreen uppercase tracking-widest mt-4">Epidemiology</p>
+
+                <h4 class="font-display text-xl mt-2 group-hover:text-brandGreen transition-colors">Prevalence Analysis
+
+                </h4>
+
+                <p class="text-uiGray text-sm mt-2">Cross-sectional study with complex survey design methods.</p>
+
+              </a>
+
+            </article>
+
+          </div>
+
+        </section>
+
+
+
+        <section id="publications" class="space-y-8 content-section" aria-label="Publications">
+
+          <div class="text-center space-y-3">
+
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Peer-Reviewed</p>
+
+            <h3 class="font-display text-3xl">Recent Publications</h3>
+
+          </div>
+
+
+
+          <div class="space-y-4">
+
+            <article
+
+              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+                <div class="space-y-2 flex-1">
+
+                  <div class="flex items-center gap-3 text-xs uppercase tracking-wider text-brandGreen font-medium">
+
+                    <span>JACC</span>
+
+                    <span class="text-uiGray">• Statistical Analysis & Methods</span>
+
+                  </div>
+
+                  <h4 class="font-display text-xl leading-snug group-hover:text-brandGreen transition-colors">
+
+                    <a href="https://www.jacc.org/doi/10.1016/j.jacc.2025.09.079" target="_blank"
+
+                      rel="noopener noreferrer" class="focus:outline-none">
+
+                      <span class="absolute inset-0" aria-hidden="true"></span>
+
+                      TCT-30 Comparative Meta-Analysis of LVOTO Prevention Techniques in TMVR
+
+                    </a>
+
+                  </h4>
+
+                  <p class="text-uiGray text-sm leading-relaxed">
+
+                    <span class="text-white font-semibold">Yousef Alghzawi</span>, Hasan Matar, Osama Hammad, Abdallah
+
+                    Aletaywi
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </article>
+
+
+
+            <article
+
+              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+                <div class="space-y-2 flex-1">
+
+                  <div class="flex items-center gap-3 text-xs uppercase tracking-wider text-brandGreen font-medium">
+
+                    <span>Blood (ASH)</span>
+
+                    <span class="text-uiGray">• Statistical Analysis & Methods</span>
+
+                  </div>
+
+                  <h4 class="font-display text-xl leading-snug group-hover:text-brandGreen transition-colors">
+
+                    <a href="https://ashpublications.org/blood/article/146/Supplement%201/7802/555052" target="_blank"
+
+                      rel="noopener noreferrer" class="focus:outline-none">
+
+                      <span class="absolute inset-0" aria-hidden="true"></span>
+
+                      Survival Outcomes Following Second Hematopoietic Cell Transplantation
+
+                    </a>
+
+                  </h4>
+
+                  <p class="text-uiGray text-sm leading-relaxed">
+
+                    <span class="text-white font-semibold">Yousef Alghzawi</span>, Bara Hammadeh, Nesreen Alhamwi, et
+
+                    al.
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </article>
+
+
+
+            <article
+
+              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+                <div class="space-y-2 flex-1">
+
+                  <div class="flex items-center gap-3 text-xs uppercase tracking-wider text-brandGreen font-medium">
+
+                    <span>Thoracic and Cardiovascular Surgeon</span>
+
+                    <span class="text-uiGray">• Meta-Analysis</span>
+
+                  </div>
+
+                  <h4 class="font-display text-xl leading-snug group-hover:text-brandGreen transition-colors">
+
+                    <a href="https://www.thieme-connect.de/products/ejournals/abstract/10.1055/a-2737-6653"
+
+                      target="_blank" rel="noopener noreferrer" class="focus:outline-none">
+
+                      <span class="absolute inset-0" aria-hidden="true"></span>
+
+                      Stent versus Trunk in Type A Dissection: Systematic Review and Meta-Analysis
+
+                    </a>
+
+                  </h4>
+
+                  <p class="text-uiGray text-sm leading-relaxed">
+
+                    Noor Abu Hantash, Abdullah Alzubaidi, <span class="text-white font-semibold">Yousef Alghzawi</span>,
+
+                    et al.
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </div>
+
+          <div class="text-center">
+
+            <a href="publications.html" class="secondary-link">View all publications ?</a>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- How It Works: Process Section -->
+        <section id="process" class="space-y-8 content-section" aria-label="How It Works">
+          <div class="text-center space-y-3">
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Your Path to Publication</p>
+            <h3 class="font-display text-3xl">How It Works</h3>
+            <p class="text-uiGray max-w-2xl mx-auto">From initial inquiry to published manuscript—a transparent, structured process designed for busy clinicians.</p>
+          </div>
+          <div class="grid gap-0 lg:gap-6 lg:grid-cols-5">
+            <div class="relative text-center p-6 reveal-on-scroll">
+              <div class="w-12 h-12 rounded-full bg-brandOrange/20 border border-brandOrange/40 flex items-center justify-center mx-auto mb-4">
+                <span class="font-display text-brandGreen text-lg">1</span>
+              </div>
+              <h4 class="font-display text-sm text-white mb-2">Submit Inquiry</h4>
+              <p class="text-uiGray text-xs">Share your study type, data status, and target journal. I assess fit within 48 hours.</p>
+            </div>
+            <div class="relative text-center p-6 reveal-on-scroll">
+              <div class="w-12 h-12 rounded-full bg-brandOrange/20 border border-brandOrange/40 flex items-center justify-center mx-auto mb-4">
+                <span class="font-display text-brandGreen text-lg">2</span>
+              </div>
+              <h4 class="font-display text-sm text-white mb-2">Scoping Call</h4>
+              <p class="text-uiGray text-xs">We discuss your research question, endpoints, and reviewer expectations. I draft an analysis plan.</p>
+            </div>
+            <div class="relative text-center p-6 reveal-on-scroll">
+              <div class="w-12 h-12 rounded-full bg-brandOrange/20 border border-brandOrange/40 flex items-center justify-center mx-auto mb-4">
+                <span class="font-display text-brandGreen text-lg">3</span>
+              </div>
+              <h4 class="font-display text-sm text-white mb-2">Analysis & Deliverables</h4>
+              <p class="text-uiGray text-xs">Full statistical analysis with tables, figures, methods text, and reproducible R code.</p>
+            </div>
+            <div class="relative text-center p-6 reveal-on-scroll">
+              <div class="w-12 h-12 rounded-full bg-brandOrange/20 border border-brandOrange/40 flex items-center justify-center mx-auto mb-4">
+                <span class="font-display text-brandGreen text-lg">4</span>
+              </div>
+              <h4 class="font-display text-sm text-white mb-2">Review & Revisions</h4>
+              <p class="text-uiGray text-xs">You review the output. I incorporate feedback and prepare the work for submission.</p>
+            </div>
+            <div class="relative text-center p-6 reveal-on-scroll">
+              <div class="w-12 h-12 rounded-full bg-brandOrange/20 border border-brandOrange/40 flex items-center justify-center mx-auto mb-4">
+                <span class="font-display text-brandGreen text-lg">5</span>
+              </div>
+              <h4 class="font-display text-sm text-white mb-2">Post-Submission Support</h4>
+              <p class="text-uiGray text-xs">Reviewer queries on statistical methods? I draft responses and run additional analyses as needed.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tools & Software -->
+        <section id="tools" class="space-y-8 content-section" aria-label="Tools and Software">
+          <div class="text-center space-y-3">
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Technical Stack</p>
+            <h3 class="font-display text-3xl">Tools & Software</h3>
+          </div>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-white">
+              <span class="w-2 h-2 rounded-full bg-brandGreen"></span>R / RStudio
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-white">
+              <span class="w-2 h-2 rounded-full bg-brandGreen"></span>SPSS
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-white">
+              <span class="w-2 h-2 rounded-full bg-brandGreen"></span>PostgreSQL
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>tidyverse
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>survival
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>meta / metafor
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>ggplot2
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>lme4
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>tableone
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>cmprsk
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>R Markdown
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>Joinpoint
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2A282B]/70 border border-white/5 text-sm text-uiGray">
+              <span class="w-2 h-2 rounded-full bg-brandOrange"></span>RevMan
+            </span>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="space-y-8 content-section" aria-label="Frequently Asked Questions">
+          <div class="text-center space-y-3">
+            <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Common Questions</p>
+            <h3 class="font-display text-3xl">FAQ</h3>
+          </div>
+          <div class="max-w-3xl mx-auto space-y-4">
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                Do you offer authorship or acknowledgment?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">My role is typically acknowledged in the methods section or author list depending on the level of contribution, per ICMJE guidelines. We discuss this upfront during scoping.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                How do you handle data confidentiality?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">I sign NDAs and data handling agreements before any data transfer. All datasets are stored on encrypted drives and deleted upon project completion unless otherwise agreed. I am experienced with de-identified datasets and HIPAA considerations.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                What if reviewers question the statistical methods?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">Post-submission support is included. I draft point-by-point statistical responses to reviewer queries and run any additional sensitivity or subgroup analyses they request. My goal is that the statistics never become the reason for rejection.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                Can you work with my existing dataset and analysis?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">Yes. I can audit existing analyses, clean and restructure datasets, or start from raw data. I work with datasets in any format—SPSS (.sav), Excel, CSV, REDCap exports, or SQL databases.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                What is the typical timeline for a project?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">Most projects take 3–6 weeks for original research and 4–8 weeks for meta-analyses. Timeline depends on dataset complexity, number of endpoints, and revision cycles. I provide a specific estimate during the scoping call.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                How do we communicate during the project?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">I provide structured progress updates at each milestone. Communication is primarily via email, with video calls for scoping and major review points. You always know where your project stands.</p>
+            </details>
+            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+              <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
+                Do you help with the study design, or only the analysis?
+                <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <p class="text-uiGray text-sm mt-4 leading-relaxed">Both. I offer pre-study consultation including sample size calculations, endpoint definitions, and study design review. For ongoing studies, I can join at any stage—from protocol development to post-hoc analysis.</p>
+            </details>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-16 text-center content-section">
+          <h3 class="font-display text-3xl mb-4">Ready to discuss your project?</h3>
+          <p class="text-uiGray mb-8 max-w-xl mx-auto">I take on a limited number of projects each month to ensure each
+            receives the methodological depth and attention it deserves.</p>
+          <a href="apply.html" class="primary-btn">Apply to Work With Me</a>
+        </section>
+
+      </div>
+
+
+
+      <footer class="px-6 md:px-10 py-10 border-t border-white/5 mt-10">
+
+        <div
+
+          class="max-w-[1200px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
+
+          <p>© <span id="year">2024</span> Yousef Alghzawi. All rights reserved.</p>
+
+          <div class="flex items-center gap-4">
+
+            <a href="mailto:yousef@example.com" class="footer-link" aria-label="Email">
+
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+
+                aria-hidden="true">
+
+                <path d="M4 6h16v12H4z" />
+
+                <path d="M4 6l8 6 8-6" />
+
+              </svg>
+
+            </a>
+
+            <a href="https://www.linkedin.com" class="footer-link" aria-label="LinkedIn">
+
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+
+                aria-hidden="true">
+
+                <path d="M6.5 9.5v9" />
+
+                <path d="M6.5 5.5a.5.5 0 11.001 1.001A.5.5 0 016.5 5.5" />
+
+                <path d="M11 9.5v9" />
+
+                <path d="M11 13.5c0-1.49 1.18-2.7 2.64-2.7S16.5 12 16.5 13.5v5" />
+
+              </svg>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </footer>
+
+
+
+      <script src="script.js" defer></script>
+
+      <script>
+
+        const CONFIG = {
+
+          containerId: 'hero-header',
+
+          canvasId: 'hero-canvas',
+
+          colors: {
+
+            primary: '#CEDC57',
+
+            text: 'rgba(255,255,255,0.7)',
+
+            bgGradientStart: '#524E53',
+
+            bgGradientEnd: '#2A282B'
+
+          },
+
+          particleCount: { mobile: 40, desktop: 100 },
+
+          speed: 0.4,
+
+          verticalDrift: -0.2,
+
+          graphLines: { count: 3, amplitude: 50, color: '#CEDC57', opacity: 0.1, thickness: 2 },
+
+          equations: ["E = mc²", "f(x) = ? e??² dx", "s = v(S(x?-µ)²/(n-1))", "P(A|B) = P(AnB)/P(B)", "?·E = ?/e0", "i? ??/?t = H?"],
+
+          greek: ['a', 'ß', '?', '?', '?', 'µ', 'p', 'S', 'O', '?'],
+
+          numbers: ['0', '1', '1.618', '3.14', 'e', '10', '01']
+
+        };
+
+
+
+        class HeroAnimation {
+
+          constructor() {
+
+            this.container = document.getElementById(CONFIG.containerId);
+
+            this.canvas = document.getElementById(CONFIG.canvasId);
+
+            this.ctx = this.canvas.getContext('2d');
+
+            this.elements = [];
+
+            this.graphs = [];
+
+            this.animate = this.animate.bind(this);
+
+            this.handleResize = this.handleResize.bind(this);
+
+            this.init();
+
+          }
+
+          init() {
+
+            this.handleResize();
+
+            this.createGraphs();
+
+            this.createElements();
+
+            window.addEventListener('resize', this.handleResize);
+
+            requestAnimationFrame(this.animate);
+
+          }
+
+          handleResize() {
+
+            this.width = this.container.offsetWidth;
+
+            this.height = this.container.offsetHeight;
+
+            this.canvas.width = this.width;
+
+            this.canvas.height = this.height;
+
+            const isMobile = this.width < 768;
+
+            const target = isMobile ? CONFIG.particleCount.mobile : CONFIG.particleCount.desktop;
+
+            if (this.elements.length !== target) {
+
+              this.elements = [];
+
+              this.createElements(target);
+
+            }
+
+          }
+
+          createGraphs() {
+
+            this.graphs = Array.from({ length: CONFIG.graphLines.count }, (_, i) => new GraphLine(i));
+
+          }
+
+          createElements(count) {
+
+            const total = count || CONFIG.particleCount.desktop;
+
+            for (let i = 0; i < total; i++) {
+
+              this.elements.push(new FloatingItem(this.width, this.height));
+
+            }
+
+          }
+
+          drawBackground() {
+
+            this.ctx.clearRect(0, 0, this.width, this.height);
+
+          }
+
+          animate() {
+
+            this.drawBackground();
+
+            this.graphs.forEach(g => { g.update(); g.draw(this.ctx, this.width, this.height); });
+
+            this.elements.sort((a, b) => b.z - a.z);
+
+            this.elements.forEach(e => { e.update(this.width, this.height); e.draw(this.ctx); });
+
+            requestAnimationFrame(this.animate);
+
+          }
+
+        }
+
+
+
+        class FloatingItem {
+
+          constructor(w, h) { this.reset(w, h, true); }
+
+          reset(w, h, initial = false) {
+
+            this.z = Math.random();
+
+            this.scale = 0.3 + (1 - this.z) * 1.0;
+
+            this.opacity = 0.05 + (1 - this.z) * 0.5;
+
+            this.x = Math.random() * w;
+
+            this.y = initial ? Math.random() * h : h + 50;
+
+            const speedMultiplier = (1.8 - this.z) * CONFIG.speed;
+
+            this.velX = (Math.random() - 0.5) * 0.5 * speedMultiplier;
+
+            this.velY = (CONFIG.verticalDrift + (Math.random() * -0.5)) * speedMultiplier;
+
+            const r = Math.random();
+
+            if (r < 0.4) this.type = 'equation', this.content = CONFIG.equations[Math.random() * CONFIG.equations.length | 0];
+
+            else if (r < 0.7) this.type = 'greek', this.content = CONFIG.greek[Math.random() * CONFIG.greek.length | 0];
+
+            else this.type = 'number', this.content = CONFIG.numbers[Math.random() * CONFIG.numbers.length | 0];
+
+            this.font = this.type === 'equation' ? 'italic 16px "Times New Roman", serif' : '14px "Segoe UI", sans-serif';
+
+          }
+
+          update(w, h) {
+
+            this.x += this.velX;
+
+            this.y += this.velY;
+
+            if (this.y < -100 || this.x < -100 || this.x > w + 100) this.reset(w, h);
+
+          }
+
+          draw(ctx) {
+
+            ctx.save();
+
+            ctx.globalAlpha = this.opacity;
+
+            ctx.fillStyle = CONFIG.colors.text;
+
+            ctx.translate(this.x, this.y);
+
+            ctx.scale(this.scale, this.scale);
+
+            ctx.font = this.font;
+
+            ctx.fillText(this.content, 0, 0);
+
+            ctx.restore();
+
+          }
+
+        }
+
+
+
+        class GraphLine {
+
+          constructor(i) { this.index = i; this.offset = Math.random() * 100; this.speed = 0.015; }
+
+          update() { this.offset += this.speed; }
+
+          draw(ctx, w, h) {
+
+            ctx.save();
+
+            ctx.beginPath();
+
+            ctx.strokeStyle = CONFIG.graphLines.color;
+
+            ctx.lineWidth = CONFIG.graphLines.thickness;
+
+            ctx.globalAlpha = CONFIG.graphLines.opacity;
+
+            const base = h * (0.3 + this.index * 0.2);
+
+            const amp = CONFIG.graphLines.amplitude;
+
+            for (let x = 0; x <= w; x += 10) {
+
+              const y = base + Math.sin((x * 0.005) + this.offset) * amp + Math.cos((x * 0.01) + this.offset) * (amp * 0.5);
+
+              x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+
+            }
+
+            ctx.stroke();
+
+            ctx.restore();
+
+          }
+
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', () => new HeroAnimation());
+
+      </script>
+
+    </main>
+
+  </div>
+
+</body>
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

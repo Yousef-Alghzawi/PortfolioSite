@@ -1,0 +1,233 @@
+:root {
+  --slate: #524E53;
+  --slate-deep: #2A282B;
+  --ui: #D6CBDA;
+  --white: #FFFFFF;
+  --orange: #8650AB;
+  --orange-2: #9B65C0;
+  --green: #CEDC57;
+  --green-2: #E1EB8D;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.gradient-bg {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--slate) 0%, var(--slate-deep) 100%);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  margin: 0 auto;
+}
+
+.figure-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.75);
+  padding: 1.5rem;
+  box-shadow: 0 30px 60px -45px rgba(0, 0, 0, 0.9);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 360px;
+}
+
+.figure-card:hover,
+.figure-card:focus-within {
+  transform: translate3d(0, -4px, 0);
+  border-color: var(--orange);
+  box-shadow: 0 25px 50px -35px rgba(249, 115, 22, 0.45);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  background: var(--orange);
+  color: var(--white);
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 20px 40px -30px rgba(249, 115, 22, 0.75);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--orange-2);
+  transform: translate3d(0, -2px, 0);
+}
+
+.code-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.04), 0 30px 60px -45px rgba(0, 0, 0, 0.9);
+  position: relative;
+}
+
+.code-wrap pre {
+  margin: 0;
+  overflow-x: auto;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  transition: border-color 0.3s ease;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible {
+  border-color: var(--green);
+}
+
+.copy-btn::after {
+  content: '';
+  position: absolute;
+  top: -2.4rem;
+  right: 0;
+  transform: translateX(30%);
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.copy-btn[data-copied="true"]::after {
+  content: 'Copied';
+  opacity: 1;
+}
+
+.toc-card {
+  position: sticky;
+  top: 6rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.8);
+  padding: 1.25rem;
+  box-shadow: 0 30px 60px -45px rgba(0, 0, 0, 0.85);
+}
+
+.toc-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ui);
+  margin-bottom: 0.75rem;
+}
+
+#toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toc-link {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.toc-link::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s ease;
+}
+
+.toc-link:hover,
+.toc-link:focus-visible {
+  color: var(--white);
+}
+
+.toc-link.active {
+  color: var(--orange);
+}
+
+.toc-link.active::before {
+  background: var(--orange);
+}
+
+.logo-chip {
+  width: 96px;
+  height: 96px;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(148, 163, 184, 0.11);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+  will-change: transform;
+}
+
+.logo-chip:hover,
+.logo-chip:focus-visible {
+  filter: grayscale(0.1);
+  transform: scale(1.02);
+}
+
+.logo-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: brightness(1.25) contrast(1.05) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.logo-chip:hover .logo-img,
+.logo-chip:focus-visible .logo-img {
+  opacity: 1;
+  filter: brightness(1.35) contrast(1.08) drop-shadow(0 14px 24px rgba(249, 115, 22, 0.25));
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

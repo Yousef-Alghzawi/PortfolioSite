@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Apply to work with Yousef Alghzawi – Clinical Biostatistician for high-impact journal submissions." />
+    <title>Apply — Yousef Alghzawi | Clinical Biostatistician</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .form-input {
+            background: rgba(42, 40, 43, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1rem 1.25rem;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #CEDC57;
+            box-shadow: 0 0 0 3px rgba(206, 220, 87, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: #8B8590;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #D6CBDA;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23D6CBDA'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 3rem;
+        }
+
+        .notice-box {
+            background: rgba(42, 40, 43, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(206, 220, 87, 0.08);
+            border: 1px solid rgba(206, 220, 87, 0.2);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: #CEDC57;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col gap-4">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link active" href="apply.html" aria-current="page">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link" href="index.html#work">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link active" href="apply.html" aria-current="page">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+                <header>
+                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2">Engagement Inquiry</p>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Apply to Work With Me</h1>
+                    <p class="text-uiGray text-base leading-relaxed max-w-2xl">I take on a limited number of projects
+                        each month
+                        to ensure each receives the methodological depth and attention it deserves.</p>
+                </header>
+
+        <!-- Trust signals for the applicant -->
+        <div class="flex flex-wrap gap-3 mb-8">
+            <span class="trust-pill">NDA provided</span>
+            <span class="trust-pill">48h response time</span>
+            <span class="trust-pill">Post-submission support included</span>
+            <span class="trust-pill">ICMJE-compliant authorship</span>
+        </div>
+
+        <div class="notice-box mb-10">
+            <p class="text-uiGray text-sm leading-relaxed"><strong class="text-white">Who this is for:</strong> Clinical researchers, academic physicians, and research teams preparing original research or systematic reviews for peer-reviewed journals. I work with studies at any stage&mdash;from protocol design to post-hoc analysis and reviewer response.</p>
+        </div>
+
+        <form action="#" method="POST" class="space-y-2">
+            <!-- Contact Info -->
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="form-group"><label for="name" class="form-label">Full Name *</label><input type="text"
+                        id="name" name="name" class="form-input" placeholder="Dr. Jane Smith" required /></div>
+                <div class="form-group"><label for="email" class="form-label">Email Address *</label><input type="email"
+                        id="email" name="email" class="form-input" placeholder="jane.smith@institution.edu" required />
+                </div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="form-group"><label for="affiliation" class="form-label">Institution / Affiliation</label><input
+                        type="text" id="affiliation" name="affiliation" class="form-input"
+                        placeholder="University Medical Center" /></div>
+                <div class="form-group"><label for="role" class="form-label">Your Role</label>
+                    <select id="role" name="role" class="form-input">
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="attending">Attending Physician / Consultant</option>
+                        <option value="resident">Resident / Fellow</option>
+                        <option value="faculty">Faculty / Professor</option>
+                        <option value="postdoc">Postdoctoral Researcher</option>
+                        <option value="phd-student">PhD / Graduate Student</option>
+                        <option value="research-coordinator">Research Coordinator</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 mt-8">
+                <h2 class="font-display text-xl mb-6 text-white">Study Details</h2>
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div class="form-group"><label for="study-type" class="form-label">Study Type *</label>
+                        <select id="study-type" name="study-type" class="form-input" required>
+                            <option value="" disabled selected>Select study type</option>
+                            <option value="rct">Randomized Controlled Trial</option>
+                            <option value="cohort">Cohort Study</option>
+                            <option value="case-control">Case-Control Study</option>
+                            <option value="cross-sectional">Cross-Sectional Study</option>
+                            <option value="systematic-review">Systematic Review</option>
+                            <option value="meta-analysis">Meta-Analysis</option>
+                            <option value="secondary-analysis">Secondary / Registry Analysis</option>
+                            <option value="case-series">Case Series / Case Report</option>
+                            <option value="diagnostic">Diagnostic Accuracy Study</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label for="dataset-status" class="form-label">Dataset Status *</label>
+                        <select id="dataset-status" name="dataset-status" class="form-input" required>
+                            <option value="" disabled selected>Select dataset status</option>
+                            <option value="complete">Data collection complete, cleaned</option>
+                            <option value="collected-not-cleaned">Data collected, not yet cleaned</option>
+                            <option value="in-progress">Data collection in progress</option>
+                            <option value="not-started">Data collection not yet started</option>
+                            <option value="secondary">Using existing / secondary dataset</option>
+                            <option value="extraction-complete">Systematic review: data extraction complete</option>
+                            <option value="extraction-in-progress">Systematic review: data extraction in progress</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label for="sample-size" class="form-label">Approximate Sample Size</label><input
+                        type="text" id="sample-size" name="sample-size" class="form-input"
+                        placeholder="e.g., 250 patients, 15 studies for meta-analysis" /></div>
+                <div class="form-group"><label for="endpoints" class="form-label">Primary Endpoints / Outcomes
+                        *</label><textarea id="endpoints" name="endpoints" class="form-input"
+                        placeholder="Describe your primary and secondary endpoints or outcomes of interest..." required></textarea></div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 mt-8">
+                <h2 class="font-display text-xl mb-6 text-white">Publication Intent</h2>
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div class="form-group"><label for="target-journal" class="form-label">Target Journal(s)</label><input
+                            type="text" id="target-journal" name="target-journal" class="form-input"
+                            placeholder="e.g., JAMA, Lancet, Blood, JACC" /></div>
+                    <div class="form-group"><label for="timeline" class="form-label">Desired Timeline *</label>
+                        <select id="timeline" name="timeline" class="form-input" required>
+                            <option value="" disabled selected>Select timeline</option>
+                            <option value="4-weeks">Within 4 weeks</option>
+                            <option value="1-2-months">1&ndash;2 months</option>
+                            <option value="2-3-months">2&ndash;3 months</option>
+                            <option value="3-plus-months">3+ months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label for="irb" class="form-label">IRB / Ethics Approval Status</label>
+                    <select id="irb" name="irb" class="form-input">
+                        <option value="" disabled selected>Select IRB status</option>
+                        <option value="approved">Approved</option>
+                        <option value="pending">Pending / Submitted</option>
+                        <option value="exempt">Exempt (e.g., secondary data, systematic review)</option>
+                        <option value="not-yet">Not yet submitted</option>
+                        <option value="not-applicable">Not applicable</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 mt-8">
+                <h2 class="font-display text-xl mb-6 text-white">Scope of Work</h2>
+                <div class="form-group"><label for="prepared" class="form-label">What is already prepared?</label><textarea id="prepared" name="prepared" class="form-input"
+                        placeholder="Protocol, IRB approval, data dictionary, preliminary analyses, literature search..."></textarea></div>
+                <div class="form-group"><label for="assistance" class="form-label">What assistance do you need?
+                        *</label><textarea id="assistance" name="assistance" class="form-input"
+                        placeholder="Statistical analysis plan, primary analysis, figures/tables, methods writing, reviewer response support..."
+                        required></textarea></div>
+                <div class="form-group"><label for="additional" class="form-label">Anything else I should know?</label><textarea id="additional" name="additional" class="form-input"
+                        placeholder="Previous analyses attempted, specific reviewer concerns, co-investigators involved, grant deadlines..."></textarea></div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div>
+                    <p class="text-sm text-uiGray">I typically respond within 48 hours.</p>
+                    <p class="text-xs text-uiGray mt-1">Your data and study details are kept strictly confidential.</p>
+                </div>
+                <button type="submit" class="primary-btn">Submit Inquiry</button>
+            </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+
+</html>
