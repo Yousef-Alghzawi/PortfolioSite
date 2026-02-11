@@ -233,6 +233,7 @@ const toggleMobileMenu = () => {
   const animateCounter = (counter) => {
     const target = parseFloat(counter.getAttribute('data-target'));
     const prefix = counter.getAttribute('data-prefix') || '';
+    const suffix = counter.getAttribute('data-suffix') || '';
     const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
     const duration = 2000; // ms
     const startTime = performance.now();
@@ -245,12 +246,12 @@ const toggleMobileMenu = () => {
       const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
 
       const current = ease * target;
-      counter.textContent = prefix + current.toFixed(decimals);
+      counter.textContent = prefix + current.toFixed(decimals) + suffix;
 
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        counter.textContent = prefix + target.toFixed(decimals);
+        counter.textContent = prefix + target.toFixed(decimals) + suffix;
       }
     };
 
