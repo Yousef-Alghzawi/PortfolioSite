@@ -30,13 +30,15 @@
 
   <title>Yousef Alghzawi – Clinical Biostatistician</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
 
-    rel="stylesheet" />
+      rel="stylesheet" />
+
+  
 
   <link rel="stylesheet" href="styles.css" />
 
@@ -44,39 +46,43 @@
 
   <script>
 
-    tailwind.config = {
+        tailwind.config = {
 
-      theme: {
+          theme: {
 
-        fontFamily: {
+            fontFamily: {
 
-          display: ['"Space Mono"', 'monospace'],
+              display: ['"Space Mono"', 'monospace'],
 
-          sans: ['"Space Mono"', 'monospace'],
+              sans: ['"Inter"', 'sans-serif'],
 
-        },
+              mono: ['"Space Mono"', 'monospace'],
 
-        extend: {
+            },
 
-          colors: {
+            extend: {
 
-            slatebase: '#524E53',
+              colors: {
 
-            slateDeep: '#2A282B',
+                slatebase: '#524E53',
 
-            uiGray: '#D6CBDA',
+                slateDeep: '#2A282B',
 
-            brandOrange: '#7A5B92',
+                uiGray: '#D6CBDA',
 
-            brandGreen: '#CEDC57',
+                brandOrange: '#7A5B92',
+
+                brandGreen: '#CEDC57',
+
+              },
+
+            },
 
           },
 
-        },
+        };
 
-      },
-
-    };
+    
 
   </script>
 
@@ -156,57 +162,67 @@
 
   <div class="min-h-screen flex flex-col lg:flex-row">
 
-    <header
+        <header
 
-      class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+          class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur-md px-6 py-4 border-b border-white/5 flex items-center justify-between h-[72px]">
 
-      <div>
+          <div>
 
-        <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+            <p class="text-[10px] text-uiGray uppercase tracking-[0.2em] font-display">Clinical Biostatistician</p>
 
-        <p class="font-display text-xl">Yousef Alghzawi</p>
+            <p class="font-display text-lg">Yousef Alghzawi</p>
 
-      </div>
+          </div>
 
-      <button id="mobile-menu-button"
+          <button id="mobile-menu-button"
 
-        class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+            class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
 
-        aria-controls="mobile-menu" aria-expanded="false">
+            aria-controls="mobile-menu" aria-expanded="false">
 
-        <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Toggle navigation</span>
 
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 
-          aria-hidden="true">
+              aria-hidden="true">
 
-          <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+              <path id="menu-icon-path" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
 
-        </svg>
+            </svg>
 
-      </button>
+          </button>
 
-    </header>
+        </header>
 
+    
 
+        <div id="mobile-menu" role="dialog" aria-label="Primary navigation">
 
-    <div id="mobile-menu" class="lg:hidden px-6 bg-[#2A282B] border-b border-white/5" role="dialog"
-      aria-label="Primary navigation">
-      <nav class="flex flex-col">
-        <a class="mobile-nav-link active" href="#home">Home</a>
-        <a class="mobile-nav-link" href="services.html">Services</a>
-        <a class="mobile-nav-link" href="#work">Work</a>
-        <a class="mobile-nav-link" href="#publications">Publications</a>
-        <a class="mobile-nav-link" href="about.html">About</a>
-        <a class="mobile-nav-link" href="apply.html">Apply</a>
-      </nav>
-    </div>
+          <nav class="flex flex-col">
 
+            <a class="mobile-nav-link active" href="#home">Home</a>
 
+            <a class="mobile-nav-link" href="services.html">Services</a>
 
-    <aside
+            <a class="mobile-nav-link" href="#work">Work</a>
 
-      class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <a class="mobile-nav-link" href="#publications">Publications</a>
+
+            <a class="mobile-nav-link" href="about.html">About</a>
+
+            <a class="mobile-nav-link" href="apply.html">Apply</a>
+
+          </nav>
+
+        </div>
+
+    
+
+        <aside
+
+          class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10">
+
+    
 
       <div>
 
@@ -268,8 +284,7 @@
 
               <p class="text-brandGreen uppercase tracking-[0.25em] text-sm">Clinical Biostatistics</p>
 
-              <h2 class="font-display text-3xl md:text-4xl leading-tight accent-underline tracking-tighter">Statistical
-
+              <h2 class="font-display text-4xl md:text-5xl leading-tight accent-underline tracking-tighter">Statistical
                 analysis that survives peer review</h2>
 
               <p class="text-gray-400 text-base leading-relaxed max-w-2xl">I deliver publication-grade analysis, tables,
@@ -304,7 +319,7 @@
 
             </div>
 
-            <figure class="relative glow-soft w-full max-w-sm ml-auto">
+            <figure class="relative glow-soft w-full max-w-sm ml-auto transition-transform duration-500 hover:scale-[1.02] cursor-crosshair">
 
               <div class="absolute inset-0 rounded-[32px] bg-brandOrange/20 blur-2xl -z-10"></div>
 
@@ -333,55 +348,30 @@
           </div>
 
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
-
-            <article class="presentation-card reveal-on-scroll" role="listitem">
-
+            <article class="glass-card rounded-[24px] p-6 reveal-on-scroll" role="listitem">
               <div class="skill-accent" aria-hidden="true"></div>
-
               <h4 class="font-display text-xl">Publication Analysis</h4>
-
-              <p class="text-uiGray mt-2">Complete statistical analysis for original research manuscripts, from design
-
+              <p class="text-uiGray mt-2 text-sm">Complete statistical analysis for original research manuscripts, from design
                 through reviewer response.</p>
-
             </article>
-
-            <article class="presentation-card reveal-on-scroll" role="listitem">
-
+            <article class="glass-card rounded-[24px] p-6 reveal-on-scroll" role="listitem">
               <div class="skill-accent" aria-hidden="true"></div>
-
               <h4 class="font-display text-xl">Meta-Analysis</h4>
-
-              <p class="text-uiGray mt-2">Systematic reviews with PRISMA-compliant synthesis, heterogeneity assessment,
-
+              <p class="text-uiGray mt-2 text-sm">Systematic reviews with PRISMA-compliant synthesis, heterogeneity assessment,
                 and publication bias evaluation.</p>
-
             </article>
-
-            <article class="presentation-card reveal-on-scroll" role="listitem">
-
+            <article class="glass-card rounded-[24px] p-6 reveal-on-scroll" role="listitem">
               <div class="skill-accent" aria-hidden="true"></div>
-
               <h4 class="font-display text-xl">Trial Strategy</h4>
-
-              <p class="text-uiGray mt-2">Pre-trial statistical planning, sample size calculations, and analysis plan
-
+              <p class="text-uiGray mt-2 text-sm">Pre-trial statistical planning, sample size calculations, and analysis plan
                 development.</p>
-
             </article>
-
-            <article class="presentation-card reveal-on-scroll" role="listitem">
-
+            <article class="glass-card rounded-[24px] p-6 reveal-on-scroll" role="listitem">
               <div class="skill-accent" aria-hidden="true"></div>
-
               <h4 class="font-display text-xl">Methods Audit</h4>
-
-              <p class="text-uiGray mt-2">Independent review to identify methodological vulnerabilities before journal
-
+              <p class="text-uiGray mt-2 text-sm">Independent review to identify methodological vulnerabilities before journal
                 submission.</p>
-
             </article>
-
           </div>
 
           <div class="text-center">
@@ -401,32 +391,32 @@
             <h3 class="font-display text-3xl">Built for High-Impact Submissions</h3>
           </div>
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2" data-target="100" data-decimals="0">0</div>
               <div class="text-sm font-display text-white mb-1">% Acceptance Rate</div>
               <p class="text-uiGray text-xs">Every manuscript I have contributed statistical analysis to has been accepted for publication.</p>
             </div>
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2">Q1</div>
               <div class="text-sm font-display text-white mb-1">Journal Quartile</div>
               <p class="text-uiGray text-xs">Published in top-quartile journals including JACC (IF: 21.7) and Blood (IF: 20.3).</p>
             </div>
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2">R</div>
               <div class="text-sm font-display text-white mb-1">Reproducible Code</div>
               <p class="text-uiGray text-xs">Every analysis ships with documented, reproducible R code and a complete audit trail.</p>
             </div>
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2">&lt;48h</div>
               <div class="text-sm font-display text-white mb-1">Reviewer Turnaround</div>
               <p class="text-uiGray text-xs">Post-review statistical queries addressed within 48 hours during active projects.</p>
             </div>
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2">NDA</div>
               <div class="text-sm font-display text-white mb-1">Confidentiality</div>
               <p class="text-uiGray text-xs">Full NDA and data handling agreements. Your data, your IP, your study—protected.</p>
             </div>
-            <div class="rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <div class="rounded-2xl glass-card p-6 reveal-on-scroll">
               <div class="text-3xl font-display text-brandGreen mb-2">IRB</div>
               <div class="text-sm font-display text-white mb-1">Compliance Aware</div>
               <p class="text-uiGray text-xs">Experienced with IRB protocols, HIPAA considerations, and data de-identification workflows.</p>
@@ -446,7 +436,7 @@
 
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="LVOT_TMVR.html" class="block h-full">
 
@@ -500,7 +490,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="CNS_Hematology.html" class="block h-full">
 
@@ -544,7 +534,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="KHCC_Articles.html" class="block h-full">
 
@@ -588,7 +578,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="Bassel_VR.html" class="block h-full">
 
@@ -640,7 +630,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="FET_Article.html" class="block h-full">
 
@@ -690,7 +680,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="IUA_Article.html" class="block h-full">
 
@@ -740,7 +730,7 @@
 
 
 
-            <article class="project-card reveal-on-scroll" tabindex="0">
+            <article class="glass-card rounded-[24px] p-5 reveal-on-scroll" tabindex="0">
 
               <a href="Anemia_Project.html" class="block h-full">
 
@@ -803,8 +793,7 @@
           <div class="space-y-4">
 
             <article
-
-              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+              class="group relative glass-card rounded-2xl p-6 hover:border-brandGreen/30 reveal-on-scroll">
 
               <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
 
@@ -849,8 +838,7 @@
 
 
             <article
-
-              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+              class="group relative glass-card rounded-2xl p-6 hover:border-brandGreen/30 reveal-on-scroll">
 
               <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
 
@@ -895,8 +883,7 @@
 
 
             <article
-
-              class="group relative bg-[#2A282B]/70 border border-white/5 rounded-2xl p-6 hover:border-brandGreen/30 transition-all duration-300 reveal-on-scroll">
+              class="group relative glass-card rounded-2xl p-6 hover:border-brandGreen/30 reveal-on-scroll">
 
               <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
 
@@ -1052,49 +1039,49 @@
             <h3 class="font-display text-3xl">FAQ</h3>
           </div>
           <div class="max-w-3xl mx-auto space-y-4">
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 Do you offer authorship or acknowledgment?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">My role is typically acknowledged in the methods section or author list depending on the level of contribution, per ICMJE guidelines. We discuss this upfront during scoping.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 How do you handle data confidentiality?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">I sign NDAs and data handling agreements before any data transfer. All datasets are stored on encrypted drives and deleted upon project completion unless otherwise agreed. I am experienced with de-identified datasets and HIPAA considerations.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 What if reviewers question the statistical methods?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">Post-submission support is included. I draft point-by-point statistical responses to reviewer queries and run any additional sensitivity or subgroup analyses they request. My goal is that the statistics never become the reason for rejection.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 Can you work with my existing dataset and analysis?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">Yes. I can audit existing analyses, clean and restructure datasets, or start from raw data. I work with datasets in any format—SPSS (.sav), Excel, CSV, REDCap exports, or SQL databases.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 What is the typical timeline for a project?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">Most projects take 3–6 weeks for original research and 4–8 weeks for meta-analyses. Timeline depends on dataset complexity, number of endpoints, and revision cycles. I provide a specific estimate during the scoping call.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 How do we communicate during the project?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <p class="text-uiGray text-sm mt-4 leading-relaxed">I provide structured progress updates at each milestone. Communication is primarily via email, with video calls for scoping and major review points. You always know where your project stands.</p>
             </details>
-            <details class="group rounded-2xl bg-[#2A282B]/70 border border-white/5 p-6 reveal-on-scroll">
+            <details class="group rounded-2xl glass-card p-6 reveal-on-scroll">
               <summary class="font-display text-base text-white cursor-pointer list-none flex items-center justify-between">
                 Do you help with the study design, or only the analysis?
                 <svg class="w-5 h-5 text-uiGray group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -1105,7 +1092,7 @@
         </section>
 
         <!-- CTA Section -->
-        <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-16 text-center content-section">
+        <section class="rounded-[32px] glass-card p-8 md:p-16 text-center content-section">
           <h3 class="font-display text-3xl mb-4">Ready to discuss your project?</h3>
           <p class="text-uiGray mb-8 max-w-xl mx-auto">I take on a limited number of projects each month to ensure each
             receives the methodological depth and attention it deserves.</p>
@@ -1116,7 +1103,7 @@
 
 
 
-      <footer class="px-6 md:px-10 py-10 border-t border-white/5 mt-10">
+      <footer class="px-6 md:px-10 py-10 border-t border-white/5 mt-10 glass-sidebar rounded-tl-[32px] rounded-tr-[32px]">
 
         <div
 
@@ -1165,6 +1152,12 @@
       </footer>
 
 
+
+      <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
 
       <script src="script.js" defer></script>
 
