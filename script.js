@@ -72,6 +72,19 @@ const setMobileMenuState = (open) => {
   if (!mobileMenuButton || !mobileMenu) return;
   mobileMenuButton.setAttribute('aria-expanded', String(open));
   mobileMenu.classList.toggle('is-open', open);
+  
+  // Update icon from hamburger to X
+  const path = document.getElementById('menu-icon-path');
+  if (path) {
+    if (open) {
+      path.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+    } else {
+      path.setAttribute('d', 'M5 7h14M5 12h14M5 17h14');
+    }
+  }
+
+  // Prevent scrolling when menu is open
+  document.body.style.overflow = open ? 'hidden' : '';
 };
 
 const closeMobileMenu = () => setMobileMenuState(false);
@@ -81,6 +94,27 @@ const toggleMobileMenu = () => {
   const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
   setMobileMenuState(!expanded);
 };
+
+// Back to Top functionality
+(() => {
+  const backToTop = document.getElementById('back-to-top');
+  if (!backToTop) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backToTop.classList.add('is-visible');
+    } else {
+      backToTop.classList.remove('is-visible');
+    }
+  });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+})();
 
 // Mobile menu toggle
 (() => {

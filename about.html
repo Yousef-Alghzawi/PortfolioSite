@@ -8,13 +8,18 @@
     <title>About — Yousef Alghzawi | Clinical Biostatistician</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                fontFamily: {
+                    display: ['"Space Mono"', 'monospace'],
+                    sans: ['"Inter"', 'sans-serif'],
+                    mono: ['"Space Mono"', 'monospace'],
+                },
                 extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
             }
         };
@@ -63,24 +68,23 @@
 <body class="font-sans text-white gradient-bg min-h-screen">
     <div class="min-h-screen flex flex-col lg:flex-row">
         <header
-            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur-md px-6 py-4 border-b border-white/5 flex items-center justify-between h-[72px]">
             <div>
-                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
-                <p class="font-display text-xl">Yousef Alghzawi</p>
+                <p class="text-[10px] text-uiGray uppercase tracking-[0.2em] font-display">Clinical Biostatistician</p>
+                <p class="font-display text-lg">Yousef Alghzawi</p>
             </div>
             <button id="mobile-menu-button"
-                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
                 aria-controls="mobile-menu" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     aria-hidden="true">
-                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                    <path id="menu-icon-path" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
                 </svg>
             </button>
         </header>
 
-        <div id="mobile-menu" class="lg:hidden px-6 bg-[#2A282B] border-b border-white/5" role="dialog"
-            aria-label="Primary navigation">
+        <div id="mobile-menu" role="dialog" aria-label="Primary navigation">
             <nav class="flex flex-col">
                 <a class="mobile-nav-link" href="index.html#home">Home</a>
                 <a class="mobile-nav-link" href="services.html">Services</a>
@@ -92,7 +96,7 @@
         </div>
 
         <aside
-            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10">
             <div>
                 <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
                 <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
@@ -163,17 +167,17 @@
             <h2 class="font-display text-2xl mb-6">Publication Track Record</h2>
             <p class="text-uiGray mb-6 text-sm">Journals where my statistical contributions have been published or accepted.</p>
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div class="expertise-card text-center">
+                <div class="expertise-card glass-card text-center">
                     <div class="text-2xl font-display text-brandGreen mb-1">21.7</div>
                     <div class="text-xs text-white font-display mb-1">Impact Factor</div>
                     <div class="text-xs text-uiGray">JACC</div>
                 </div>
-                <div class="expertise-card text-center">
+                <div class="expertise-card glass-card text-center">
                     <div class="text-2xl font-display text-brandGreen mb-1">20.3</div>
                     <div class="text-xs text-white font-display mb-1">Impact Factor</div>
                     <div class="text-xs text-uiGray">Blood (ASH)</div>
                 </div>
-                <div class="expertise-card text-center">
+                <div class="expertise-card glass-card text-center">
                     <div class="text-2xl font-display text-brandGreen mb-1">2.1</div>
                     <div class="text-xs text-white font-display mb-1">Impact Factor</div>
                     <div class="text-xs text-uiGray">Clinical Neurology & Neurosurgery</div>
@@ -184,25 +188,25 @@
         <section class="mb-16">
             <h2 class="font-display text-2xl mb-6">Methodological Focus</h2>
             <div class="grid gap-4 sm:grid-cols-2">
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
                     <h4 class="font-display text-lg text-white">Clinical Trial Analysis</h4>
                     <p class="text-uiGray text-sm mt-2">Primary and secondary endpoint analysis for RCTs, including
                         survival analysis and mixed-effects models.</p>
                 </div>
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
                     <h4 class="font-display text-lg text-white">Evidence Synthesis</h4>
                     <p class="text-uiGray text-sm mt-2">Systematic reviews and meta-analyses using random-effects models
                         and publication bias evaluation.</p>
                 </div>
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
                     <h4 class="font-display text-lg text-white">Reproducible Analysis</h4>
                     <p class="text-uiGray text-sm mt-2">Fully documented workflows in R with complete audit trails and
                         version control.</p>
                 </div>
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <div class="w-3 h-3 rounded-full bg-brandGreen mb-4"></div>
                     <h4 class="font-display text-lg text-white">Publication-Grade Output</h4>
                     <p class="text-uiGray text-sm mt-2">Tables, figures, and methods text designed to address reviewer
@@ -284,7 +288,7 @@
         <section class="mb-16">
             <h2 class="font-display text-2xl mb-4">Software & Tools</h2>
             <div class="grid gap-4 sm:grid-cols-3">
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <h4 class="font-display text-base text-white mb-2">Primary Analysis</h4>
                     <ul class="text-uiGray text-sm space-y-1">
                         <li>R / RStudio</li>
@@ -292,7 +296,7 @@
                         <li>PostgreSQL</li>
                     </ul>
                 </div>
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <h4 class="font-display text-base text-white mb-2">Key R Packages</h4>
                     <ul class="text-uiGray text-sm space-y-1">
                         <li>tidyverse, ggplot2</li>
@@ -301,7 +305,7 @@
                         <li>lme4, tableone</li>
                     </ul>
                 </div>
-                <div class="expertise-card">
+                <div class="expertise-card glass-card">
                     <h4 class="font-display text-base text-white mb-2">Reporting & Review</h4>
                     <ul class="text-uiGray text-sm space-y-1">
                         <li>R Markdown</li>
@@ -324,7 +328,13 @@
             </div>
         </main>
     </div>
-    <script src="script.js" defer></script>
+      <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
+
+      <script src="script.js" defer></script>
 </body>
 
 </html>

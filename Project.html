@@ -10,18 +10,24 @@
   <meta property="og:image" content="assets/projects/PROJECT_SLUG/og-image.jpg" />
   <meta property="og:type" content="website" />
   <title>Project | Stent vs. Trunk</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-q+maOGihQ/HUkNzxaz2YsmiVjCwXTlzAIXazhbugzuDUFcPRl1BDpRP70dNDO7xjoMnIKh4j/wcgUp3NEPoY8g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="project.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                fontFamily: {
+                    display: ['"Space Mono"', 'monospace'],
+                    sans: ['"Inter"', 'sans-serif'],
+                    mono: ['"Space Mono"', 'monospace'],
+                },
                 extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
             }
         };
@@ -31,36 +37,35 @@
 <body class="font-sans text-white gradient-bg min-h-screen">
     <div class="min-h-screen flex flex-col lg:flex-row">
         <header
-            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur-md px-6 py-4 border-b border-white/5 flex items-center justify-between h-[72px]">
             <div>
-                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
-                <p class="font-display text-xl">Yousef Alghzawi</p>
+                <p class="text-[10px] text-uiGray uppercase tracking-[0.2em] font-display">Clinical Biostatistician</p>
+                <p class="font-display text-lg">Yousef Alghzawi</p>
             </div>
             <button id="mobile-menu-button"
-                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
                 aria-controls="mobile-menu" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     aria-hidden="true">
-                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                    <path id="menu-icon-path" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
                 </svg>
             </button>
         </header>
 
-        <div id="mobile-menu" class="lg:hidden hidden px-6 py-4 border-b border-white/5 bg-[#2A282B]" role="dialog"
-            aria-label="Primary navigation">
-            <nav class="flex flex-col gap-4">
-                <a class="nav-link" href="index.html#home">Home</a>
-                <a class="nav-link" href="services.html">Services</a>
-                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
-                <a class="nav-link" href="publications.html">Publications</a>
-                <a class="nav-link" href="about.html">About</a>
-                <a class="nav-link" href="apply.html">Apply</a>
+        <div id="mobile-menu" role="dialog" aria-label="Primary navigation">
+            <nav class="flex flex-col">
+                <a class="mobile-nav-link" href="index.html#home">Home</a>
+                <a class="mobile-nav-link" href="services.html">Services</a>
+                <a class="mobile-nav-link" href="index.html#work">Work</a>
+                <a class="mobile-nav-link" href="publications.html">Publications</a>
+                <a class="mobile-nav-link" href="about.html">About</a>
+                <a class="mobile-nav-link" href="apply.html">Apply</a>
             </nav>
         </div>
 
         <aside
-            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10">
             <div>
                 <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
                 <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
@@ -69,7 +74,7 @@
             <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
                 <a class="nav-link" href="index.html#home">Home</a>
                 <a class="nav-link" href="services.html">Services</a>
-                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="index.html#work">Work</a>
                 <a class="nav-link" href="publications.html">Publications</a>
                 <a class="nav-link" href="about.html">About</a>
                 <a class="nav-link" href="apply.html">Apply</a>
@@ -244,7 +249,21 @@ rob_plot</code></pre>
             </main>
         </div>
     
-        <script src="project.js" defer></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+              <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+    
+                </svg>
+    
+              </button>
+    
+        
+    
+            <script src="project.js" defer></script>
+    
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
     integrity="sha512-+qfHB0N/eg9jMZEvUyM+zP4h6AsVzTdDEr1xgG+Z6kTpsuRWpu9X6lzNN2O0o39YqZ0PXmXqQyV2pAonx0P3jg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
