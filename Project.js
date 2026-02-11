@@ -51,49 +51,78 @@ function showCopiedState(button) {
 function initToc() {
   const tocContainer = document.getElementById('toc');
   const headings = Array.from(document.querySelectorAll('h2[id]'));
-  if (!tocContainer || !headings.length) return;
+  if (!headings.length) return;
 
-  const list = document.createElement('ul');
+  // Desktop ToC
+  if (tocContainer) {
+    const list = document.createElement('ul');
+    headings.forEach((heading) => {
+      const listItem = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `#${heading.id}`;
+      link.textContent = heading.textContent.trim();
+      link.className = 'toc-link';
+      link.addEventListener('click', (e) => handleTocClick(e, heading.id));
+      listItem.appendChild(link);
+      list.appendChild(listItem);
+    });
+    tocContainer.innerHTML = '';
+    tocContainer.appendChild(list);
+  }
 
+  // Mobile ToC setup
+  const mobileMenu = document.createElement('div');
+  mobileMenu.className = 'mobile-toc-menu';
+  mobileMenu.id = 'mobile-toc-menu';
+  
+  const mobileList = document.createElement('nav');
   headings.forEach((heading) => {
-    const listItem = document.createElement('li');
     const link = document.createElement('a');
     link.href = `#${heading.id}`;
     link.textContent = heading.textContent.trim();
-    link.className = 'toc-link';
-
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const target = document.getElementById(heading.id);
-      if (!target) return;
-      const top = target.getBoundingClientRect().top + window.scrollY - 16;
-      window.scrollTo({
-        top,
-        behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
-      });
+    link.className = 'mobile-toc-link';
+    link.addEventListener('click', (e) => {
+      handleTocClick(e, heading.id);
+      mobileMenu.classList.remove('is-open');
     });
-
-    listItem.appendChild(link);
-    list.appendChild(listItem);
+    mobileList.appendChild(link);
   });
+  
+  mobileMenu.appendChild(mobileList);
+  document.body.appendChild(mobileMenu);
 
-  tocContainer.innerHTML = '';
-  tocContainer.appendChild(list);
+  const mobileToggle = document.createElement('button');
+  mobileToggle.className = 'mobile-toc-toggle';
+  mobileToggle.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>';
+  mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('is-open'));
+  document.body.appendChild(mobileToggle);
+
+  function handleTocClick(event, id) {
+    event.preventDefault();
+    const target = document.getElementById(id);
+    if (!target) return;
+    const offset = window.innerWidth >= 1024 ? 40 : 96;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+  }
 
   if (!('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const link = tocContainer.querySelector(`a[href="#${entry.target.id}"]`);
-        if (!link) return;
         if (entry.isIntersecting) {
-          tocContainer.querySelectorAll('.toc-link').forEach((l) => l.classList.remove('active'));
-          link.classList.add('active');
+          const id = entry.target.id;
+          // Sync Desktop
+          if (tocContainer) {
+            tocContainer.querySelectorAll('.toc-link').forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+          }
+          // Sync Mobile
+          mobileMenu.querySelectorAll('.mobile-toc-link').forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
         }
       });
     },
-    { rootMargin: '-40% 0px -40% 0px', threshold: 0.1 }
+    { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
   );
 
   headings.forEach((heading) => observer.observe(heading));

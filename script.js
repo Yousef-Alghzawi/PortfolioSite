@@ -71,7 +71,7 @@ const mobileMenu = document.getElementById('mobile-menu');
 const setMobileMenuState = (open) => {
   if (!mobileMenuButton || !mobileMenu) return;
   mobileMenuButton.setAttribute('aria-expanded', String(open));
-  mobileMenu.classList.toggle('hidden', !open);
+  mobileMenu.classList.toggle('is-open', open);
 };
 
 const closeMobileMenu = () => setMobileMenuState(false);
