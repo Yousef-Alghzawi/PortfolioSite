@@ -1,8 +1,47 @@
-// Force scroll to top on load to prevent browser scroll restoration
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
+// Force scroll to top on load to prevent browser scroll restoration / layout-shift scroll offsets.
+(() => {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  const hasHashTarget = () => {
+    const hash = window.location.hash;
+    if (!hash || hash === '#') return false;
+    const id = decodeURIComponent(hash.slice(1));
+    return Boolean(document.getElementById(id));
+  };
+
+  const scrollToTopInstant = () => {
+    if (hasHashTarget()) return;
+
+    const prevHtmlBehavior = document.documentElement.style.scrollBehavior;
+    const prevBodyBehavior = document.body.style.scrollBehavior;
+
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    document.documentElement.style.scrollBehavior = prevHtmlBehavior;
+    document.body.style.scrollBehavior = prevBodyBehavior;
+  };
+
+  // Run immediately, then again after layout settles (fonts/images) and on bfcache restores.
+  scrollToTopInstant();
+  window.addEventListener('load', () => {
+    scrollToTopInstant();
+    setTimeout(scrollToTopInstant, 50);
+  }, { once: true });
+
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      scrollToTopInstant();
+      setTimeout(scrollToTopInstant, 50);
+    }
+  });
+})();
 
 // Update year for footer
 const yearEl = document.getElementById('year');
