@@ -151,14 +151,21 @@ const toggleMobileMenu = () => {
     const offset = window.innerWidth >= 1024 ? 40 : 96;
     const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
 
-    window.scrollTo({
-      top: targetTop,
-      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
-    });
+    const scrollToTarget = () => {
+      window.scrollTo({
+        top: targetTop,
+        behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+      });
+    };
 
+    // Close the mobile menu first so body scroll lock doesn't block scrolling on mobile browsers.
     if (window.innerWidth < 1024) {
       closeMobileMenu();
+      requestAnimationFrame(scrollToTarget);
+      return;
     }
+
+    scrollToTarget();
   };
 
   anchorLinks.forEach((link) => link.addEventListener('click', handleClick));
@@ -166,15 +173,20 @@ const toggleMobileMenu = () => {
 
 // Active nav state on scroll
 (() => {
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
   if (!navLinks.length || !('IntersectionObserver' in window)) return;
 
-  const sections = Array.from(navLinks)
+  const sectionSet = new Set(
+    Array.from(navLinks)
     .map((link) => {
-      const id = link.getAttribute('href')?.replace('#', '');
-      return id ? document.getElementById(id) : null;
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#') || href === '#') return null;
+      const id = href.slice(1);
+      return document.getElementById(id);
     })
-    .filter(Boolean);
+    .filter(Boolean)
+  );
+  const sections = Array.from(sectionSet);
 
   if (!sections.length) return;
 
@@ -202,6 +214,161 @@ const toggleMobileMenu = () => {
   );
 
   sections.forEach((section) => observer.observe(section));
+})();
+
+// FAQ accordions (smooth <details> open/close)
+(() => {
+  const faq = document.getElementById('faq');
+  if (!faq) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const detailsList = Array.from(faq.querySelectorAll('details'));
+  if (!detailsList.length) return;
+
+  const state = new WeakMap();
+
+  const setPanelA11y = (panel, open) => {
+    if (!panel) return;
+    if (open) {
+      panel.removeAttribute('aria-hidden');
+      if ('inert' in panel) panel.inert = false;
+    } else {
+      panel.setAttribute('aria-hidden', 'true');
+      if ('inert' in panel) panel.inert = true;
+    }
+  };
+
+  const getDirectChild = (parent, predicate) => {
+    for (const child of parent.children) {
+      if (predicate(child)) return child;
+    }
+    return null;
+  };
+
+  const getPanel = (details) =>
+    getDirectChild(details, (el) => el.classList && el.classList.contains('faq-panel'));
+
+  const ensurePanel = (details) => {
+    const summary = getDirectChild(details, (el) => el.tagName === 'SUMMARY');
+    if (!summary) return null;
+
+    let panel = getPanel(details);
+    if (panel) return panel;
+
+    panel = document.createElement('div');
+    panel.className = 'faq-panel';
+
+    while (summary.nextSibling) {
+      panel.appendChild(summary.nextSibling);
+    }
+    details.appendChild(panel);
+    return panel;
+  };
+
+  const cleanupTransition = (details) => {
+    const current = state.get(details);
+    if (!current) return;
+    if (current.onEnd) current.panel.removeEventListener('transitionend', current.onEnd);
+    state.delete(details);
+  };
+
+  const animateOpen = (details, panel) => {
+    cleanupTransition(details);
+    setPanelA11y(panel, true);
+
+    details.open = true;
+    panel.style.height = '0px';
+
+    panel.style.height = 'auto';
+    const targetHeight = panel.getBoundingClientRect().height;
+    panel.style.height = '0px';
+    panel.getBoundingClientRect();
+
+    requestAnimationFrame(() => {
+      panel.style.height = `${targetHeight}px`;
+    });
+
+    const onEnd = (e) => {
+      if (e.target !== panel || e.propertyName !== 'height') return;
+      panel.removeEventListener('transitionend', onEnd);
+      panel.style.height = 'auto';
+      state.delete(details);
+    };
+
+    state.set(details, { panel, onEnd });
+    panel.addEventListener('transitionend', onEnd);
+  };
+
+  const animateClose = (details, panel) => {
+    cleanupTransition(details);
+    setPanelA11y(panel, false);
+
+    const startHeight = panel.getBoundingClientRect().height;
+    panel.style.height = `${startHeight}px`;
+
+    details.open = false;
+
+    panel.getBoundingClientRect();
+    requestAnimationFrame(() => {
+      panel.style.height = '0px';
+    });
+
+    const onEnd = (e) => {
+      if (e.target !== panel || e.propertyName !== 'height') return;
+      panel.removeEventListener('transitionend', onEnd);
+      state.delete(details);
+    };
+
+    state.set(details, { panel, onEnd });
+    panel.addEventListener('transitionend', onEnd);
+  };
+
+  const toggle = (details) => {
+    const panel = ensurePanel(details);
+    if (!panel) return;
+
+    const isOpen = details.hasAttribute('open');
+
+    if (reduceMotion) {
+      cleanupTransition(details);
+      if (isOpen) {
+        details.open = false;
+        panel.style.height = '0px';
+        setPanelA11y(panel, false);
+      } else {
+        details.open = true;
+        panel.style.height = 'auto';
+        setPanelA11y(panel, true);
+      }
+      return;
+    }
+
+    if (isOpen) {
+      animateClose(details, panel);
+    } else {
+      animateOpen(details, panel);
+    }
+  };
+
+  detailsList.forEach((details) => {
+    const summary = getDirectChild(details, (el) => el.tagName === 'SUMMARY');
+    if (!summary) return;
+    const panel = ensurePanel(details);
+    if (!panel) return;
+
+    if (details.open) {
+      panel.style.height = 'auto';
+      setPanelA11y(panel, true);
+    } else {
+      panel.style.height = '0px';
+      setPanelA11y(panel, false);
+    }
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggle(details);
+    });
+  });
 })();
 
 // Reveal-on-scroll animations

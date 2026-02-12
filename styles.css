@@ -216,6 +216,21 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 1.25rem !important;
+  }
+  
+  .primary-btn {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+  }
+  
+  h2.font-display {
+    font-size: 1.75rem; /* Equivalent to text-2xl/3xl mix */
+  }
+}
+
 @media (hover: hover) {
 
   .skill-card:hover,
@@ -404,28 +419,41 @@ a:focus-visible,
 #mobile-menu {
   position: fixed;
   inset: 0;
-  top: 72px;
-  /* Height of header */
+  top: 72px; /* Height of header */
   z-index: 50;
-  background: rgba(42, 40, 43, 0.98);
-  backdrop-blur: 12px;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: none;
-  height: 0;
-  overflow: hidden;
+  background: rgba(20, 18, 21, 0.98);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: calc(100vh - 72px);
+  width: 100%;
   opacity: 0;
   visibility: hidden;
   display: flex;
   flex-direction: column;
   padding: 0;
-  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  transform: translateY(-8px);
+  pointer-events: none;
 }
 
 #mobile-menu.is-open {
-  height: calc(100vh - 72px);
   opacity: 1;
   visibility: visible;
-  padding: 2rem 1.5rem;
+  transform: translateY(0);
+  padding: 2rem;
+  pointer-events: all;
+}
+
+/* Enhanced Hamburger Button */
+#mobile-menu-button {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s;
+}
+
+#mobile-menu-button:active {
+  transform: scale(0.92);
 }
 
 .mobile-nav-link {
@@ -436,42 +464,25 @@ a:focus-visible,
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--ui);
   font-family: "Space Mono", monospace;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-  transform: translateX(20px);
+  transition: transform 0.4s ease, opacity 0.4s ease, color 0.2s;
+  transform: translateY(10px);
   opacity: 0;
 }
 
 #mobile-menu.is-open .mobile-nav-link {
-  transform: translateX(0);
+  transform: translateY(0);
   opacity: 1;
 }
 
 /* Staggered delay for mobile links */
-#mobile-menu.is-open .mobile-nav-link:nth-child(1) {
-  transition-delay: 0.1s;
-}
-
-#mobile-menu.is-open .mobile-nav-link:nth-child(2) {
-  transition-delay: 0.15s;
-}
-
-#mobile-menu.is-open .mobile-nav-link:nth-child(3) {
-  transition-delay: 0.2s;
-}
-
-#mobile-menu.is-open .mobile-nav-link:nth-child(4) {
-  transition-delay: 0.25s;
-}
-
-#mobile-menu.is-open .mobile-nav-link:nth-child(5) {
-  transition-delay: 0.3s;
-}
-
-#mobile-menu.is-open .mobile-nav-link:nth-child(6) {
-  transition-delay: 0.35s;
-}
+#mobile-menu.is-open .mobile-nav-link:nth-child(1) { transition-delay: 0.05s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(2) { transition-delay: 0.1s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(3) { transition-delay: 0.15s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(4) { transition-delay: 0.2s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(5) { transition-delay: 0.25s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(6) { transition-delay: 0.3s; }
 
 .mobile-nav-link:last-child {
   border-bottom: none;
@@ -480,19 +491,55 @@ a:focus-visible,
 .mobile-nav-link.active {
   color: var(--green);
   font-weight: 700;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--green);
 }
 
 .mobile-nav-link::after {
   content: '→';
+  font-family: "Inter", sans-serif;
   opacity: 0;
   transform: translateX(-10px);
   transition: all 0.3s ease;
+  color: var(--green);
 }
 
 .mobile-nav-link:hover::after,
 .mobile-nav-link.active::after {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* FAQ accordion (smooth <details>) */
+#faq details > summary::-webkit-details-marker {
+  display: none;
+}
+
+#faq details > summary {
+  list-style: none;
+}
+
+/* Override UA default `display:none` for closed details content so we can animate it. */
+#faq details:not([open]) > .faq-panel {
+  display: block;
+}
+
+#faq .faq-panel {
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  contain: layout paint;
+  will-change: height;
+  transition:
+    height 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#faq details[open] > .faq-panel {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 @media (max-width: 1023px) {
@@ -507,20 +554,19 @@ a:focus-visible,
   pointer-events: all;
 }
 
-/* Page entrance: body fades + slides in */
+/* Page entrance: body fades in */
 body {
-  animation: pageEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  /* Avoid transforms on body/html: it breaks `position: fixed` (e.g., mobile menu) on mobile. */
+  animation: pageEnter 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(12px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -601,5 +647,10 @@ body {
 
   .page-transition-overlay {
     display: none;
+  }
+
+  #faq .faq-panel {
+    transition: none;
+    transform: none;
   }
 }
