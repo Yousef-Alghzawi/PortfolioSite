@@ -1,3 +1,9 @@
+// Force scroll to top on load to prevent browser scroll restoration
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 // Update year for footer
 const yearEl = document.getElementById('year');
 if (yearEl) {
