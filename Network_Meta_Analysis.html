@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Case study: Bayesian and frequentist network meta-analysis with MCMC simulation and treatment ranking." />
+    <title>Case Study: Bayesian Network Meta-Analysis Yousef Alghzawi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Project.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(122, 91, 146, 0.2);
+            color: #7A5B92;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #8650AB;
+        }
+
+        .pub-badge {
+            display: inline-flex;
+            padding: 0.35rem 0.75rem;
+            background: rgba(122, 91, 146, 0.15);
+            border: 1px solid rgba(122, 91, 146, 0.3);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #D6CBDA;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #D6CBDA;
+            background: rgba(42, 40, 43, 0.5);
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden px-6 bg-[#2A282B] border-b border-white/5" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col">
+                <a class="mobile-nav-link" href="index.html#home">Home</a>
+                <a class="mobile-nav-link" href="services.html">Services</a>
+                <a class="mobile-nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials &bull; Evidence synthesis &bull; Publication-grade reporting
+                </p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+
+                <!-- Header -->
+                <header>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="text-xs uppercase tracking-widest text-brandGreen">Network Meta-Analysis</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">Neurology</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">2024</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Bayesian Network Meta-Analysis:
+                        Comparative Treatment Efficacy</h1>
+                    <span class="pub-badge">Bayesian + Frequentist NMA</span>
+                </header>
+
+                <!-- Case Summary -->
+                <section class="grid gap-6 md:grid-cols-2">
+                    <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                        <p class="section-label">Problem</p>
+                        <p class="text-uiGray text-sm leading-relaxed">Multiple treatment options exist for an acute
+                            neurological condition, but direct head-to-head comparisons are sparse. Indirect evidence
+                            through a treatment network was needed to rank interventions.</p>
+                    </div>
+                    <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                        <p class="section-label">Approach</p>
+                        <p class="text-uiGray text-sm leading-relaxed"><strong class="text-white">Dual-framework
+                                NMA</strong>: Bayesian analysis with MCMC simulation (gemtc) for probabilistic ranking,
+                            and frequentist NMA (netmeta) for robustness. Convergence diagnostics via Gelman-Rubin
+                            statistics.</p>
+                    </div>
+                </section>
+
+                <!-- Methods Tags -->
+                <div class="flex flex-wrap gap-2">
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>gemtc</span>
+                    <span class="method-tag"><span
+                            class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>netmeta</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#7A5B92]"></span>MCMC (4
+                        chains)</span>
+                    <span class="method-tag"><span
+                            class="w-1.5 h-1.5 rounded-full bg-[#7A5B92]"></span>Gelman-Rubin</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#D6CBDA]"></span>Random
+                        Effects</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#D6CBDA]"></span>Risk
+                        Ratio</span>
+                </div>
+
+                <div class="w-full h-px bg-white/10"></div>
+
+                <!-- Analysis Code -->
+                <section>
+                    <h2 class="font-display text-2xl mb-8">Analysis Code</h2>
+
+                    <!-- 1. DATA PREPARATION -->
+                    <div class="code-section">
+                        <div class="code-section-title cleaning">
+                            <span class="icon">1</span>
+                            <h3 class="font-display text-lg text-white">Data Preparation &amp; Pairwise Transformation
+                            </h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# DATA PREPARATION FOR NMA
+# ============================================
+library(readxl)
+library(netmeta)
+library(meta)
+library(dplyr)
+
+# Load extracted study-level data
+data <- read_excel("data/nma_extraction.xlsx")
+names(data) <- gsub("^\\s+|\\s+$", "", names(data))
+
+# Clean treatment arm labels (alphanumeric + underscore only)
+data$arm <- gsub("[^a-zA-Z0-9_]", "_", data$arm)
+data$arm <- gsub("__+", "_", data$arm)
+data$arm <- gsub("_$", "", data$arm)
+
+# --- Filter for primary outcome ---
+df_primary <- data[
+  !is.na(data$outcome_1_event) & !is.na(data$outcome_1_total),
+]
+
+# --- Pairwise transformation for frequentist NMA ---
+pw_primary <- pairwise(
+  treat   = arm,
+  event   = outcome_1_event,
+  n       = outcome_1_total,
+  studlab = study_id,
+  data    = df_primary,
+  sm      = "RR"
+)
+
+# Inspect the contrast-level data
+cat("Number of contrasts:", nrow(pw_primary), "\n")
+cat("Number of studies:", length(unique(pw_primary$studlab)), "\n")
+cat("Treatments in network:",
+    length(unique(c(pw_primary$treat1, pw_primary$treat2))), "\n")</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 2. FREQUENTIST NMA -->
+                    <div class="code-section">
+                        <div class="code-section-title analysis">
+                            <span class="icon">2</span>
+                            <h3 class="font-display text-lg text-white">Frequentist Network Meta-Analysis</h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# FREQUENTIST NMA (netmeta)
+# ============================================
+
+# Fit random-effects network meta-analysis
+net_primary <- netmeta(
+  pw_primary,
+  reference.group = "Control",
+  common          = FALSE,
+  random          = TRUE,
+  title           = "Primary Outcome: Favorable Response"
+)
+
+# --- Network geometry plot ---
+png("figures/network_plot.png", width = 8, height = 8,
+    units = "in", res = 300)
+netgraph(
+  net_primary,
+  seq        = "optimal",
+  col        = "black",
+  plastic    = FALSE,
+  points     = TRUE,
+  pch        = 21,
+  cex.points = 3,
+  col.points = "black",
+  bg.points  = "gray"
+)
+dev.off()
+
+# --- Forest plot: All treatments vs. Control ---
+png("figures/forest_nma.png", width = 12, height = 8,
+    units = "in", res = 300)
+netmeta:::forest.netmeta(
+  net_primary,
+  sortvar  = TE,
+  xlim     = c(0.1, 10),
+  ref      = "Control",
+  leftlabs = "Treatment",
+  xlab     = "Risk Ratio vs. Control"
+)
+dev.off()
+
+# --- League table (all pairwise comparisons) ---
+league <- netleague(net_primary, random = TRUE, digits = 2)
+print(league)
+
+# --- Sensitivity: Pairwise meta-analysis (direct evidence only) ---
+direct_data <- data[
+  !is.na(data$outcome_1_treatment_event) &
+  !is.na(data$outcome_1_control_event),
+]
+
+meta_direct <- metabin(
+  event.e    = outcome_1_treatment_event,
+  n.e        = outcome_1_treatment_total,
+  event.c    = outcome_1_control_event,
+  n.c        = outcome_1_control_total,
+  studlab    = study_id,
+  data       = direct_data,
+  sm         = "RR",
+  method     = "MH",
+  fixed      = TRUE,
+  random     = TRUE,
+  method.tau = "DL"
+)
+
+# Leave-one-out sensitivity analysis
+if (meta_direct$k > 2) {
+  sens <- metainf(meta_direct, pooled = "random")
+
+  png("figures/sensitivity_loo.png", width = 12, height = 10,
+      units = "in", res = 300)
+  meta::forest(sens, main = "Leave-One-Out Sensitivity Analysis")
+  dev.off()
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 3. BAYESIAN NMA -->
+                    <div class="code-section">
+                        <div class="code-section-title plotting">
+                            <span class="icon">3</span>
+                            <h3 class="font-display text-lg text-white">Bayesian NMA with MCMC</h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# BAYESIAN NMA (gemtc + MCMC)
+# ============================================
+library(gemtc)
+
+# --- Prepare arm-level data for gemtc ---
+gemtc_data <- data.frame(
+  study      = df_primary$study_id,
+  treatment  = df_primary$arm,
+  responders = as.integer(df_primary$outcome_1_event),
+  sampleSize = as.integer(df_primary$outcome_1_total)
+)
+
+# --- Create treatment network ---
+network <- mtc.network(data.ab = gemtc_data)
+
+# --- Compile Bayesian model ---
+model <- mtc.model(
+  network,
+  type        = "consistency",
+  likelihood  = "binom",
+  link        = "logit",
+  linearModel = "random",
+  n.chain     = 4
+)
+
+# --- Run MCMC simulation ---
+results <- mtc.run(
+  model,
+  n.adapt = 5000,
+  n.iter  = 20000,
+  thin    = 1
+)
+
+# --- Summary of posterior distributions ---
+summary(results)
+
+# --- Convergence diagnostics ---
+cat("\n--- Gelman-Rubin Diagnostic ---\n")
+gelman <- gelman.diag(results)
+print(gelman)
+
+# All point estimates should be < 1.05
+cat("\nMax Gelman-Rubin R-hat:",
+    max(gelman$psrf[, "Point est."]), "\n")
+
+# --- Forest plot: Bayesian relative effects ---
+png("figures/bayesian_forest.png", width = 10, height = 8,
+    units = "in", res = 300)
+forest(
+  relative.effect(results, t1 = "Control"),
+  main = "Bayesian NMA: Relative Effects vs. Control"
+)
+dev.off()
+
+# --- Trace plots and density plots ---
+png("figures/mcmc_trace.png", width = 14, height = 10,
+    units = "in", res = 300)
+plot(results)
+dev.off()
+
+# --- Gelman-Rubin convergence plot ---
+png("figures/gelman_plot.png", width = 12, height = 8,
+    units = "in", res = 300)
+gelman.plot(results)
+dev.off()
+
+# --- Treatment ranking (SUCRA-like probabilities) ---
+ranking <- rank.probability(results)
+print(ranking)
+
+cat("\nAnalysis complete. All outputs saved to figures/ directory.\n")</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Nav -->
+                <footer class="border-t border-white/10 pt-10">
+                    <nav class="flex items-center justify-between text-sm text-uiGray">
+                        <a href="Survey_Analysis.html" class="hover:text-white transition-colors">&larr; Previous case
+                            study</a>
+                        <a href="index.html#work" class="hover:text-white transition-colors">View all work &rarr;</a>
+                    </nav>
+                </footer>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
+        crossorigin="anonymous"></script>
+    <script>
+        function copyCode(btn) {
+            const pre = btn.nextElementSibling;
+            const code = pre.querySelector('code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

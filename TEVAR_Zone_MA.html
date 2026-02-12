@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Case study: Multi-outcome binary meta-analysis with sensitivity diagnostics and subgroup analysis." />
+    <title>Case Study: Multi-Outcome Binary Meta-Analysis Yousef Alghzawi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Project.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .case-meta {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94A3B8;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #CEDC57;
+            margin-bottom: 0.75rem;
+        }
+
+        .prose-block {
+            color: #D6CBDA;
+            line-height: 1.75;
+        }
+
+        .prose-block strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818CF8;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #C084FC;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .method-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            background: rgba(134, 80, 171, 0.15);
+            color: #C084FC;
+            border: 1px solid rgba(134, 80, 171, 0.25);
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden px-6 bg-[#2A282B] border-b border-white/5" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col">
+                <a class="mobile-nav-link" href="index.html#home">Home</a>
+                <a class="mobile-nav-link" href="services.html">Services</a>
+                <a class="mobile-nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials &bull; Evidence synthesis &bull; Publication-grade reporting</p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+
+                <header>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="case-meta">Meta-Analysis</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="case-meta">Vascular Surgery</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="case-meta">2025</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight">Multi-Outcome Binary Meta-Analysis with
+                        Sensitivity Diagnostics</h1>
+                    <p class="text-uiGray mt-3 text-lg">6 Binary Outcomes &bull; Leave-One-Out &bull; Baujat Influence
+                        &bull; Country Subgroups</p>
+                    <div class="flex flex-wrap gap-2 mt-6">
+                        <span class="method-tag">metabin()</span>
+                        <span class="method-tag">DerSimonian-Laird</span>
+                        <span class="method-tag">Hartung-Knapp</span>
+                        <span class="method-tag">Leave-One-Out</span>
+                        <span class="method-tag">Baujat Plot</span>
+                        <span class="method-tag">Subgroup by Country</span>
+                    </div>
+                </header>
+
+                <section class="mb-16 space-y-8">
+                    <div class="grid gap-8 md:grid-cols-2">
+                        <div>
+                            <p class="section-title">Problem</p>
+                            <p class="prose-block">
+                                Comparing two surgical approaches for a thoracic vascular condition across six binary
+                                outcomes, with studies spanning multiple countries. Some outcomes exhibited substantial
+                                heterogeneity (I&sup2; &gt; 80%), requiring robust sensitivity analyses to assess result
+                                stability.
+                            </p>
+                        </div>
+                        <div>
+                            <p class="section-title">Approach</p>
+                            <p class="prose-block">
+                                Random-effects meta-analysis using <strong>metabin()</strong> with inverse-variance
+                                weighting, DerSimonian-Laird &tau;&sup2; estimation, and Hartung-Knapp confidence
+                                interval adjustment. Continuity correction (0.5) applied to all studies for zero-event
+                                handling.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid gap-8 md:grid-cols-2">
+                        <div>
+                            <p class="section-title">Sensitivity Framework</p>
+                            <ul class="prose-block space-y-2">
+                                <li>&bull; <strong>Fixed vs. Random effects</strong> comparison per outcome</li>
+                                <li>&bull; <strong>Leave-one-out</strong>: refit dropping each study</li>
+                                <li>&bull; <strong>Size-restricted</strong>: minimum per-arm N threshold</li>
+                                <li>&bull; <strong>Baujat plots</strong>: influence vs. heterogeneity contribution</li>
+                                <li>&bull; <strong>Subgroup analysis</strong> by country with interaction testing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="section-title">Outcome</p>
+                            <p class="prose-block">
+                                <strong>Under peer review.</strong> The multi-outcome framework with comprehensive
+                                sensitivity analyses provided robust comparative effectiveness evidence. All six outcomes
+                                reported with I&sup2;, &tau;&sup2;, and pooled OR with 95% CI.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Code Section 1: Data Preparation & Binary Meta-Analysis -->
+                <section class="code-section">
+                    <div class="code-section-title cleaning">
+                        <span class="icon">1</span>
+                        <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Data Preparation &amp;
+                            Binary Meta-Analysis</h3>
+                    </div>
+                    <div class="code-wrap">
+                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── Libraries ─────────────────────────────────────────────
+library(readxl)
+library(dplyr)
+library(meta)
+library(metafor)
+
+# ── Load extracted data ──────────────────────────────────
+dat &lt;- read_excel("data/study_extract.xlsx", sheet = "Main")
+
+# ── Prepare outcome 1 ───────────────────────────────────
+oc1 &lt;- dat %&gt;%
+  filter(!is.na(outcome_1_ctrl), !is.na(outcome_1_intv)) %&gt;%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = round(a_n * as.numeric(outcome_1_ctrl) / 100),
+    b_e = round(b_n * as.numeric(outcome_1_intv) / 100),
+    a_e = pmax(pmin(a_e, a_n), 0),
+    b_e = pmax(pmin(b_e, b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %&gt;%
+  arrange(year)
+
+# ── Random-effects meta-analysis: outcome 1 ──────────────
+meta_oc1 &lt;- metabin(
+  event.e = oc1$a_e, n.e = oc1$a_n,     # Approach A
+  event.c = oc1$b_e, n.c = oc1$b_n,     # Approach B
+  studlab = oc1$label,
+  sm          = "OR",
+  method      = "Inverse",
+  method.tau  = "DL",       # DerSimonian-Laird tau²
+  hakn        = TRUE,       # Hartung-Knapp CI adjustment
+  random      = TRUE,
+  incr        = 0.5,        # continuity correction for zero cells
+  allstudies  = TRUE
+)
+summary(meta_oc1)
+
+# ── Prepare &amp; run outcome 2 ─────────────────────────────
+oc2 &lt;- dat %&gt;%
+  filter(!is.na(outcome_2_ctrl), !is.na(outcome_2_intv)) %&gt;%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_2_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_2_intv) / 100), b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %&gt;%
+  arrange(year)
+
+meta_oc2 &lt;- metabin(
+  event.e = oc2$a_e, n.e = oc2$a_n,
+  event.c = oc2$b_e, n.c = oc2$b_n,
+  studlab    = oc2$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+
+# ── Prepare &amp; run outcome 3 (high heterogeneity) ────────
+oc3 &lt;- dat %&gt;%
+  filter(!is.na(outcome_3_ctrl), !is.na(outcome_3_intv)) %&gt;%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_3_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_3_intv) / 100), b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %&gt;%
+  arrange(year)
+
+meta_oc3 &lt;- metabin(
+  event.e = oc3$a_e, n.e = oc3$a_n,
+  event.c = oc3$b_e, n.c = oc3$b_n,
+  studlab    = oc3$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+# I² &gt; 80% — requires sensitivity analyses (Section 2)
+
+# ── Repeat for outcomes 4–6 (same structure) ────────────
+# [outcomes 4-6 follow identical preparation and metabin() calls]
+
+# ── Forest plots ────────────────────────────────────────
+png("results/forest_outcome_1.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc1,
+       leftcols  = c("studlab", "event.e", "n.e", "event.c", "n.c"),
+       leftlabs  = c("Study (Year)", "A events", "A N", "B events", "B N"),
+       print.tau2 = TRUE,
+       print.I2   = TRUE)
+dev.off()
+
+png("results/forest_outcome_2.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc2, print.tau2 = TRUE, print.I2 = TRUE)
+dev.off()
+
+png("results/forest_outcome_3.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc3, print.tau2 = TRUE, print.I2 = TRUE)
+dev.off()</code></pre>
+                    </div>
+                </section>
+
+                <!-- Code Section 2: Sensitivity Analyses -->
+                <section class="code-section">
+                    <div class="code-section-title analysis">
+                        <span class="icon">2</span>
+                        <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Sensitivity Analyses &amp;
+                            Influence Diagnostics</h3>
+                    </div>
+                    <div class="code-wrap">
+                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── (A) Fixed vs. Random effects — outcome 1 ────────────
+meta_oc1_fixed &lt;- metabin(
+  event.e    = oc1$a_e, n.e = oc1$a_n,
+  event.c    = oc1$b_e, n.c = oc1$b_n,
+  studlab    = oc1$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = FALSE,
+  comb.fixed = TRUE
+)
+
+# Compare pooled estimates
+cat("Outcome 1 — Fixed OR:", exp(meta_oc1_fixed$TE.fixed), "\n")
+cat("Outcome 1 — Random OR:", exp(meta_oc1$TE.random), "\n")
+
+# ── Fixed vs. Random — outcome 3 (high I²) ──────────────
+meta_oc3_fixed &lt;- metabin(
+  event.e    = oc3$a_e, n.e = oc3$a_n,
+  event.c    = oc3$b_e, n.c = oc3$b_n,
+  studlab    = oc3$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = FALSE,
+  comb.fixed = TRUE
+)
+
+cat("Outcome 3 — Fixed OR:", exp(meta_oc3_fixed$TE.fixed), "\n")
+cat("Outcome 3 — Random OR:", exp(meta_oc3$TE.random), "\n")
+
+# ── (B) Leave-One-Out via metainf() — outcome 1 ────────
+loo_oc1 &lt;- metainf(meta_oc1)
+
+png("results/sensitivity/LOO_outcome_1.png", width = 1920, height = 1080, res = 140)
+forest(loo_oc1,
+       common    = FALSE,
+       random    = TRUE,
+       backtransf = TRUE,
+       print.I2  = TRUE,
+       print.tau2 = TRUE)
+dev.off()
+
+# ── Leave-One-Out — outcome 3 (most heterogeneous) ─────
+loo_oc3 &lt;- metainf(meta_oc3)
+
+png("results/sensitivity/LOO_outcome_3.png", width = 1920, height = 1080, res = 140)
+forest(loo_oc3,
+       common    = FALSE,
+       random    = TRUE,
+       backtransf = TRUE,
+       print.I2  = TRUE,
+       print.tau2 = TRUE)
+dev.off()
+
+# ── (C) Baujat influence diagnostics — outcome 3 ───────
+# X-axis: contribution to overall heterogeneity (Q)
+# Y-axis: influence on pooled result
+png("results/sensitivity/baujat_outcome_3.png", width = 1200, height = 900, res = 140)
+baujat(meta_oc3)
+dev.off()
+
+png("results/sensitivity/baujat_outcome_5.png", width = 1200, height = 900, res = 140)
+baujat(meta_oc5)
+dev.off()
+
+# ── (D) Size-restricted sensitivity — outcome 1 ────────
+# Include only studies with per-arm N &gt;= 40
+oc1_large &lt;- oc1 %&gt;% filter(a_n &gt;= 40, b_n &gt;= 40)
+
+meta_oc1_large &lt;- metabin(
+  event.e    = oc1_large$a_e, n.e = oc1_large$a_n,
+  event.c    = oc1_large$b_e, n.c = oc1_large$b_n,
+  studlab    = oc1_large$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+
+cat("Outcome 1 (all studies) OR:", exp(meta_oc1$TE.random),
+    " k =", meta_oc1$k, "\n")
+cat("Outcome 1 (N &gt;= 40) OR:", exp(meta_oc1_large$TE.random),
+    " k =", meta_oc1_large$k, "\n")</code></pre>
+                    </div>
+                </section>
+
+                <!-- Code Section 3: Subgroup Analysis & Summary -->
+                <section class="code-section">
+                    <div class="code-section-title plotting">
+                        <span class="icon">3</span>
+                        <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Country Subgroup Analysis
+                            &amp; Summary Tables</h3>
+                    </div>
+                    <div class="code-wrap">
+                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── Subgroup by country — outcome 1 ──────────────────────
+oc1_sub &lt;- dat %&gt;%
+  filter(!is.na(outcome_1_ctrl), !is.na(outcome_1_intv), !is.na(country)) %&gt;%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_1_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_1_intv) / 100), b_n), 0),
+    label  = paste0(year, " – ", study_id),
+    region = as.factor(country)
+  ) %&gt;%
+  arrange(year)
+
+meta_oc1_country &lt;- metabin(
+  event.e = oc1_sub$a_e, n.e = oc1_sub$a_n,
+  event.c = oc1_sub$b_e, n.c = oc1_sub$b_n,
+  studlab = oc1_sub$label,
+  data    = oc1_sub,
+  sm      = "OR",
+  method  = "Inverse",
+  method.tau       = "DL",
+  method.random.ci = "HK",        # Hartung-Knapp
+  random     = TRUE,
+  fixed      = FALSE,
+  incr       = 0.5,
+  allstudies = TRUE,
+  subgroup   = oc1_sub$region,    # stratification variable
+  print.subgroup.name = TRUE
+)
+
+# ── Subgroup forest plot with interaction test ───────────
+png("results/subgroup/forest_country_outcome_1.png",
+    width = 1600, height = 1100, res = 130)
+forest(meta_oc1_country,
+       comb.fixed      = FALSE,
+       comb.random     = TRUE,
+       overall         = TRUE,
+       overall.hetstat = TRUE,
+       test.subgroup   = TRUE,
+       leftcols  = c("studlab", "event.e", "n.e", "event.c", "n.c"),
+       leftlabs  = c("Study", "A ev", "A N", "B ev", "B N"))
+dev.off()
+
+# ── Extract subgroup-difference p-value ──────────────────
+p_interaction &lt;- meta_oc1_country$pval.Q.subgroup
+cat("Subgroup interaction p-value:", p_interaction, "\n")
+
+# ── Subgroup summary table ──────────────────────────────
+subgroup_summary &lt;- data.frame(
+  Subgroup = levels(oc1_sub$region),
+  k   = as.numeric(table(oc1_sub$region)),
+  OR  = exp(meta_oc1_country$TE.random.w),
+  LCL = exp(meta_oc1_country$lower.random.w),
+  UCL = exp(meta_oc1_country$upper.random.w)
+)
+
+overall_row &lt;- data.frame(
+  Subgroup = "Overall",
+  k   = meta_oc1_country$k,
+  OR  = exp(meta_oc1_country$TE.random),
+  LCL = exp(meta_oc1_country$lower.random),
+  UCL = exp(meta_oc1_country$upper.random)
+)
+
+write.csv(rbind(subgroup_summary, overall_row),
+          "results/subgroup/subgroup_outcome_1.csv", row.names = FALSE)
+
+# ── [Repeat subgroup analysis for outcomes 2–6] ─────────
+
+# ── Master summary across all 6 outcomes ─────────────────
+summary_all &lt;- data.frame(
+  Outcome = c("outcome_1", "outcome_2", "outcome_3",
+              "outcome_4", "outcome_5", "outcome_6"),
+  k  = c(meta_oc1$k, meta_oc2$k, meta_oc3$k,
+         meta_oc4$k, meta_oc5$k, meta_oc6$k),
+  OR = c(exp(meta_oc1$TE.random), exp(meta_oc2$TE.random),
+         exp(meta_oc3$TE.random), exp(meta_oc4$TE.random),
+         exp(meta_oc5$TE.random), exp(meta_oc6$TE.random)),
+  I2_pct = c(meta_oc1$I2, meta_oc2$I2, meta_oc3$I2,
+             meta_oc4$I2, meta_oc5$I2, meta_oc6$I2)
+)
+
+write.csv(summary_all, "results/summary_all_outcomes.csv",
+          row.names = FALSE)</code></pre>
+                    </div>
+                </section>
+
+                <div class="divider my-16"></div>
+
+                <!-- Footer Nav -->
+                <footer class="border-t border-white/10 pt-10">
+                    <nav class="flex items-center justify-between text-sm text-uiGray">
+                        <a href="index.html#work" class="hover:text-white transition-colors">&larr; Back to work</a>
+                        <a href="CNS_Hematology.html" class="hover:text-white transition-colors">Next case study
+                            &rarr;</a>
+                    </nav>
+                </footer>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
+        crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
+    <script src="Project.js" defer></script>
+</body>
+
+</html>

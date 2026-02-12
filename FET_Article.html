@@ -5,11 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Case study: Systematic review and meta-analysis of proportion outcomes." />
-    <title>Case Study: Meta-Analysis of Proportions — Yousef Alghzawi</title>
+    <title>Case Study: Meta-Analysis of Proportions   Yousef Alghzawi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="project.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Project.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -45,6 +48,56 @@
         .prose-block strong {
             color: #fff;
             font-weight: 600;
+        }
+
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818CF8;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #C084FC;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .method-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            background: rgba(134, 80, 171, 0.15);
+            color: #C084FC;
+            border: 1px solid rgba(134, 80, 171, 0.25);
         }
     </style>
 </head>
@@ -85,7 +138,7 @@
             <div>
                 <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
                 <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
-                <p class="text-uiGray mt-3">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+                <p class="text-uiGray mt-3">Clinical trials &bull; Evidence synthesis &bull; Publication-grade reporting</p>
             </div>
             <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
                 <a class="nav-link" href="index.html#home">Home</a>
@@ -102,12 +155,22 @@
                 <header>
                     <div class="flex flex-wrap items-center gap-3 mb-4">
                         <span class="case-meta">Meta-Analysis</span>
-                        <span class="text-uiGray">•</span>
+                        <span class="text-uiGray">&bull;</span>
                         <span class="case-meta">Thoracic Surgery</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="case-meta">2025</span>
                     </div>
                     <h1 class="font-display text-3xl md:text-4xl leading-tight">Meta-Analysis of Proportion Outcomes:
-                        Stent vs.
-                        FET</h1>
+                        Stent vs. FET</h1>
+                    <p class="text-uiGray mt-3 text-lg">Proportion Pooling &bull; Freeman-Tukey PFT &bull; Continuous Outcomes &bull; Publication Bias</p>
+                    <div class="flex flex-wrap gap-2 mt-6">
+                        <span class="method-tag">metaprop()</span>
+                        <span class="method-tag">Freeman-Tukey PFT</span>
+                        <span class="method-tag">metamean()</span>
+                        <span class="method-tag">REML</span>
+                        <span class="method-tag">Trim-and-Fill</span>
+                        <span class="method-tag">Egger Regression</span>
+                    </div>
                 </header>
 
         <section class="mb-16 space-y-8">
@@ -140,11 +203,11 @@
                 <div>
                     <p class="section-title">Output</p>
                     <ul class="prose-block space-y-2">
-                        <li>• Forest plots for pooled proportions</li>
-                        <li>• Funnel plots with asymmetry tests</li>
-                        <li>• Subgroup analyses by technique</li>
-                        <li>• Complete PRISMA documentation</li>
-                        <li>• Reproducible analysis code</li>
+                        <li>&bull; Forest plots for pooled proportions</li>
+                        <li>&bull; Funnel plots with asymmetry tests</li>
+                        <li>&bull; Subgroup analyses by technique</li>
+                        <li>&bull; Complete PRISMA documentation</li>
+                        <li>&bull; Reproducible analysis code</li>
                     </ul>
                 </div>
             </div>
@@ -155,6 +218,207 @@
                     comparative effectiveness data for surgical decision-making. Methodology section required no
                     revision during peer review.
                 </p>
+            </div>
+        </section>
+
+        <!-- Code Section 1: Data Preparation -->
+        <section class="code-section">
+            <div class="code-section-title cleaning">
+                <span class="icon">1</span>
+                <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Data Preparation &amp; Proportion Meta-Analysis</h3>
+            </div>
+            <div class="code-wrap">
+                <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── Libraries ───────────────────────────────────────────────
+library(readxl)
+library(dplyr)
+library(meta)
+library(metafor)
+
+# ── Load extracted data ────────────────────────────────────
+dat &lt;- read_excel("data/study_extract.xlsx", sheet = "Main")
+
+# ── Prepare proportion outcome: Approach A ─────────────────
+prop_a &lt;- dat %&gt;%
+  filter(arm == "A", !is.na(outcome_1_event), !is.na(outcome_1_total)) %&gt;%
+  mutate(
+    events = as.integer(outcome_1_event),
+    total  = as.integer(outcome_1_total),
+    label  = paste0(year, " – ", study_id)
+  ) %&gt;%
+  arrange(year)
+
+# ── Proportion pooling with Freeman-Tukey PFT ──────────────
+meta_prop_a &lt;- metaprop(
+  event = prop_a$events,
+  n     = prop_a$total,
+  studlab = prop_a$label,
+  sm    = "PFT",        # Freeman-Tukey double arcsine
+  method.ci = "CP",     # Clopper-Pearson exact CI
+  method.tau = "DL",    # DerSimonian-Laird τ²
+  random = TRUE,
+  fixed  = FALSE,
+  title  = "Outcome 1 – Approach A"
+)
+summary(meta_prop_a)
+
+# ── Proportion pooling: Approach B ─────────────────────────
+prop_b &lt;- dat %&gt;%
+  filter(arm == "B", !is.na(outcome_1_event), !is.na(outcome_1_total)) %&gt;%
+  mutate(
+    events = as.integer(outcome_1_event),
+    total  = as.integer(outcome_1_total),
+    label  = paste0(year, " – ", study_id)
+  ) %&gt;%
+  arrange(year)
+
+meta_prop_b &lt;- metaprop(
+  event = prop_b$events,
+  n     = prop_b$total,
+  studlab = prop_b$label,
+  sm    = "PFT",
+  method.ci = "CP",
+  method.tau = "DL",
+  random = TRUE,
+  fixed  = FALSE,
+  title  = "Outcome 1 – Approach B"
+)
+
+# ── Continuous outcome: metamean() with MRAW ───────────────
+cont_a &lt;- dat %&gt;%
+  filter(arm == "A", !is.na(mean_val), !is.na(sd_val)) %&gt;%
+  mutate(label = paste0(year, " – ", study_id))
+
+meta_mean_a &lt;- metamean(
+  n    = cont_a$n,
+  mean = cont_a$mean_val,
+  sd   = cont_a$sd_val,
+  studlab = cont_a$label,
+  sm   = "MRAW",
+  method.tau = "REML",
+  random = TRUE,
+  fixed  = FALSE,
+  title  = "Continuous Outcome – Approach A"
+)
+summary(meta_mean_a)</code></pre>
+            </div>
+        </section>
+
+        <!-- Code Section 2: Meta-Analysis -->
+        <section class="code-section">
+            <div class="code-section-title analysis">
+                <span class="icon">2</span>
+                <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Forest Plots &amp; Heterogeneity Assessment</h3>
+            </div>
+            <div class="code-wrap">
+                <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── Forest plot: Proportion outcome ─────────────────────────
+png("results/forest_prop_approach_a.png", width = 1920, height = 1080, res = 140)
+forest(meta_prop_a,
+       leftcols  = c("studlab", "event", "n"),
+       leftlabs  = c("Study (Year)", "Events", "N"),
+       rightcols = c("effect", "ci"),
+       rightlabs = c("Proportion", "95% CI"),
+       print.tau2 = TRUE,
+       print.I2   = TRUE,
+       col.diamond = "#7A5B92")
+dev.off()
+
+png("results/forest_prop_approach_b.png", width = 1920, height = 1080, res = 140)
+forest(meta_prop_b,
+       leftcols  = c("studlab", "event", "n"),
+       leftlabs  = c("Study (Year)", "Events", "N"),
+       print.tau2 = TRUE,
+       print.I2   = TRUE,
+       col.diamond = "#CEDC57")
+dev.off()
+
+# ── Forest plot: Continuous outcome ────────────────────────
+png("results/forest_mean_approach_a.png", width = 1920, height = 1080, res = 140)
+forest(meta_mean_a,
+       leftcols  = c("studlab", "n", "mean", "sd"),
+       leftlabs  = c("Study", "N", "Mean", "SD"),
+       print.tau2 = TRUE,
+       print.I2   = TRUE)
+dev.off()
+
+# ── Heterogeneity summary ─────────────────────────────────
+cat("Approach A – Proportion:\n")
+cat("  I² =", meta_prop_a$I2, "\n")
+cat("  τ² =", meta_prop_a$tau2, "\n")
+cat("  Q  =", meta_prop_a$Q, " p =", meta_prop_a$pval.Q, "\n\n")
+
+cat("Approach B – Proportion:\n")
+cat("  I² =", meta_prop_b$I2, "\n")
+cat("  τ² =", meta_prop_b$tau2, "\n")
+cat("  Q  =", meta_prop_b$Q, " p =", meta_prop_b$pval.Q, "\n\n")
+
+cat("Approach A – Continuous:\n")
+cat("  I² =", meta_mean_a$I2, "\n")
+cat("  τ² =", meta_mean_a$tau2, "\n")
+cat("  Q  =", meta_mean_a$Q, " p =", meta_mean_a$pval.Q, "\n")</code></pre>
+            </div>
+        </section>
+
+        <!-- Code Section 3: Publication Bias -->
+        <section class="code-section">
+            <div class="code-section-title plotting">
+                <span class="icon">3</span>
+                <h3 class="text-white font-semibold text-sm tracking-wide uppercase">Publication Bias &amp; Sensitivity</h3>
+            </div>
+            <div class="code-wrap">
+                <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># ── Funnel plot: Approach A proportion ──────────────────────
+png("results/funnel_prop_a.png", width = 1200, height = 900, res = 140)
+funnel(meta_prop_a,
+       xlab = "Proportion (Freeman-Tukey)",
+       studlab = TRUE,
+       cex.studlab = 0.7)
+dev.off()
+
+# ── Egger regression test for funnel asymmetry ─────────────
+# Convert metaprop to metafor rma object for Egger test
+rma_prop_a &lt;- rma(
+  yi = meta_prop_a$TE,
+  sei = meta_prop_a$seTE,
+  method = "DL"
+)
+
+egger_result &lt;- regtest(rma_prop_a, model = "lm")
+cat("Egger regression test:\n")
+cat("  z =", egger_result$zval, "\n")
+cat("  p =", egger_result$pval, "\n")
+
+# ── Trim-and-fill analysis ────────────────────────────────
+tf_result &lt;- trimfill(rma_prop_a)
+cat("\nTrim-and-fill:\n")
+cat("  Imputed studies:", tf_result$k0, "\n")
+cat("  Adjusted estimate:", tf_result$beta, "\n")
+cat("  Original estimate:", rma_prop_a$beta, "\n")
+
+png("results/funnel_trimfill_a.png", width = 1200, height = 900, res = 140)
+funnel(tf_result,
+       xlab = "Proportion (Freeman-Tukey)",
+       main = "Trim-and-Fill Funnel Plot")
+dev.off()
+
+# ── Funnel plot: Approach B proportion ─────────────────────
+png("results/funnel_prop_b.png", width = 1200, height = 900, res = 140)
+funnel(meta_prop_b,
+       xlab = "Proportion (Freeman-Tukey)",
+       studlab = TRUE,
+       cex.studlab = 0.7)
+dev.off()
+
+rma_prop_b &lt;- rma(
+  yi = meta_prop_b$TE,
+  sei = meta_prop_b$seTE,
+  method = "DL"
+)
+
+egger_b &lt;- regtest(rma_prop_b, model = "lm")
+cat("\nApproach B – Egger test:\n")
+cat("  z =", egger_b$zval, "  p =", egger_b$pval, "\n")
+
+tf_b &lt;- trimfill(rma_prop_b)
+cat("  Trim-and-fill imputed:", tf_b$k0, "\n")</code></pre>
             </div>
         </section>
 
@@ -174,13 +438,16 @@
 
         <footer class="border-t border-white/10 pt-10">
             <nav class="flex items-center justify-between text-sm text-uiGray">
-                <a href="CNS_Hematology.html" class="hover:text-white transition-colors">← Previous case study</a>
-                <a href="index.html#work" class="hover:text-white transition-colors">View all work →</a>
+                <a href="CNS_Hematology.html" class="hover:text-white transition-colors">&larr; Previous case study</a>
+                <a href="Survey_Analysis.html" class="hover:text-white transition-colors">Next case study &rarr;</a>
             </nav>
             </div>
         </main>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
+    <script src="Project.js" defer></script>
 </body>
 
 </html>

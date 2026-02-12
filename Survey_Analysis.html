@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Case study: Complex survey analysis with multi-level exposure classification using NHANES data." />
+    <title>Case Study: Complex Survey Analysis Yousef Alghzawi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Project.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { display: ['"Space Mono"', 'monospace'], sans: ['"Space Mono"', 'monospace'] },
+                extend: { colors: { slatebase: '#524E53', slateDeep: '#2A282B', uiGray: '#D6CBDA', brandOrange: '#7A5B92', brandGreen: '#CEDC57' } }
+            }
+        };
+    </script>
+    <style>
+        .code-section {
+            margin-bottom: 2rem;
+        }
+
+        .code-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-section-title .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .code-section-title.cleaning .icon {
+            background: rgba(122, 91, 146, 0.2);
+            color: #7A5B92;
+        }
+
+        .code-section-title.analysis .icon {
+            background: rgba(206, 220, 87, 0.2);
+            color: #CEDC57;
+        }
+
+        .code-section-title.plotting .icon {
+            background: rgba(134, 80, 171, 0.2);
+            color: #8650AB;
+        }
+
+        .pub-badge {
+            display: inline-flex;
+            padding: 0.35rem 0.75rem;
+            background: rgba(122, 91, 146, 0.15);
+            border: 1px solid rgba(122, 91, 146, 0.3);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #D6CBDA;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #D6CBDA;
+            background: rgba(42, 40, 43, 0.5);
+        }
+    </style>
+</head>
+
+<body class="font-sans text-white gradient-bg min-h-screen">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <header
+            class="lg:hidden sticky top-0 z-40 bg-[#524E53cc] backdrop-blur px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-widest">Clinical Biostatistician</p>
+                <p class="font-display text-xl">Yousef Alghzawi</p>
+            </div>
+            <button id="mobile-menu-button"
+                class="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/10 hover:border-brandGreen transition-all"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="lg:hidden px-6 bg-[#2A282B] border-b border-white/5" role="dialog"
+            aria-label="Primary navigation">
+            <nav class="flex flex-col">
+                <a class="mobile-nav-link" href="index.html#home">Home</a>
+                <a class="mobile-nav-link" href="services.html">Services</a>
+                <a class="mobile-nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </div>
+
+        <aside
+            class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 bg-[#2A282B]/70 backdrop-blur rounded-tr-[24px] rounded-br-[24px] border-r border-white/5 p-8 space-y-8">
+            <div>
+                <p class="text-sm text-uiGray uppercase tracking-[0.3em]">Clinical Biostatistician</p>
+                <h1 class="font-display text-3xl leading-tight mt-2">Yousef Alghzawi</h1>
+                <p class="text-uiGray mt-3">Clinical trials &bull; Evidence synthesis &bull; Publication-grade reporting
+                </p>
+            </div>
+            <nav class="flex flex-col gap-4 text-lg" aria-label="Primary">
+                <a class="nav-link" href="index.html#home">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link active" href="index.html#work" aria-current="page">Work</a>
+                <a class="nav-link" href="publications.html">Publications</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="apply.html">Apply</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
+            <div class="max-w-[1200px] mx-auto space-y-20">
+
+                <!-- Header -->
+                <header>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="text-xs uppercase tracking-widest text-brandGreen">Survey Epidemiology</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">NHANES</span>
+                        <span class="text-uiGray">&bull;</span>
+                        <span class="text-xs uppercase tracking-widest text-uiGray">2024</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight mb-4">Complex Survey Analysis:
+                        Multi-Level Exposure Classification</h1>
+                    <span class="pub-badge">National Survey &middot; 28,000+ Participants</span>
+                </header>
+
+                <!-- Case Summary -->
+                <section class="grid gap-6 md:grid-cols-2">
+                    <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                        <p class="section-label">Problem</p>
+                        <p class="text-uiGray text-sm leading-relaxed">Multiple exposure products are increasingly used
+                            in combination, but comparative health impact data across exclusive and poly-use groups
+                            remains fragmented. A nationally representative analysis was needed.</p>
+                    </div>
+                    <div class="bg-[rgba(15,23,42,0.5)] border border-white/5 rounded-2xl p-6">
+                        <p class="section-label">Approach</p>
+                        <p class="text-uiGray text-sm leading-relaxed"><strong class="text-white">Complex survey
+                                design</strong> using NHANES multi-cycle data with appropriate sampling weights,
+                            stratification, and cluster variables. Survey-weighted logistic and linear regression across
+                            9 mutually exclusive exposure groups.</p>
+                    </div>
+                </section>
+
+                <!-- Methods Tags -->
+                <div class="flex flex-wrap gap-2">
+                    <span class="method-tag"><span
+                            class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>svyglm()</span>
+                    <span class="method-tag"><span
+                            class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>quasibinomial</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#7A5B92]"></span>NHANES
+                        Weights</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#7A5B92]"></span>Stratified
+                        PSU</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#D6CBDA]"></span>Subgroup
+                        Analysis</span>
+                    <span class="method-tag"><span class="w-1.5 h-1.5 rounded-full bg-[#D6CBDA]"></span>Sensitivity
+                        Analysis</span>
+                </div>
+
+                <div class="w-full h-px bg-white/10"></div>
+
+                <!-- Analysis Code -->
+                <section>
+                    <h2 class="font-display text-2xl mb-8">Analysis Code</h2>
+
+                    <!-- 1. SURVEY DESIGN SETUP -->
+                    <div class="code-section">
+                        <div class="code-section-title cleaning">
+                            <span class="icon">1</span>
+                            <h3 class="font-display text-lg text-white">Survey Design &amp; Exposure Classification</h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# SURVEY DESIGN SETUP
+# ============================================
+library(srvyr)
+library(survey)
+library(dplyr)
+library(forcats)
+
+# Load multi-cycle nationally representative survey data
+survey_data <- readr::read_rds("data/survey_analysis_ready.rds")
+
+# --- Construct complex survey design object ---
+make_design <- function(df, weight = "WEIGHT_COMBINED", nest = TRUE) {
+  wt <- rlang::sym(weight)
+  df %>%
+    filter(!is.na(.data[[weight]]),
+           !is.na(PSU_VAR),
+           !is.na(STRATA_VAR)) %>%
+    srvyr::as_survey_design(
+      ids     = PSU_VAR,
+      strata  = STRATA_VAR,
+      weights = !!wt,
+      nest    = nest
+    )
+}
+
+design_srvyr <- make_design(survey_data, weight = "WEIGHT_COMBINED")
+
+# --- Classify participants into 9 mutually exclusive exposure groups ---
+survey_data <- survey_data %>%
+  mutate(
+    current_count = product_a_current + product_b_current +
+                    product_c_current + product_d_current +
+                    product_e_current + product_f_current,
+    exposure_group = case_when(
+      never_exposed == 1                              ~ "never_exposed",
+      former_only   == 1                              ~ "former_only",
+      current_count == 1 & product_a_current == 1     ~ "exclusive_product_a",
+      current_count == 1 & product_b_current == 1     ~ "exclusive_product_b",
+      current_count == 1 & product_c_current == 1     ~ "exclusive_product_c",
+      current_count == 1 & product_d_current == 1     ~ "exclusive_product_d",
+      current_count == 1 & product_e_current == 1     ~ "exclusive_product_e",
+      current_count == 1 & product_f_current == 1     ~ "exclusive_product_f",
+      current_count >= 2                              ~ "poly_product",
+      TRUE                                            ~ NA_character_
+    ),
+    exposure_group = factor(
+      exposure_group,
+      levels = c("never_exposed", "former_only",
+                 "exclusive_product_a", "exclusive_product_b",
+                 "exclusive_product_c", "exclusive_product_d",
+                 "exclusive_product_e", "exclusive_product_f",
+                 "poly_product")
+    )
+  ) %>%
+  filter(!is.na(exposure_group))</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 2. PRIMARY MODELS -->
+                    <div class="code-section">
+                        <div class="code-section-title analysis">
+                            <span class="icon">2</span>
+                            <h3 class="font-display text-lg text-white">Survey-Weighted Models</h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# PRIMARY SURVEY-WEIGHTED MODELS
+# ============================================
+
+# --- Reusable survey logistic regression wrapper ---
+run_svy_logit <- function(design, outcome,
+                          exposure   = "exposure_group",
+                          covariates = character(),
+                          reference  = "never_exposed") {
+  n_obs <- nrow(design$variables)
+
+  design <- design %>%
+    mutate(!!exposure := forcats::fct_relevel(
+      .data[[exposure]], reference
+    ))
+
+  rhs  <- c(exposure, covariates)
+  form <- as.formula(paste(outcome, "~", paste(rhs, collapse = " + ")))
+
+  model <- survey::svyglm(form, design = design,
+                           family = quasibinomial())
+
+  broom::tidy(model, conf.int = TRUE, exponentiate = TRUE) %>%
+    filter(term != "(Intercept)") %>%
+    mutate(
+      exposure_level = stringr::str_remove(term, paste0("^", exposure)),
+      outcome   = outcome,
+      reference = reference,
+      n         = n_obs
+    ) %>%
+    select(outcome, term, exposure_level,
+           estimate, conf.low, conf.high, p.value,
+           reference, n)
+}
+
+# --- Reusable survey linear regression wrapper ---
+run_svy_linear <- function(design, outcome,
+                           exposure   = "exposure_group",
+                           covariates = character(),
+                           reference  = "never_exposed") {
+  n_obs <- nrow(design$variables)
+
+  design <- design %>%
+    mutate(!!exposure := forcats::fct_relevel(
+      .data[[exposure]], reference
+    ))
+
+  rhs  <- c(exposure, covariates)
+  form <- as.formula(paste(outcome, "~", paste(rhs, collapse = " + ")))
+
+  model <- survey::svyglm(form, design = design)
+
+  broom::tidy(model, conf.int = TRUE, exponentiate = FALSE) %>%
+    filter(term != "(Intercept)") %>%
+    mutate(
+      exposure_level = stringr::str_remove(term, paste0("^", exposure)),
+      outcome   = outcome,
+      reference = reference,
+      n         = n_obs
+    ) %>%
+    select(outcome, term, exposure_level,
+           estimate, conf.low, conf.high, p.value,
+           reference, n)
+}
+
+# --- Run primary binary outcome models ---
+binary_outcomes <- c("outcome_1", "outcome_2", "outcome_3",
+                     "outcome_4", "outcome_5", "outcome_6")
+
+core_covars <- c("age", "sex", "race_eth", "educ",
+                 "income_ratio", "alcohol_status", "physical_activity")
+
+purrr::walk(binary_outcomes, function(outcome) {
+  res <- run_svy_logit(
+    design     = design_srvyr,
+    outcome    = outcome,
+    exposure   = "exposure_group",
+    covariates = core_covars,
+    reference  = "never_exposed"
+  )
+  readr::write_csv(res, file.path("output",
+                                  paste0("model_", outcome, ".csv")))
+})
+
+# --- Run primary continuous outcome models ---
+continuous_outcomes <- c("outcome_cont_1", "outcome_cont_2",
+                         "outcome_cont_3")
+
+purrr::walk(continuous_outcomes, function(outcome) {
+  res <- run_svy_linear(
+    design     = design_srvyr,
+    outcome    = outcome,
+    exposure   = "exposure_group",
+    covariates = core_covars,
+    reference  = "never_exposed"
+  )
+  readr::write_csv(res, file.path("output",
+                                  paste0("model_", outcome, ".csv")))
+})</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 3. SENSITIVITY ANALYSIS -->
+                    <div class="code-section">
+                        <div class="code-section-title plotting">
+                            <span class="icon">3</span>
+                            <h3 class="font-display text-lg text-white">Subgroup &amp; Sensitivity Analysis</h3>
+                        </div>
+                        <div class="code-wrap">
+                            <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre class="language-r"><code class="language-r"># ============================================
+# SUBGROUP & SENSITIVITY ANALYSIS
+# ============================================
+
+# --- Subgroup: Stratified by sex ---
+for (s in c("male", "female")) {
+  d_sub <- design_srvyr %>% filter(sex == s)
+
+  purrr::walk(binary_outcomes, function(outcome) {
+    res <- run_svy_logit(d_sub, outcome, covariates = core_covars)
+    readr::write_csv(res, file.path(
+      "output", paste0("sub_sex_", s, "_", outcome, ".csv")
+    ))
+  })
+}
+
+# --- Subgroup: Stratified by age band ---
+for (band in c("18_39", "40_59", "60_plus")) {
+  d_sub <- design_srvyr %>% filter(age_band == band)
+
+  purrr::walk(binary_outcomes, function(outcome) {
+    res <- run_svy_logit(d_sub, outcome, covariates = core_covars)
+    readr::write_csv(res, file.path(
+      "output", paste0("sub_age_", band, "_", outcome, ".csv")
+    ))
+  })
+}
+
+# --- Sensitivity: Alternative exposure definition (5-day threshold) ---
+flag_any <- function(df, vars) {
+  available <- intersect(vars, names(df))
+  if (length(available) == 0) return(rep(0L, nrow(df)))
+  df %>%
+    transmute(flag = rowSums(
+      across(all_of(available),
+             ~ as.integer(coalesce(as.numeric(.x), 0) > 0)),
+      na.rm = TRUE) > 0
+    ) %>%
+    pull(flag) %>%
+    as.integer()
+}
+
+# Reclassify using stricter 5-day window
+survey_5d <- survey_data %>%
+  mutate(
+    product_a_5d = flag_any(., c("ITEM_A01", "ITEM_A02")),
+    product_b_5d = flag_any(., c("ITEM_B01", "ITEM_B02")),
+    product_c_5d = flag_any(., c("ITEM_C01", "ITEM_C02")),
+    product_d_5d = flag_any(., c("ITEM_D01", "ITEM_D02", "ITEM_D03")),
+    product_e_5d = flag_any(., c("ITEM_E01")),
+    product_f_5d = flag_any(., c("ITEM_F01", "ITEM_F02")),
+    count_5d = product_a_5d + product_b_5d + product_c_5d +
+               product_d_5d + product_e_5d + product_f_5d,
+    exposure_group_5d = case_when(
+      never_exposed == 1                          ~ "never_exposed",
+      former_only   == 1                          ~ "former_only",
+      count_5d == 1 & product_a_5d == 1           ~ "exclusive_product_a",
+      count_5d == 1 & product_b_5d == 1           ~ "exclusive_product_b",
+      count_5d == 1 & product_c_5d == 1           ~ "exclusive_product_c",
+      count_5d == 1 & product_d_5d == 1           ~ "exclusive_product_d",
+      count_5d == 1 & product_e_5d == 1           ~ "exclusive_product_e",
+      count_5d == 1 & product_f_5d == 1           ~ "exclusive_product_f",
+      count_5d >= 2                               ~ "poly_product",
+      TRUE                                        ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(exposure_group_5d))
+
+# --- Sensitivity: Exclude pre-existing conditions ---
+survey_excl <- survey_data %>%
+  filter(pre_existing_condition == 0)
+
+design_excl <- make_design(survey_excl)
+
+purrr::walk(binary_outcomes, function(outcome) {
+  res <- run_svy_logit(design_excl, outcome, covariates = core_covars)
+  readr::write_csv(res, file.path(
+    "output", paste0("sens_excl_", outcome, ".csv")
+  ))
+})</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Nav -->
+                <footer class="border-t border-white/10 pt-10">
+                    <nav class="flex items-center justify-between text-sm text-uiGray">
+                        <a href="FET_Article.html" class="hover:text-white transition-colors">&larr; Previous case
+                            study</a>
+                        <a href="Network_Meta_Analysis.html" class="hover:text-white transition-colors">Next case study
+                            &rarr;</a>
+                    </nav>
+                </footer>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"
+        crossorigin="anonymous"></script>
+    <script>
+        function copyCode(btn) {
+            const pre = btn.nextElementSibling;
+            const code = pre.querySelector('code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>
