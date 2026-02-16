@@ -49,6 +49,64 @@ if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
+// --- Theme Switching ---
+(() => {
+  const THEME_KEY = 'portfolio-theme';
+  const THEME_LIGHT = 'light';
+  const THEME_DARK = 'dark';
+
+  // Get initial theme from localStorage or default to dark
+  const getStoredTheme = () => localStorage.getItem(THEME_KEY) || THEME_DARK;
+
+  // Set theme on document
+  const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+
+    // Update icon visibility
+    const sunIcon = document.querySelector('.theme-icon-sun');
+    const moonIcon = document.querySelector('.theme-icon-moon');
+
+    if (sunIcon && moonIcon) {
+      if (theme === THEME_LIGHT) {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      } else {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      }
+    }
+  };
+
+  // Toggle theme
+  const toggleTheme = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
+    setTheme(newTheme);
+  };
+
+  // Initialize theme immediately to prevent flash
+  const initialTheme = getStoredTheme();
+  document.documentElement.setAttribute('data-theme', initialTheme);
+
+  // Set up toggle button after DOM is ready
+  const initThemeToggle = () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', toggleTheme);
+      // Update icon visibility based on initial theme
+      setTheme(initialTheme);
+    }
+  };
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle);
+  } else {
+    initThemeToggle();
+  }
+})();
+
 // --- Seamless Page Transitions ---
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -117,7 +175,7 @@ const setMobileMenuState = (open) => {
   if (!mobileMenuButton || !mobileMenu) return;
   mobileMenuButton.setAttribute('aria-expanded', String(open));
   mobileMenu.classList.toggle('is-open', open);
-  
+
   // Update icon from hamburger to X
   const path = document.getElementById('menu-icon-path');
   if (path) {
@@ -217,13 +275,13 @@ const toggleMobileMenu = () => {
 
   const sectionSet = new Set(
     Array.from(navLinks)
-    .map((link) => {
-      const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#') || href === '#') return null;
-      const id = href.slice(1);
-      return document.getElementById(id);
-    })
-    .filter(Boolean)
+      .map((link) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#') || href === '#') return null;
+        const id = href.slice(1);
+        return document.getElementById(id);
+      })
+      .filter(Boolean)
   );
   const sections = Array.from(sectionSet);
 

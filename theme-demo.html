@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Toggle Demo - Portfolio Site</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .demo-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body class="font-sans gradient-bg min-h-screen">
+    <div class="demo-container">
+        <h1 class="text-white font-display text-4xl mb-4">🌓 Theme Toggle Demo</h1>
+        <p class="text-uiGray text-lg mb-8">
+            Click the button in the bottom-right corner to toggle between light and dark modes.
+            Your preference will be saved automatically!
+        </p>
+
+        <div class="demo-section">
+            <h2 class="text-white font-display text-2xl mb-4">Text Styles</h2>
+            <p class="text-white mb-3">
+                <strong>Primary Text:</strong> This is the main text color that adapts to light/dark mode.
+            </p>
+            <p class="text-uiGray mb-3">
+                <strong class="text-white">Secondary Text:</strong> This is used for less prominent content.
+            </p>
+            <p style="color: var(--green);" class="mb-3">
+                <strong>Accent Color (Green):</strong> Brand accent that adjusts for each theme.
+            </p>
+            <p style="color: var(--orange);">
+                <strong>Accent Color (Orange/Purple):</strong> Primary brand color that adapts.
+            </p>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="text-white font-display text-2xl mb-4">Color Variables</h2>
+            <div class="mb-3">
+                <span class="color-swatch" style="background: var(--bg-primary);"></span>
+                <span class="text-white"><strong>Background Primary:</strong> Main background color</span>
+            </div>
+            <div class="mb-3">
+                <span class="color-swatch" style="background: var(--bg-secondary);"></span>
+                <span class="text-white"><strong>Background Secondary:</strong> Secondary background color</span>
+            </div>
+            <div class="mb-3">
+                <span class="color-swatch" style="background: var(--orange);"></span>
+                <span class="text-white"><strong>Orange/Purple:</strong> Primary brand color</span>
+            </div>
+            <div class="mb-3">
+                <span class="color-swatch" style="background: var(--green);"></span>
+                <span class="text-white"><strong>Green:</strong> Secondary brand color</span>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="text-white font-display text-2xl mb-4">Interactive Elements</h2>
+            <button class="primary-btn mb-4">Primary Button</button>
+            <br>
+            <a href="#" class="secondary-link">Secondary Link →</a>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="text-white font-display text-2xl mb-4">Cards</h2>
+            <div class="glass-card rounded-2xl p-6">
+                <h3 class="text-white font-display text-xl mb-2">Glass Card</h3>
+                <p class="text-uiGray">
+                    This card uses glassmorphism effects and adapts to both themes perfectly.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-uiGray text-sm">
+                ← Look for the theme toggle button in the bottom-right corner
+            </p>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun icon (visible in dark mode) -->
+        <svg class="theme-icon theme-icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+        </svg>
+        <!-- Moon icon (visible in light mode) -->
+        <svg class="theme-icon theme-icon-moon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

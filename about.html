@@ -4,11 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="About Yousef Alghzawi – Clinical Biostatistician specializing in publication-grade analysis for high-impact journal submissions." />
-    <title>About   Yousef Alghzawi | Clinical Biostatistician</title>
+    <meta name="description"
+        content="About Yousef Alghzawi – Clinical Biostatistician specializing in publication-grade analysis for high-impact journal submissions." />
+    <title>About Yousef Alghzawi | Clinical Biostatistician</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,14 +29,14 @@
     <style>
         .expertise-card {
             padding: 1.5rem;
-            background: rgba(42, 40, 43, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 1.5rem;
-            transition: border-color 0.3s, transform 0.3s;
+            transition: border-color 0.3s, transform 0.3s, background-color 0.3s;
         }
 
         .expertise-card:hover {
-            border-color: #7A5B92;
+            border-color: var(--orange);
             transform: translateY(-4px);
         }
 
@@ -45,22 +47,22 @@
             border: 1px solid rgba(206, 220, 87, 0.25);
             border-radius: 999px;
             font-size: 0.8rem;
-            color: #CEDC57;
+            color: var(--green);
         }
 
         .method-tag {
             display: inline-flex;
             padding: 0.35rem 0.75rem;
-            background: rgba(42, 40, 43, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 999px;
             font-size: 0.75rem;
-            color: #D6CBDA;
-            transition: border-color 0.3s;
+            color: var(--text-secondary);
+            transition: border-color 0.3s, background-color 0.3s;
         }
 
         .method-tag:hover {
-            border-color: #CEDC57;
+            border-color: var(--green);
         }
 
         .marquee-track {
@@ -75,8 +77,13 @@
         }
 
         @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
     </style>
 </head>
@@ -114,9 +121,11 @@
         <aside
             class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10">
             <div>
-                <p class="text-[11px] text-uiGray uppercase tracking-[0.4em] font-semibold opacity-80">Clinical Biostatistician</p>
+                <p class="text-[11px] text-uiGray uppercase tracking-[0.4em] font-semibold opacity-80">Clinical
+                    Biostatistician</p>
                 <h1 class="font-display text-3xl leading-tight mt-3">Yousef Alghzawi</h1>
-                <p class="text-uiGray mt-5 leading-relaxed text-[15px]">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+                <p class="text-uiGray mt-5 leading-relaxed text-[15px]">Clinical trials • Evidence synthesis •
+                    Publication-grade reporting</p>
             </div>
             <nav class="flex flex-col gap-5 text-lg" aria-label="Primary">
                 <a class="nav-link" href="index.html#home">Home</a>
@@ -131,315 +140,380 @@
         <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
             <div class="max-w-[1440px] mx-auto space-y-24">
                 <header class="reveal-on-scroll">
-                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2 font-semibold">Clinical Research Profile</p>
+                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2 font-semibold">Clinical Research
+                        Profile</p>
                     <h1 class="font-display text-4xl md:text-6xl leading-tight mb-4">Yousef Alghzawi</h1>
                     <p class="text-uiGray text-xl md:text-2xl font-light">Clinical Biostatistician</p>
                 </header>
 
-        <section class="mb-16 reveal-on-scroll">
-            <div class="grid gap-12 lg:grid-cols-12 items-start">
-                <div class="lg:col-span-8 space-y-6 text-uiGray leading-relaxed text-lg">
-                    <p>I provide statistical analysis and methodological consultation for clinical research teams
-                        preparing manuscripts for peer-reviewed publication. My work focuses on ensuring that studies
-                        withstand rigorous editorial and statistical review.</p>
-                    <p>My approach prioritizes <span class="text-white font-medium">methodological transparency</span>, <span
-                            class="text-white font-medium">reproducible analysis workflows</span>, and strict adherence to
-                        established reporting guidelines. Every analysis is designed not just to answer the research
-                        question, but to survive the peer-review process.</p>
-                    <p>I work primarily with clinician-researchers, academic medical centers, and research teams who
-                        understand that statistical rigor is not optional it is the foundation of publishable, impactful
-                        science.</p>
-                    <p>My publications span <span class="text-white font-medium">interventional cardiology</span> (JACC), <span class="text-white font-medium">hematologic oncology</span> (Blood/ASH), <span class="text-white font-medium">neurology</span>, and <span class="text-white font-medium">cardiovascular surgery</span> giving me cross-specialty fluency that helps me anticipate the statistical expectations of different editorial boards.</p>
-                </div>
-                <div class="lg:col-span-4 relative group max-w-sm mx-auto">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-brandGreen/20 to-brandOrange/20 rounded-[32px] blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    <img src="assets/PersonalPhoto.jpg" alt="Yousef Alghzawi"
-                        class="relative w-full aspect-[4/5] object-cover rounded-[32px] border border-white/10 shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.01]" loading="lazy" />
-                </div>
-            </div>
-        </section>
+                <section class="mb-16 reveal-on-scroll">
+                    <div class="grid gap-12 lg:grid-cols-12 items-start">
+                        <div class="lg:col-span-8 space-y-6 text-uiGray leading-relaxed text-lg">
+                            <p>I provide statistical analysis and methodological consultation for clinical research
+                                teams
+                                preparing manuscripts for peer-reviewed publication. My work focuses on ensuring that
+                                studies
+                                withstand rigorous editorial and statistical review.</p>
+                            <p>My approach prioritizes <span class="text-white font-medium">methodological
+                                    transparency</span>, <span class="text-white font-medium">reproducible analysis
+                                    workflows</span>, and strict adherence to
+                                established reporting guidelines. Every analysis is designed not just to answer the
+                                research
+                                question, but to survive the peer-review process.</p>
+                            <p>I work primarily with clinician-researchers, academic medical centers, and research teams
+                                who
+                                understand that statistical rigor is not optional it is the foundation of publishable,
+                                impactful
+                                science.</p>
+                            <p>My publications span <span class="text-white font-medium">interventional
+                                    cardiology</span> (JACC), <span class="text-white font-medium">hematologic
+                                    oncology</span> (Blood/ASH), <span class="text-white font-medium">neurology</span>,
+                                and <span class="text-white font-medium">cardiovascular surgery</span> giving me
+                                cross-specialty fluency that helps me anticipate the statistical expectations of
+                                different editorial boards.</p>
+                        </div>
+                        <div class="lg:col-span-4 relative group max-w-sm mx-auto">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-brandGreen/20 to-brandOrange/20 rounded-[32px] blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500">
+                            </div>
+                            <img src="assets/PersonalPhoto.jpg" alt="Yousef Alghzawi"
+                                class="relative w-full aspect-[4/5] object-cover rounded-[32px] border border-white/10 shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.01]"
+                                loading="lazy" />
+                        </div>
+                    </div>
+                </section>
 
-        <!-- Institutional Affiliations Marquee -->
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-brandGreen pl-4">Institutional Affiliations</h2>
-            <!-- Marquee Container -->
-            <div class="marquee-shell relative w-full overflow-hidden select-none">
-                <div class="marquee-track py-6">
-                    <!-- Set 1 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
-                    
-                    <!-- Set 2 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
+                <!-- Institutional Affiliations Marquee -->
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-brandGreen pl-4">Institutional Affiliations
+                    </h2>
+                    <!-- Marquee Container -->
+                    <div class="marquee-shell relative w-full overflow-hidden select-none">
+                        <div class="marquee-track py-6">
+                            <!-- Set 1 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
 
-                    <!-- Set 3 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
+                            <!-- Set 2 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
 
-                    <!-- Set 4 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
+                            <!-- Set 3 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
 
-                    <!-- Set 5 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
+                            <!-- Set 4 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
 
-                     <!-- Set 6 -->
-                    <div class="logo-chip flex-shrink-0" title="University of Jordan">
-                        <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
-                        <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
-                        <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
-                    </div>
-                    <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
-                        <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
-                    </div>
-                </div>
-            </div>
-        </section>
+                            <!-- Set 5 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
 
-        <!-- Journal Publication Track Record -->
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Publication Impact</h2>
-            <p class="text-uiGray mb-8 text-base max-w-2xl">Journals where my statistical contributions have been published or accepted.</p>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
-                    <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums" data-target="21.7" data-decimals="1">0</div>
-                    <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor</div>
-                    <div class="text-sm text-uiGray group-hover:text-white transition-colors">JACC</div>
-                </div>
-                <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
-                    <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums" data-target="20.3" data-decimals="1">0</div>
-                    <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor</div>
-                    <div class="text-sm text-uiGray group-hover:text-white transition-colors">Blood (ASH)</div>
-                </div>
-                <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
-                    <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums" data-target="2.1" data-decimals="1">0</div>
-                    <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor</div>
-                    <div class="text-sm text-uiGray group-hover:text-white transition-colors">Clinical Neurology & Neurosurgery</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-brandGreen pl-4">Methodological Focus</h2>
-            <div class="grid gap-6 sm:grid-cols-2">
-                <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
-                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]"></div>
-                    <h4 class="font-display text-xl text-white">Clinical Trial Analysis</h4>
-                    <p class="text-uiGray text-base mt-3 leading-relaxed">Primary and secondary endpoint analysis for RCTs, including
-                        survival analysis and mixed-effects models.</p>
-                </div>
-                <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
-                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]"></div>
-                    <h4 class="font-display text-xl text-white">Evidence Synthesis</h4>
-                    <p class="text-uiGray text-base mt-3 leading-relaxed">Systematic reviews and meta-analyses using random-effects models
-                        and publication bias evaluation.</p>
-                </div>
-                <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
-                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]"></div>
-                    <h4 class="font-display text-xl text-white">Reproducible Analysis</h4>
-                    <p class="text-uiGray text-base mt-3 leading-relaxed">Fully documented workflows in R with complete audit trails and
-                        version control.</p>
-                </div>
-                <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
-                    <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]"></div>
-                    <h4 class="font-display text-xl text-white">Publication-Grade Output</h4>
-                    <p class="text-uiGray text-base mt-3 leading-relaxed">Tables, figures, and methods text designed to address reviewer
-                        concerns before they arise.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Statistical Methods Mastered -->
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Statistical Methods</h2>
-            <p class="text-uiGray mb-8 text-base">Methods I routinely apply in peer-reviewed publications.</p>
-
-            <div class="grid gap-8 md:grid-cols-2">
-                <div>
-                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Survival & Time-to-Event
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="method-tag">Kaplan&ndash;Meier</span>
-                        <span class="method-tag">Cox Proportional Hazards</span>
-                        <span class="method-tag">Stratified Cox Models</span>
-                        <span class="method-tag">Competing Risks (Fine&ndash;Gray)</span>
-                        <span class="method-tag">Joinpoint Regression</span>
-                        <span class="method-tag">Log-Rank Test</span>
+                            <!-- Set 6 -->
+                            <div class="logo-chip flex-shrink-0" title="University of Jordan">
+                                <img src="assets/UJ.png" alt="University of Jordan" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="Jordan University of Science and Technology">
+                                <img src="assets/JUST.png" alt="JUST" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Hussein Cancer Center">
+                                <img src="assets/KHCC.png" alt="KHCC" class="logo-img" loading="lazy" />
+                            </div>
+                            <div class="logo-chip flex-shrink-0" title="King Abdullah University Hospital">
+                                <img src="assets/KAUH.png" alt="KAUH" class="logo-img" loading="lazy" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
-                         <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Meta-Analysis & Evidence Synthesis
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="method-tag">Random-Effects (DerSimonian&ndash;Laird)</span>
-                        <span class="method-tag">Fixed-Effects (Mantel&ndash;Haenszel)</span>
-                        <span class="method-tag">Subgroup Analysis</span>
-                        <span class="method-tag">Sensitivity Analysis</span>
-                        <span class="method-tag">Publication Bias (Egger, Begg)</span>
-                        <span class="method-tag">Rare Events (Peto OR)</span>
-                        <span class="method-tag">Leave-One-Out Analysis</span>
-                        <span class="method-tag">Heterogeneity (I&sup2;, Q)</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
-                         <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Regression & Predictive Modeling
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="method-tag">Logistic Regression</span>
-                        <span class="method-tag">Linear Regression</span>
-                        <span class="method-tag">Mixed-Effects Models</span>
-                        <span class="method-tag">Ordinal Regression</span>
-                        <span class="method-tag">Multivariable Adjustment</span>
-                        <span class="method-tag">Internal Validation (Bootstrap)</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
-                         <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Descriptive & Epidemiological
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="method-tag">Cross-Sectional Analysis</span>
-                        <span class="method-tag">Survey-Weighted Analysis</span>
-                        <span class="method-tag">Prevalence Estimation</span>
-                        <span class="method-tag">Chi-Square / Fisher Exact</span>
-                        <span class="method-tag">T-test / Mann&ndash;Whitney</span>
-                        <span class="method-tag">ANOVA / Kruskal&ndash;Wallis</span>
-                        <span class="method-tag">Correlation Analysis</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-white/50 pl-4">Reporting Standards</h2>
-            <p class="text-uiGray mb-6 text-lg">Every project follows the appropriate reporting guideline.</p>
-            <div class="flex flex-wrap gap-3">
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">CONSORT   Trials</span>
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">STROBE   Observational</span>
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">PRISMA   Reviews</span>
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">TRIPOD   Prediction</span>
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">MOOSE   Meta-Analysis of Observational</span>
-                <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">RECORD   Routinely Collected Data</span>
-            </div>
-        </section>
+                <!-- Journal Publication Track Record -->
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Publication Impact</h2>
+                    <p class="text-uiGray mb-8 text-base max-w-2xl">Journals where my statistical contributions have
+                        been published or accepted.</p>
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
+                            <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums"
+                                data-target="21.7" data-decimals="1">0</div>
+                            <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor
+                            </div>
+                            <div class="text-sm text-uiGray group-hover:text-white transition-colors">JACC</div>
+                        </div>
+                        <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
+                            <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums"
+                                data-target="20.3" data-decimals="1">0</div>
+                            <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor
+                            </div>
+                            <div class="text-sm text-uiGray group-hover:text-white transition-colors">Blood (ASH)</div>
+                        </div>
+                        <div class="expertise-card glass-card text-center group hover:bg-white/5 transition-colors">
+                            <div class="text-4xl font-display text-brandGreen mb-2 font-bold tabular-nums"
+                                data-target="2.1" data-decimals="1">0</div>
+                            <div class="text-sm text-white font-display mb-1 uppercase tracking-wider">Impact Factor
+                            </div>
+                            <div class="text-sm text-uiGray group-hover:text-white transition-colors">Clinical Neurology
+                                & Neurosurgery</div>
+                        </div>
+                    </div>
+                </section>
 
-        <!-- Software & Tools -->
-        <section class="mb-16 reveal-on-scroll">
-            <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Software & Tools</h2>
-            <div class="grid gap-6 sm:grid-cols-3">
-                <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
-                    <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Primary Analysis</h4>
-                    <ul class="text-uiGray text-base space-y-2">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>R / RStudio</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>SPSS</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>PostgreSQL</li>
-                    </ul>
-                </div>
-                <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
-                    <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Key R Packages</h4>
-                    <ul class="text-uiGray text-base space-y-2">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>tidyverse, ggplot2</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>survival, cmprsk</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>meta, metafor</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>lme4, tableone</li>
-                    </ul>
-                </div>
-                <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
-                    <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Reporting & Review</h4>
-                    <ul class="text-uiGray text-base space-y-2">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>R Markdown</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brandGreen rounded-full"></span>PRISMA Flow Generator</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-brandGreen pl-4">Methodological Focus</h2>
+                    <div class="grid gap-6 sm:grid-cols-2">
+                        <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
+                            <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]">
+                            </div>
+                            <h4 class="font-display text-xl text-white">Clinical Trial Analysis</h4>
+                            <p class="text-uiGray text-base mt-3 leading-relaxed">Primary and secondary endpoint
+                                analysis for RCTs, including
+                                survival analysis and mixed-effects models.</p>
+                        </div>
+                        <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
+                            <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]">
+                            </div>
+                            <h4 class="font-display text-xl text-white">Evidence Synthesis</h4>
+                            <p class="text-uiGray text-base mt-3 leading-relaxed">Systematic reviews and meta-analyses
+                                using random-effects models
+                                and publication bias evaluation.</p>
+                        </div>
+                        <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
+                            <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]">
+                            </div>
+                            <h4 class="font-display text-xl text-white">Reproducible Analysis</h4>
+                            <p class="text-uiGray text-base mt-3 leading-relaxed">Fully documented workflows in R with
+                                complete audit trails and
+                                version control.</p>
+                        </div>
+                        <div class="expertise-card glass-card hover:border-brandGreen/50 transition-colors">
+                            <div class="w-3 h-3 rounded-full bg-brandGreen mb-4 shadow-[0_0_10px_rgba(206,220,87,0.5)]">
+                            </div>
+                            <h4 class="font-display text-xl text-white">Publication-Grade Output</h4>
+                            <p class="text-uiGray text-base mt-3 leading-relaxed">Tables, figures, and methods text
+                                designed to address reviewer
+                                concerns before they arise.</p>
+                        </div>
+                    </div>
+                </section>
 
-        <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-12 reveal-on-scroll">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                <div>
-                    <h3 class="font-display text-2xl mb-2">Considering a collaboration?</h3>
-                    <p class="text-uiGray text-base">Limited projects per month. Serious inquiries from clinical researchers welcome.</p>
-                </div>
-                <a href="apply.html" class="primary-btn group">
-                    Apply to Work With Me
-                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </a>
-            </div>
+                <!-- Statistical Methods Mastered -->
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Statistical Methods</h2>
+                    <p class="text-uiGray mb-8 text-base">Methods I routinely apply in peer-reviewed publications.</p>
+
+                    <div class="grid gap-8 md:grid-cols-2">
+                        <div>
+                            <p
+                                class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Survival & Time-to-Event
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="method-tag">Kaplan&ndash;Meier</span>
+                                <span class="method-tag">Cox Proportional Hazards</span>
+                                <span class="method-tag">Stratified Cox Models</span>
+                                <span class="method-tag">Competing Risks (Fine&ndash;Gray)</span>
+                                <span class="method-tag">Joinpoint Regression</span>
+                                <span class="method-tag">Log-Rank Test</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p
+                                class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Meta-Analysis & Evidence
+                                Synthesis
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="method-tag">Random-Effects (DerSimonian&ndash;Laird)</span>
+                                <span class="method-tag">Fixed-Effects (Mantel&ndash;Haenszel)</span>
+                                <span class="method-tag">Subgroup Analysis</span>
+                                <span class="method-tag">Sensitivity Analysis</span>
+                                <span class="method-tag">Publication Bias (Egger, Begg)</span>
+                                <span class="method-tag">Rare Events (Peto OR)</span>
+                                <span class="method-tag">Leave-One-Out Analysis</span>
+                                <span class="method-tag">Heterogeneity (I&sup2;, Q)</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p
+                                class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Regression & Predictive
+                                Modeling
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="method-tag">Logistic Regression</span>
+                                <span class="method-tag">Linear Regression</span>
+                                <span class="method-tag">Mixed-Effects Models</span>
+                                <span class="method-tag">Ordinal Regression</span>
+                                <span class="method-tag">Multivariable Adjustment</span>
+                                <span class="method-tag">Internal Validation (Bootstrap)</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p
+                                class="text-xs text-brandGreen uppercase tracking-wider mb-4 font-semibold flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brandGreen"></span> Descriptive &
+                                Epidemiological
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="method-tag">Cross-Sectional Analysis</span>
+                                <span class="method-tag">Survey-Weighted Analysis</span>
+                                <span class="method-tag">Prevalence Estimation</span>
+                                <span class="method-tag">Chi-Square / Fisher Exact</span>
+                                <span class="method-tag">T-test / Mann&ndash;Whitney</span>
+                                <span class="method-tag">ANOVA / Kruskal&ndash;Wallis</span>
+                                <span class="method-tag">Correlation Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-white/50 pl-4">Reporting Standards</h2>
+                    <p class="text-uiGray mb-6 text-lg">Every project follows the appropriate reporting guideline.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">CONSORT
+                            Trials</span>
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">STROBE
+                            Observational</span>
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">PRISMA
+                            Reviews</span>
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">TRIPOD
+                            Prediction</span>
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">MOOSE
+                            Meta-Analysis of Observational</span>
+                        <span class="standard-badge hover:bg-brandGreen/20 transition-colors cursor-default">RECORD
+                            Routinely Collected Data</span>
+                    </div>
+                </section>
+
+                <!-- Software & Tools -->
+                <section class="mb-16 reveal-on-scroll">
+                    <h2 class="font-display text-2xl mb-8 border-l-4 border-brandOrange pl-4">Software & Tools</h2>
+                    <div class="grid gap-6 sm:grid-cols-3">
+                        <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
+                            <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Primary
+                                Analysis</h4>
+                            <ul class="text-uiGray text-base space-y-2">
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>R / RStudio</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>SPSS</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>PostgreSQL</li>
+                            </ul>
+                        </div>
+                        <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
+                            <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Key R
+                                Packages</h4>
+                            <ul class="text-uiGray text-base space-y-2">
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>tidyverse, ggplot2</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>survival, cmprsk</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>meta, metafor</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>lme4, tableone</li>
+                            </ul>
+                        </div>
+                        <div class="expertise-card glass-card hover:-translate-y-2 transition-transform duration-300">
+                            <h4 class="font-display text-lg text-white mb-4 border-b border-white/10 pb-2">Reporting &
+                                Review</h4>
+                            <ul class="text-uiGray text-base space-y-2">
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>R Markdown</li>
+                                <li class="flex items-center gap-2"><span
+                                        class="w-1 h-1 bg-brandGreen rounded-full"></span>PRISMA Flow Generator</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="rounded-[32px] bg-[#2A282B]/70 border border-white/5 p-8 md:p-12 reveal-on-scroll">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                        <div>
+                            <h3 class="font-display text-2xl mb-2">Considering a collaboration?</h3>
+                            <p class="text-uiGray text-base">Limited projects per month. Serious inquiries from clinical
+                                researchers welcome.</p>
+                        </div>
+                        <a href="apply.html" class="primary-btn group">
+                            Apply to Work With Me
+                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
             </div>
         </main>
     </div>
 
     <footer class="px-6 md:px-10 py-10 border-t border-white/5 mt-10 glass-sidebar rounded-tl-[32px] rounded-tr-[32px]">
-        <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
+        <div
+            class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
             <p>© <span id="year">2024</span> Yousef Alghzawi. All rights reserved.</p>
             <div class="flex items-center gap-4">
                 <a href="mailto:yaalghzawi23@med.just.edu.jo" class="footer-link" aria-label="Email">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+                        aria-hidden="true">
                         <path d="M4 6h16v12H4z" />
                         <path d="M4 6l8 6 8-6" />
                     </svg>
                 </a>
                 <a href="https://www.linkedin.com/in/yousef-alghzawi/" class="footer-link" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+                        aria-hidden="true">
                         <path d="M6.5 9.5v9" />
                         <path d="M6.5 5.5a.5.5 0 11.001 1.001A.5.5 0 016.5 5.5" />
                         <path d="M11 9.5v9" />
@@ -450,15 +524,29 @@
         </div>
     </footer>
 
-      <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
         </svg>
-      </button>
+    </button>
 
-      <script src="script.js" defer></script>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun icon (visible in dark mode) -->
+        <svg class="theme-icon theme-icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+        </svg>
+        <!-- Moon icon (visible in light mode) -->
+        <svg class="theme-icon theme-icon-moon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
+    <script src="script.js" defer></script>
 </body>
 
 </html>
-
-

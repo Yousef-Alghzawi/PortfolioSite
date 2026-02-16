@@ -1,3 +1,4 @@
+/* Dark mode (default) */
 :root {
   --slate: #524E53;
   --slate-deep: #2A282B;
@@ -7,6 +8,78 @@
   --orange-2: #9B65C0;
   --green: #CEDC57;
   --green-2: #E1EB8D;
+
+  /* Semantic theme variables */
+  --bg-primary: #2A282B;
+  --bg-secondary: #524E53;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-glass: rgba(42, 40, 43, 0.6);
+  --bg-glass-hover: rgba(42, 40, 43, 0.8);
+  --bg-sidebar: rgba(42, 40, 43, 0.7);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D6CBDA;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(206, 220, 87, 0.3);
+  --shadow-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Light mode */
+[data-theme="light"] {
+  --slate: #E8E4E9;
+  --slate-deep: #F5F3F6;
+  --ui: #5A5664;
+  --white: #1A1A1A;
+  --orange: #6B3D8A;
+  --orange-2: #7A4D99;
+  --green: #8FA820;
+  --green-2: #A8C234;
+
+  /* Semantic theme variables for light mode */
+  --bg-primary: #F5F3F6;
+  --bg-secondary: #E8E4E9;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-glass: rgba(248, 246, 249, 0.75);
+  --bg-glass-hover: rgba(255, 255, 255, 0.95);
+  --bg-sidebar: rgba(255, 255, 255, 0.85);
+  --text-primary: #1A1A1A;
+  --text-secondary: #5A5664;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(143, 168, 32, 0.35);
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Tailwind utility overrides for theme support */
+.text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-uiGray {
+  color: var(--text-secondary) !important;
+}
+
+/* Fix hardcoded background colors in badges/pills */
+.bg-\[#2A282B\]\/70,
+.bg-\[#2A282B\]\/80 {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Fix dark card backgrounds */
+.bg-slate-900,
+.bg-slate-800 {
+  background-color: var(--bg-card) !important;
+}
+
+/* Ensure proper text contrast in themed backgrounds */
+[data-theme="light"] .bg-\[#2A282B\]\/70 .text-white,
+[data-theme="light"] .bg-\[#2A282B\]\/80 .text-white {
+  color: var(--text-primary) !important;
+}
+
+/* Border utilities */
+.border-white\/5,
+.border-white\/10 {
+  border-color: var(--border-color) !important;
 }
 
 * {
@@ -15,13 +88,14 @@
 
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(180deg, var(--slate) 0%, var(--slate-deep) 100%);
-  color: var(--white);
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
   font-size: 16px;
   line-height: 1.75;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @media (max-width: 640px) {
@@ -36,7 +110,7 @@ body {
 }
 
 .gradient-bg {
-  background: linear-gradient(180deg, var(--slate) 0%, var(--slate-deep) 100%);
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 
 .glow-soft {
@@ -90,18 +164,18 @@ body {
 
 .marquee-shell::before {
   left: 0;
-  background: linear-gradient(90deg, var(--slate-deep) 0%, transparent 100%);
+  background: linear-gradient(90deg, var(--bg-primary) 0%, transparent 100%);
 }
 
 .marquee-shell::after {
   right: 0;
-  background: linear-gradient(270deg, var(--slate-deep) 0%, transparent 100%);
+  background: linear-gradient(270deg, var(--bg-primary) 0%, transparent 100%);
 }
 
 .nav-link {
   position: relative;
   padding: 0.5rem 0;
-  color: var(--ui);
+  color: var(--text-secondary);
   transition: color 0.3s ease, transform 0.3s ease;
   display: inline-block;
   min-height: 44px;
@@ -133,7 +207,7 @@ body {
 
 .nav-link.active,
 .nav-link[aria-current='page'] {
-  color: var(--white);
+  color: var(--text-primary);
 }
 
 .nav-link.active::after,
@@ -150,9 +224,9 @@ body {
   min-width: 48px;
   border-radius: 999px;
   background: var(--orange);
-  color: var(--white);
+  color: #FFFFFF;
   font-weight: 600;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
   box-shadow: 0 15px 30px -20px rgba(134, 80, 171, 0.9);
 }
 
@@ -201,10 +275,10 @@ body {
   position: relative;
   border-radius: 24px;
   padding: 1.75rem;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 25px 45px -35px rgba(0, 0, 0, 0.8);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 25px 45px -35px var(--shadow-color);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   will-change: transform;
 }
 
@@ -220,14 +294,15 @@ body {
   .glass-card {
     padding: 1.25rem !important;
   }
-  
+
   .primary-btn {
     width: 100%;
     padding: 0.875rem 1.5rem;
   }
-  
+
   h2.font-display {
-    font-size: 1.75rem; /* Equivalent to text-2xl/3xl mix */
+    font-size: 1.75rem;
+    /* Equivalent to text-2xl/3xl mix */
   }
 }
 
@@ -255,33 +330,34 @@ body {
     bottom: 0.5rem;
     right: 1rem;
     font-size: 0.65rem;
-    color: var(--ui);
+    color: var(--text-secondary);
     opacity: 0.5;
     pointer-events: none;
   }
 }
 
 .glass-sidebar {
-  background: rgba(42, 40, 43, 0.7);
+  background: var(--bg-sidebar);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 10px 0 30px -15px rgba(0, 0, 0, 0.5);
+  border-right: 1px solid var(--border-color);
+  box-shadow: 10px 0 30px -15px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .glass-card {
-  background: rgba(42, 40, 43, 0.6);
+  background: var(--bg-glass);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(206, 220, 87, 0.3);
-  background: rgba(42, 40, 43, 0.8);
+  border-color: var(--border-hover);
+  background: var(--bg-glass-hover);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 40px -20px var(--shadow-color);
 }
 
 .back-to-top {
@@ -321,6 +397,68 @@ body {
     right: 1.5rem;
     width: 40px;
     height: 40px;
+  }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 5.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px -5px var(--shadow-color);
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-5px);
+  border-color: var(--orange);
+  background: var(--bg-glass-hover);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(180deg);
+}
+
+.theme-icon {
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-icon.hidden {
+  opacity: 0;
+  transform: scale(0.5) rotate(90deg);
+}
+
+@media (max-width: 1023px) {
+  .theme-toggle {
+    bottom: 1.5rem;
+    right: 4rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -379,7 +517,7 @@ body {
 }
 
 .footer-link {
-  color: var(--ui);
+  color: var(--text-secondary);
   display: inline-flex;
   padding: 0.4rem;
   border-radius: 12px;
@@ -419,7 +557,8 @@ a:focus-visible,
 #mobile-menu {
   position: fixed;
   inset: 0;
-  top: 72px; /* Height of header */
+  top: 72px;
+  /* Height of header */
   z-index: 50;
   background: rgba(20, 18, 21, 0.98);
   backdrop-filter: blur(8px);
@@ -461,8 +600,8 @@ a:focus-visible,
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--ui);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
   font-family: "Space Mono", monospace;
   font-size: 1.25rem;
   letter-spacing: 0.05em;
@@ -477,12 +616,29 @@ a:focus-visible,
 }
 
 /* Staggered delay for mobile links */
-#mobile-menu.is-open .mobile-nav-link:nth-child(1) { transition-delay: 0.05s; }
-#mobile-menu.is-open .mobile-nav-link:nth-child(2) { transition-delay: 0.1s; }
-#mobile-menu.is-open .mobile-nav-link:nth-child(3) { transition-delay: 0.15s; }
-#mobile-menu.is-open .mobile-nav-link:nth-child(4) { transition-delay: 0.2s; }
-#mobile-menu.is-open .mobile-nav-link:nth-child(5) { transition-delay: 0.25s; }
-#mobile-menu.is-open .mobile-nav-link:nth-child(6) { transition-delay: 0.3s; }
+#mobile-menu.is-open .mobile-nav-link:nth-child(1) {
+  transition-delay: 0.05s;
+}
+
+#mobile-menu.is-open .mobile-nav-link:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+#mobile-menu.is-open .mobile-nav-link:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+#mobile-menu.is-open .mobile-nav-link:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+#mobile-menu.is-open .mobile-nav-link:nth-child(5) {
+  transition-delay: 0.25s;
+}
+
+#mobile-menu.is-open .mobile-nav-link:nth-child(6) {
+  transition-delay: 0.3s;
+}
 
 .mobile-nav-link:last-child {
   border-bottom: none;
@@ -511,16 +667,16 @@ a:focus-visible,
 }
 
 /* FAQ accordion (smooth <details>) */
-#faq details > summary::-webkit-details-marker {
+#faq details>summary::-webkit-details-marker {
   display: none;
 }
 
-#faq details > summary {
+#faq details>summary {
   list-style: none;
 }
 
 /* Override UA default `display:none` for closed details content so we can animate it. */
-#faq details:not([open]) > .faq-panel {
+#faq details:not([open])>.faq-panel {
   display: block;
 }
 
@@ -537,7 +693,7 @@ a:focus-visible,
     transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#faq details[open] > .faq-panel {
+#faq details[open]>.faq-panel {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }

@@ -4,11 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Apply to work with Yousef Alghzawi – Clinical Biostatistician for high-impact journal submissions." />
+    <meta name="description"
+        content="Apply to work with Yousef Alghzawi – Clinical Biostatistician for high-impact journal submissions." />
     <title>Apply Yousef Alghzawi | Clinical Biostatistician</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,32 +28,33 @@
     </script>
     <style>
         .form-input {
-            background: rgba(42, 40, 43, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 1rem;
             padding: 1rem 1.25rem;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
             width: 100%;
             font-family: inherit;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #b979e6;
-            box-shadow: 0 0 0 3px rgba(185, 121, 230, 0.15);
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(134, 80, 171, 0.15);
         }
 
         .form-input::placeholder {
-            color: #8B8590;
+            color: var(--text-secondary);
+            opacity: 0.6;
         }
 
         .form-label {
             display: block;
             font-size: 0.95rem;
             font-weight: 500;
-            color: #D6CBDA;
+            color: var(--text-secondary);
             margin-bottom: 0.75rem;
         }
 
@@ -73,11 +76,17 @@
             padding-right: 3rem;
         }
 
+        /* Light mode: darker dropdown arrow */
+        [data-theme="light"] select.form-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235A5664'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+        }
+
         .notice-box {
-            background: rgba(42, 40, 43, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 1rem;
             padding: 1.5rem 2rem;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .trust-pill {
@@ -89,7 +98,7 @@
             border: 1px solid rgba(206, 220, 87, 0.2);
             border-radius: 999px;
             font-size: 0.85rem;
-            color: #CEDC57;
+            color: var(--green);
         }
     </style>
 </head>
@@ -127,9 +136,11 @@
         <aside
             class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10">
             <div>
-                <p class="text-[11px] text-uiGray uppercase tracking-[0.4em] font-semibold opacity-80">Clinical Biostatistician</p>
+                <p class="text-[11px] text-uiGray uppercase tracking-[0.4em] font-semibold opacity-80">Clinical
+                    Biostatistician</p>
                 <h1 class="font-display text-3xl leading-tight mt-3">Yousef Alghzawi</h1>
-                <p class="text-uiGray mt-5 leading-relaxed text-[15px]">Clinical trials • Evidence synthesis • Publication-grade reporting</p>
+                <p class="text-uiGray mt-5 leading-relaxed text-[15px]">Clinical trials • Evidence synthesis •
+                    Publication-grade reporting</p>
             </div>
             <nav class="flex flex-col gap-5 text-lg" aria-label="Primary">
                 <a class="nav-link" href="index.html#home">Home</a>
@@ -144,9 +155,12 @@
         <main class="flex-1 lg:ml-[280px] px-6 md:px-10 py-10" id="main-content">
             <div class="max-w-[1440px] mx-auto space-y-20">
                 <header>
-                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2 font-semibold">Engagement Inquiry</p>
+                    <p class="text-sm text-brandGreen uppercase tracking-[0.25em] mb-2 font-semibold">Engagement Inquiry
+                    </p>
                     <h1 class="font-display text-3xl md:text-5xl leading-tight mb-6">Apply to Work With Me</h1>
-                    <p class="text-uiGray text-lg md:text-xl leading-relaxed max-w-3xl">I take on a limited number of projects each month to ensure each receives the methodological depth and attention it deserves.</p>
+                    <p class="text-uiGray text-lg md:text-xl leading-relaxed max-w-3xl">I take on a limited number of
+                        projects each month to ensure each receives the methodological depth and attention it deserves.
+                    </p>
                 </header>
 
                 <div class="flex flex-wrap gap-3">
@@ -156,17 +170,22 @@
                 </div>
 
                 <div class="notice-box glass-card">
-                    <p class="text-uiGray text-base leading-relaxed"><strong class="text-white">Who this is for:</strong> Clinical researchers, academic physicians, and research teams preparing original research or systematic reviews for peer-reviewed journals. I work with studies at any stage from protocol design to post-hoc analysis and reviewer response.</p>
+                    <p class="text-uiGray text-base leading-relaxed"><strong class="text-white">Who this is
+                            for:</strong> Clinical researchers, academic physicians, and research teams preparing
+                        original research or systematic reviews for peer-reviewed journals. I work with studies at any
+                        stage from protocol design to post-hoc analysis and reviewer response.</p>
                 </div>
 
                 <form id="apply-form" action="#" method="POST" class="space-y-6">
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name *</label>
-                        <input type="text" id="name" name="name" class="form-input" placeholder="Dr. Jane Smith" required />
+                        <input type="text" id="name" name="name" class="form-input" placeholder="Dr. Jane Smith"
+                            required />
                     </div>
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address *</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="jane.smith@institution.edu" required />
+                        <input type="email" id="email" name="email" class="form-input"
+                            placeholder="jane.smith@institution.edu" required />
                     </div>
 
                     <div class="form-group">
@@ -183,7 +202,9 @@
 
                     <div class="form-group">
                         <label for="assistance" class="form-label">How can I help? *</label>
-                        <textarea id="assistance" name="assistance" class="form-input" placeholder="Tell me about your research question, institution, timeline, and what you need assistance with..." required></textarea>
+                        <textarea id="assistance" name="assistance" class="form-input"
+                            placeholder="Tell me about your research question, institution, timeline, and what you need assistance with..."
+                            required></textarea>
                     </div>
 
                     <div class="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8">
@@ -198,17 +219,20 @@
     </div>
 
     <footer class="px-6 md:px-10 py-10 border-t border-white/5 mt-10 glass-sidebar rounded-tl-[32px] rounded-tr-[32px]">
-        <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
+        <div
+            class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
             <p>© <span id="year">2024</span> Yousef Alghzawi. All rights reserved.</p>
             <div class="flex items-center gap-4">
                 <a href="mailto:yaalghzawi23@med.just.edu.jo" class="footer-link" aria-label="Email">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+                        aria-hidden="true">
                         <path d="M4 6h16v12H4z" />
                         <path d="M4 6l8 6 8-6" />
                     </svg>
                 </a>
                 <a href="https://www.linkedin.com/in/yousef-alghzawi/" class="footer-link" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+                        aria-hidden="true">
                         <path d="M6.5 9.5v9" />
                         <path d="M6.5 5.5a.5.5 0 11.001 1.001A.5.5 0 016.5 5.5" />
                         <path d="M11 9.5v9" />
@@ -225,24 +249,40 @@
         </svg>
     </button>
 
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun icon (visible in dark mode) -->
+        <svg class="theme-icon theme-icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+        </svg>
+        <!-- Moon icon (visible in light mode) -->
+        <svg class="theme-icon theme-icon-moon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
     <script src="script.js" defer></script>
     <script>
         // Simple form submission simulation
-        document.getElementById('apply-form').addEventListener('submit', function(e) {
+        document.getElementById('apply-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
             const originalText = btn.innerHTML;
-            
+
             // Loading state
             btn.disabled = true;
             btn.innerHTML = '<span class="relative z-10 flex items-center gap-2">Sending... <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>';
-            
+
             // Simulate network request
             setTimeout(() => {
                 btn.innerHTML = '<span class="relative z-10 flex items-center gap-2">Sent Successfully <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>';
                 btn.classList.add('bg-brandGreen', 'border-brandGreen');
                 document.getElementById('apply-form').reset();
-                
+
                 setTimeout(() => {
                     btn.disabled = false;
                     btn.innerHTML = originalText;
@@ -251,4 +291,3 @@
             }, 1500);
         });
     </script>
-
