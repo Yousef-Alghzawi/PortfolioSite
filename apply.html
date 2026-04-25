@@ -176,7 +176,7 @@
                         stage from protocol design to post-hoc analysis and reviewer response.</p>
                 </div>
 
-                <form id="apply-form" action="#" method="POST" class="space-y-6">
+                <form id="apply-form" class="space-y-6">
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name *</label>
                         <input type="text" id="name" name="name" class="form-input" placeholder="Dr. Jane Smith"
@@ -267,27 +267,52 @@
 
     <script src="script.js" defer></script>
     <script>
-        // Simple form submission simulation
-        document.getElementById('apply-form').addEventListener('submit', function (e) {
+        const WEB3FORMS_ACCESS_KEY = '10ae5930-3362-4b37-9e6f-1d2fadab95d8';
+
+        document.getElementById('apply-form').addEventListener('submit', async function (e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerHTML;
+            const originalHTML = btn.innerHTML;
+            const spinnerHTML = '<span class="relative z-10 flex items-center gap-2">Sending... <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>';
+            const successHTML = '<span class="relative z-10 flex items-center gap-2">Sent Successfully <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>';
+            const errorHTML = '<span class="relative z-10">Something went wrong — try again</span>';
 
-            // Loading state
             btn.disabled = true;
-            btn.innerHTML = '<span class="relative z-10 flex items-center gap-2">Sending... <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>';
+            btn.innerHTML = spinnerHTML;
 
-            // Simulate network request
-            setTimeout(() => {
-                btn.innerHTML = '<span class="relative z-10 flex items-center gap-2">Sent Successfully <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>';
-                btn.classList.add('bg-brandGreen', 'border-brandGreen');
-                document.getElementById('apply-form').reset();
+            const formData = new FormData(this);
+            formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+            formData.append('subject', 'New Inquiry: ' + (formData.get('name') || 'Portfolio Site'));
+            formData.append('from_name', 'Portfolio Site');
 
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    btn.innerHTML = successHTML;
+                    btn.classList.add('bg-brandGreen', 'border-brandGreen');
+                    this.reset();
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalHTML;
+                        btn.classList.remove('bg-brandGreen', 'border-brandGreen');
+                    }, 4000);
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            } catch (err) {
+                console.error('Form submission error:', err);
+                btn.innerHTML = errorHTML;
+                btn.classList.add('border-red-400');
                 setTimeout(() => {
                     btn.disabled = false;
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('bg-brandGreen', 'border-brandGreen');
-                }, 3000);
-            }, 1500);
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('border-red-400');
+                }, 4000);
+            }
         });
     </script>
