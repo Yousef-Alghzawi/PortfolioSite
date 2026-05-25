@@ -9,6 +9,7 @@ import { initReveals } from './reveals';
 import { initParallax } from './parallax';
 import { initMarquee } from './marquee';
 import { initScrolly } from './scrolly';
+import { initHGallery } from './hGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,6 +44,7 @@ export function initMotion(): void {
     cleanups.push(initParallax(reduced));
     cleanups.push(initMarquee(reduced));
     cleanups.push(initScrolly(reduced));
+    cleanups.push(initHGallery(reduced));
     if (!reduced) cleanups.push(initCursor());
   });
 

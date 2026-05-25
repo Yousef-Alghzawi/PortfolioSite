@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import raw from '../_migrated/services.html?raw';
+---
+<Layout title="Services – Yousef Alghzawi" description="Statistical services for clinical research: publication analysis, meta-analysis, trial strategy, and methods audits." mainClass="flex-1 lg:ml-[280px] px-4 md:px-10 py-8 md:py-10">
+  <Fragment set:html={raw} />
+</Layout>
