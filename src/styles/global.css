@@ -1076,7 +1076,14 @@ body.has-custom-cursor [data-cursor] { cursor: none; }
   background: var(--bg-secondary);
 }
 .fluid-header canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.fluid-header img.fluid-fallback { width: 100%; height: 100%; object-fit: cover; }
+.fluid-header img.fluid-fallback { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.fluid-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(42, 40, 43, 0.25) 0%, transparent 35%, rgba(42, 40, 43, 0.65) 100%);
+}
 
 /* Editorial link list (publications) */
 .edit-row {
