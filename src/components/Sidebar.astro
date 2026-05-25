@@ -1,0 +1,21 @@
+---
+import { navLinks, site } from '../data/site';
+---
+<aside
+  class="hidden lg:flex flex-col w-[280px] fixed inset-y-0 left-0 glass-sidebar rounded-tr-[32px] rounded-br-[32px] p-8 space-y-10 z-30">
+  <div>
+    <p class="text-[11px] text-uiGray uppercase tracking-[0.4em] font-semibold opacity-80">{site.role}</p>
+    <a href={navLinks[0].href} class="block">
+      <h1 class="font-serif text-3xl leading-tight mt-3">{site.name}</h1>
+    </a>
+    <p class="text-uiGray mt-5 leading-relaxed text-[15px]">{site.tagline}</p>
+  </div>
+
+  <nav class="flex flex-col gap-5 text-lg" aria-label="Primary">
+    {navLinks.map((link) => (
+      <a class="nav-link" href={link.href} data-cursor="">{link.label}</a>
+    ))}
+  </nav>
+
+  <p class="notation text-xs mt-auto">β · σ · HR · 95% CI · p&lt;0.001</p>
+</aside>
