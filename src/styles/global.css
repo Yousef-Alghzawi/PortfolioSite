@@ -58,8 +58,8 @@
 }
 
 /* Fix hardcoded background colors in badges/pills */
-.bg-\[#2A282B\]\/70,
-.bg-\[#2A282B\]\/80 {
+.bg-\[\#2A282B\]\/70,
+.bg-\[\#2A282B\]\/80 {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
 }
@@ -71,8 +71,8 @@
 }
 
 /* Ensure proper text contrast in themed backgrounds */
-[data-theme="light"] .bg-\[#2A282B\]\/70 .text-white,
-[data-theme="light"] .bg-\[#2A282B\]\/80 .text-white {
+[data-theme="light"] .bg-\[\#2A282B\]\/70 .text-white,
+[data-theme="light"] .bg-\[\#2A282B\]\/80 .text-white {
   color: var(--text-primary) !important;
 }
 
@@ -809,4 +809,299 @@ body {
     transition: none;
     transform: none;
   }
+}
+
+/* =====================================================================
+   "DATA AS ART" DESIGN SYSTEM (redesign layer)
+   Editorial serif type, custom cursor, kinetic marquee, living-data hero,
+   horizontal gallery, scrollytelling charts. Palette unchanged.
+   ===================================================================== */
+
+/* ---- Editorial type ---- */
+.font-serif { font-family: "Fraunces", Georgia, serif; }
+
+.display-hero {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 380;
+  font-size: clamp(2.75rem, 7vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-optical-sizing: auto;
+}
+
+.display-section {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.eyebrow {
+  font-family: "Space Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.72rem;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.ink-dim { color: var(--text-secondary); }
+.signal { color: var(--green); }
+.interaction { color: var(--orange); }
+
+/* Oversized animated stat numbers */
+.stat-number {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 360;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--green);
+}
+
+/* Faint plot-grid texture behind sections */
+.plot-grid-bg {
+  position: relative;
+  isolation: isolate;
+}
+.plot-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(214, 203, 218, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(214, 203, 218, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+          mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Decorative statistical notation */
+.notation {
+  font-family: "Space Mono", monospace;
+  color: var(--text-secondary);
+  opacity: 0.55;
+}
+
+/* ---- Custom data-crosshair cursor ---- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(134, 80, 171, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+}
+/* crosshair ticks on the ring */
+.cursor-ring::before,
+.cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: rgba(134, 80, 171, 0.7);
+}
+.cursor-ring::before { left: 50%; top: -5px; width: 1px; height: 10px; transform: translateX(-50%); }
+.cursor-ring::after  { top: 50%; left: -5px; height: 1px; width: 10px; transform: translateY(-50%); }
+
+.cursor-ring.is-active {
+  width: 72px;
+  height: 72px;
+  background: rgba(134, 80, 171, 0.12);
+  border-color: var(--green);
+}
+.cursor-ring .cursor-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.cursor-ring.is-active .cursor-label { opacity: 1; }
+
+/* Hide native cursor only when custom cursor is live (fine pointer + JS + motion ok) */
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor [data-cursor] { cursor: none; }
+
+/* ---- Kinetic marquee ---- */
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+.marquee-item {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  padding: 0 1.5rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.marquee-item::after {
+  content: '•';
+  color: var(--green);
+  font-size: 0.6em;
+}
+
+/* ---- Living-data hero ---- */
+.hero-stage {
+  position: relative;
+  min-height: clamp(560px, 88vh, 920px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+/* Static gradient fallback (shown when WebGL is off / reduced motion) */
+.hero-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 90% at 80% 15%, rgba(134, 80, 171, 0.28), transparent 55%),
+    radial-gradient(90% 80% at 10% 90%, rgba(206, 220, 87, 0.16), transparent 55%),
+    linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+}
+.hero-stage .hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 45%, rgba(20, 18, 21, 0.55) 100%);
+}
+
+/* ---- Split-text reveal (in-repo splitter) ---- */
+.split-line { display: block; overflow: hidden; }
+.split-inner { display: block; will-change: transform; }
+
+/* ---- Horizontal pinned project gallery ---- */
+.h-gallery { position: relative; overflow: hidden; }
+.h-track {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  will-change: transform;
+  padding: 0 clamp(1rem, 6vw, 6rem);
+}
+.h-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(78vw, 560px);
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 30px 60px -40px var(--shadow-color);
+}
+.h-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+.h-card-media img {
+  position: absolute;
+  inset: -10% 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  will-change: transform;
+}
+.h-card-body { padding: 1.5rem 1.75rem 1.75rem; }
+
+@media (max-width: 1023px) {
+  /* No pinning on touch: simple horizontal swipe */
+  .h-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+  }
+  .h-card { scroll-snap-align: center; width: 82vw; }
+}
+
+/* ---- Scrollytelling SVG charts ---- */
+.draw-path {
+  stroke-dasharray: var(--path-len, 1000);
+  stroke-dashoffset: var(--path-len, 1000);
+}
+.draw-path.is-drawn { stroke-dashoffset: 0; }
+.ci-band { opacity: 0; transform-origin: center; }
+.ci-band.is-shown { opacity: 1; }
+.forest-row { opacity: 0; transform: translateX(-12px); }
+.forest-row.is-shown { opacity: 1; transform: none; }
+
+/* Fluid-distortion case-study header */
+.fluid-header {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--bg-secondary);
+}
+.fluid-header canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fluid-header img.fluid-fallback { width: 100%; height: 100%; object-fit: cover; }
+
+/* Editorial link list (publications) */
+.edit-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-color);
+  transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+  .edit-row:hover { padding-left: 0.75rem; }
+}
+
+/* ---- Reduced-motion: neutralize redesign motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring { display: none !important; }
+  body.has-custom-cursor,
+  body.has-custom-cursor * { cursor: auto !important; }
+  .marquee-track { transform: none !important; }
+  .split-inner { transform: none !important; }
+  .draw-path { stroke-dashoffset: 0 !important; }
+  .ci-band { opacity: 1 !important; }
+  .forest-row { opacity: 1 !important; transform: none !important; }
+  .h-card-media img { position: static; inset: auto; height: 100%; }
 }
