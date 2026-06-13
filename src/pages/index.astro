@@ -107,7 +107,7 @@ const homePublications = publications.slice(0, 4);
 
     <!-- SERVICES -->
     <section id="services">
-      <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-8">
         <div>
           <div class="section-head !mb-6">
             <span class="section-index">§ 02</span>
@@ -117,26 +117,23 @@ const homePublications = publications.slice(0, 4);
         </div>
         <a href={withBase('/services')} class="link-underline font-mono text-sm">All services →</a>
       </div>
-      <div class="grid gap-5 md:grid-cols-2">
+      <div>
         {services.map((s) => (
-          <a href={withBase('/services')} class="card p-7 md:p-9 reveal-on-scroll group">
-            <div class="flex items-center justify-between mb-6">
-              <span class="font-mono text-xs text-accent tracking-widest">{s.code}</span>
-              <div class="flex flex-wrap gap-2 justify-end">
-                {s.idealFor.map((t) => (<span class="tag">{t}</span>))}
-              </div>
-            </div>
-            <h3 class="font-serif text-2xl md:text-[1.7rem] leading-tight mb-3 group-hover:text-accent transition-colors">{s.title}</h3>
-            <p class="text-inkSoft leading-relaxed measure">{s.summary}</p>
-            <p class="mono-label mt-6">{s.timeline} typical</p>
+          <a href={withBase('/services')} class="svc-row group reveal-on-scroll">
+            <span class="font-mono text-xs text-accent tracking-widest pt-1">{s.code}</span>
+            <span>
+              <span class="font-serif text-2xl md:text-3xl leading-tight group-hover:text-accent transition-colors block">{s.title}</span>
+              <span class="text-inkSoft leading-relaxed mt-2 block measure">{s.summary}</span>
+            </span>
+            <span class="mono-label whitespace-nowrap pt-1 hidden md:block">{s.timeline}</span>
           </a>
         ))}
       </div>
     </section>
 
-    <!-- WORK -->
-    <section id="work">
-      <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+    <!-- WORK (horizontal gallery) -->
+    <section id="work" class="h-gallery" data-h-gallery>
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
         <div>
           <div class="section-head !mb-6">
             <span class="section-index">§ 03</span>
@@ -144,26 +141,27 @@ const homePublications = publications.slice(0, 4);
           </div>
           <h2 class="display-section" data-split-reveal>The evidence.</h2>
         </div>
+        <p class="mono-label hidden lg:block">Scroll to explore →</p>
       </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        {projects.map((p, i) => (
-          <article class={`card overflow-hidden reveal-on-scroll group ${i === 0 ? 'md:col-span-2' : ''}`}>
-            <a href={withBase(`/work/${p.slug}`)} class={`block h-full ${i === 0 ? 'md:grid md:grid-cols-2 md:items-stretch' : ''}`}>
-              <div class="relative overflow-hidden bg-white border-b border-line aspect-[16/10] md:aspect-[16/9]">
-                <img src={withBase(p.img)} alt={p.title} loading="lazy"
-                  class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700" />
+      <div class="h-viewport max-lg:-mx-[clamp(1.25rem,4vw,3rem)] max-lg:px-[clamp(1.25rem,4vw,3rem)]">
+        <div class="h-track">
+          {projects.map((p) => (
+            <a href={withBase(`/work/${p.slug}`)} class="h-card group">
+              <div class="h-media">
+                <img src={withBase(p.img)} alt={p.title} loading="lazy" />
               </div>
-              <div class="p-7 md:p-9 flex flex-col">
+              <div class="h-body">
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <p class="mono-label text-accent">{p.field}</p>
                   <span class="tag whitespace-nowrap">{p.status}</span>
                 </div>
-                <h3 class="font-serif text-2xl md:text-3xl leading-tight group-hover:text-accent transition-colors">{p.title}</h3>
-                <p class="text-inkSoft leading-relaxed mt-3 measure">{p.blurb}</p>
+                <h3 class="font-serif text-2xl leading-tight group-hover:text-accent transition-colors">{p.title}</h3>
+                <p class="text-inkSoft leading-relaxed mt-3 text-[15px]">{p.blurb}</p>
+                <span class="mono-label mt-auto pt-5 group-hover:text-accent transition-colors">View case study →</span>
               </div>
             </a>
-          </article>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
 

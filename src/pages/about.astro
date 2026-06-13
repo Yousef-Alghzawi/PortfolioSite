@@ -23,13 +23,14 @@ const software = [
   title="About · Yousef Alghzawi"
   description="Background, expertise, and qualifications of Yousef Alghzawi, Clinical Biostatistician."
 >
-  <header class="mb-20 md:mb-24">
+  <header class="mb-16 md:mb-24">
     <p class="eyebrow mb-5">Clinical Research Profile</p>
     <h1 class="display-section max-w-[16ch]">Yousef Alghzawi</h1>
     <p class="lead mt-5 text-inkMuted">Clinical Biostatistician · Amman, Jordan</p>
   </header>
 
-  <section class="grid lg:grid-cols-[1.45fr_0.55fr] gap-12 lg:gap-16 items-start mb-20 md:mb-40">
+  <!-- Bio: asymmetric two-column -->
+  <section class="grid lg:grid-cols-[1.45fr_0.55fr] gap-12 lg:gap-16 items-start mb-20 md:mb-32">
     <div class="space-y-6 lead">
       <p>I provide statistical analysis and methodological consultation for clinical research teams preparing manuscripts for peer-reviewed publication. My work focuses on ensuring studies withstand rigorous editorial and statistical review.</p>
       <p>My approach prioritizes <span class="text-ink font-medium">methodological transparency</span>, <span class="text-ink font-medium">reproducible workflows</span>, and strict adherence to established reporting guidelines. Every analysis is designed not just to answer the research question, but to survive peer review.</p>
@@ -43,20 +44,22 @@ const software = [
     </figure>
   </section>
 
-  <!-- Affiliations -->
-  <section class="mb-20 md:mb-40">
+  <!-- Affiliations: horizontal marquee -->
+  <section class="mb-20 md:mb-32">
     <div class="section-head"><span class="section-index">§ 01</span><span class="section-kicker">Institutional affiliations</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {affiliations.map((a) => (
-        <div class="card !bg-white flex items-center justify-center p-6 h-28" title={a.name}>
-          <img src={withBase(a.img)} alt={a.name} class="max-h-14 max-w-[82%] object-contain" loading="lazy" />
-        </div>
-      ))}
+    <div class="marquee-shell -mx-[clamp(1.25rem,4vw,3rem)]" data-marquee data-marquee-speed="32" aria-label="Affiliations">
+      <div class="marquee-track py-6">
+        {affiliations.map((a) => (
+          <span class="mx-3 inline-flex items-center justify-center bg-white rounded-2xl border border-line px-8 h-24 w-48 shrink-0" title={a.name}>
+            <img src={withBase(a.img)} alt={a.name} class="max-h-12 max-w-[80%] object-contain" loading="lazy" />
+          </span>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- Publication impact -->
-  <section class="mb-20 md:mb-40">
+  <!-- Publication impact: full-width stat row -->
+  <section class="mb-20 md:mb-32">
     <div class="section-head"><span class="section-index">§ 02</span><span class="section-kicker">Publication impact</span></div>
     <h2 class="display-section mb-12 max-w-[20ch]" data-split-reveal>Where my statistics get published.</h2>
     <div class="grid gap-8 sm:grid-cols-3">
@@ -70,22 +73,27 @@ const software = [
     </div>
   </section>
 
-  <!-- Methodological focus -->
-  <section class="mb-20 md:mb-40">
-    <div class="section-head"><span class="section-index">§ 03</span><span class="section-kicker">Methodological focus</span></div>
-    <div class="grid gap-5 sm:grid-cols-2">
-      {focus.map((f) => (
-        <div class="card p-7 md:p-8 reveal-on-scroll">
-          <span class="inline-block w-2.5 h-2.5 rounded-full bg-signal mb-5"></span>
-          <h3 class="font-serif text-2xl mb-3">{f.t}</h3>
-          <p class="text-inkSoft leading-relaxed">{f.d}</p>
+  <!-- Methodological focus: sticky-label + de-carded feature rows -->
+  <section class="ed-section mb-20 md:mb-32">
+    <div class="ed-label mb-8 lg:mb-0">
+      <div class="section-head"><span class="section-index">§ 03</span><span class="section-kicker">Methodological focus</span></div>
+      <h2 class="display-sub max-w-[12ch]">What I bring to every study.</h2>
+    </div>
+    <div>
+      {focus.map((f, i) => (
+        <div class="feature-row reveal-on-scroll">
+          <span class="fr-num">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="font-serif text-2xl mb-2">{f.t}</h3>
+            <p class="text-inkSoft leading-relaxed">{f.d}</p>
+          </div>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Statistical methods -->
-  <section class="mb-20 md:mb-40">
+  <!-- Statistical methods: full-width tag groups -->
+  <section class="mb-20 md:mb-32">
     <div class="section-head"><span class="section-index">§ 04</span><span class="section-kicker">Statistical methods</span></div>
     <h2 class="display-section mb-12 max-w-[18ch]" data-split-reveal>Methods I apply in peer-reviewed work.</h2>
     <div class="grid gap-10 md:grid-cols-2">
@@ -100,8 +108,8 @@ const software = [
     </div>
   </section>
 
-  <!-- Reporting standards -->
-  <section class="mb-20 md:mb-40">
+  <!-- Reporting standards: full-width tags -->
+  <section class="mb-20 md:mb-32">
     <div class="section-head"><span class="section-index">§ 05</span><span class="section-kicker">Reporting standards</span></div>
     <h2 class="display-section mb-10 max-w-[18ch]" data-split-reveal>Every project follows the right guideline.</h2>
     <div class="flex flex-wrap gap-3">
@@ -109,15 +117,18 @@ const software = [
     </div>
   </section>
 
-  <!-- Software -->
-  <section>
-    <div class="section-head"><span class="section-index">§ 06</span><span class="section-kicker">Software &amp; tools</span></div>
-    <div class="grid gap-5 sm:grid-cols-3">
+  <!-- Software: sticky-label + de-carded columns -->
+  <section class="ed-section">
+    <div class="ed-label mb-8 lg:mb-0">
+      <div class="section-head"><span class="section-index">§ 06</span><span class="section-kicker">Software &amp; tools</span></div>
+      <h2 class="display-sub max-w-[12ch]">The stack behind the work.</h2>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-8">
       {software.map((s) => (
-        <div class="card p-7 reveal-on-scroll">
-          <h3 class="font-serif text-xl mb-4 pb-3 border-b border-line">{s.t}</h3>
-          <ul class="space-y-2.5 text-inkSoft">
-            {s.items.map((i) => (<li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-accent"></span>{i}</li>))}
+        <div class="border-t border-ink pt-4 reveal-on-scroll">
+          <h3 class="font-serif text-lg mb-3">{s.t}</h3>
+          <ul class="space-y-2 text-inkSoft text-[15px]">
+            {s.items.map((i) => (<li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-accent shrink-0"></span>{i}</li>))}
           </ul>
         </div>
       ))}

@@ -614,6 +614,61 @@ body { animation: pageEnter 0.4s ease both; }
 @keyframes vtIn { from { opacity: 0; transform: translateY(10px); } }
 
 /* ---------------------------------------------------------------------
+   HORIZONTAL GALLERY (work) — pinned scroll on desktop, swipe on mobile
+   --------------------------------------------------------------------- */
+.h-track { display: flex; gap: 1.25rem; will-change: transform; }
+.h-card {
+  flex: 0 0 86%;
+  display: flex; flex-direction: column;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 20px; overflow: hidden;
+  scroll-snap-align: start;
+  transition: border-color 0.3s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@media (hover: hover) { .h-card:hover { border-color: var(--line-strong); } }
+.h-media { aspect-ratio: 16 / 10; background: #fff; border-bottom: 1px solid var(--line); overflow: hidden; }
+.h-media img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.h-card:hover .h-media img { transform: scale(1.04); }
+.h-body { padding: 1.5rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
+
+.h-viewport {
+  overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.h-viewport::-webkit-scrollbar { display: none; }
+@media (min-width: 1024px) {
+  .h-card { flex: 0 0 440px; }
+  .h-gallery.is-pinned .h-viewport { overflow: hidden; scroll-snap-type: none; }
+}
+
+/* ---------------------------------------------------------------------
+   EDITORIAL — de-carded rows + sticky-label two-column sections
+   --------------------------------------------------------------------- */
+.svc-row {
+  display: grid; grid-template-columns: 3.5rem 1fr auto; gap: 1.5rem; align-items: baseline;
+  padding: 2rem 0; border-top: 1px solid var(--line);
+  transition: padding-left 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:last-child { border-bottom: 1px solid var(--line); }
+@media (hover: hover) { .svc-row:hover { padding-left: 0.85rem; } }
+@media (max-width: 720px) { .svc-row { grid-template-columns: 1fr; gap: 0.6rem; padding: 1.5rem 0; } }
+
+.feature-row {
+  display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.5rem; align-items: start;
+  padding: 1.75rem 0; border-top: 1px solid var(--line);
+}
+.feature-row:last-child { border-bottom: 1px solid var(--line); }
+.feature-row .fr-num { font-family: "Fraunces", Georgia, serif; font-size: 1.7rem; color: var(--ink-muted); line-height: 1; }
+@media (max-width: 540px) { .feature-row { grid-template-columns: 2.25rem 1fr; gap: 1rem; padding: 1.4rem 0; } }
+
+.ed-section { display: block; }
+@media (min-width: 1024px) {
+  .ed-section { display: grid; grid-template-columns: 290px 1fr; gap: 4rem; align-items: start; }
+  .ed-label { position: sticky; top: 7rem; }
+}
+
+/* ---------------------------------------------------------------------
    MOBILE REFINEMENTS — native-app feel (scoped ≤640px; desktop untouched)
    --------------------------------------------------------------------- */
 @media (max-width: 640px) {

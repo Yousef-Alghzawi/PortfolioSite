@@ -12,7 +12,7 @@ const includes = [
   title="Services · Yousef Alghzawi"
   description="Statistical services for clinical research: publication analysis, meta-analysis, trial strategy, and methods audits."
 >
-  <header class="mb-20 md:mb-24 max-w-4xl">
+  <header class="mb-12 md:mb-16 max-w-4xl">
     <p class="eyebrow mb-5">Signature Engagements</p>
     <h1 class="display-section mb-7">Services.</h1>
     <p class="lead">
@@ -22,37 +22,41 @@ const includes = [
     </p>
   </header>
 
-  <div class="space-y-6">
+  <!-- Engagements: de-carded editorial rows -->
+  <div class="border-b border-line">
     {services.map((s) => (
-      <article class="card p-6 md:p-12 reveal-on-scroll">
-        <div class="grid lg:grid-cols-[5rem_1fr] gap-6 lg:gap-12">
-          <div class="font-mono text-sm text-accent tracking-widest pt-2">{s.code}</div>
-          <div>
-            <div class="flex flex-wrap gap-2 mb-5">
-              {s.idealFor.map((t) => (<span class="tag">{t}</span>))}
+      <article class="grid md:grid-cols-[5rem_1fr] gap-5 md:gap-12 py-10 md:py-16 border-t border-line reveal-on-scroll">
+        <div class="font-mono text-sm text-accent tracking-widest md:pt-3">{s.code}</div>
+        <div>
+          <div class="flex flex-wrap gap-2 mb-5">
+            {s.idealFor.map((t) => (<span class="tag">{t}</span>))}
+          </div>
+          <h2 class="font-serif text-3xl md:text-[2.6rem] leading-tight mb-4">{s.title}</h2>
+          <p class="lead measure mb-9">{s.summary}</p>
+          <div class="grid lg:grid-cols-[1fr_auto] gap-8 items-end">
+            <div>
+              <p class="mono-label mb-4">Key deliverables</p>
+              <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-2.5 max-w-2xl">
+                {s.deliverables.map((d) => (
+                  <li class="flex items-start gap-3 text-inkSoft leading-snug">
+                    <span class="mt-2 w-1.5 h-1.5 rounded-full bg-signal shrink-0"></span>{d}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h2 class="font-serif text-3xl md:text-[2.6rem] leading-tight mb-4">{s.title}</h2>
-            <p class="lead measure mb-9">{s.summary}</p>
-            <p class="mono-label mb-4">Key deliverables</p>
-            <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-2.5 mb-9 max-w-2xl">
-              {s.deliverables.map((d) => (
-                <li class="flex items-start gap-3 text-inkSoft leading-snug">
-                  <span class="mt-2 w-1.5 h-1.5 rounded-full bg-signal shrink-0"></span>{d}
-                </li>
-              ))}
-            </ul>
-            <span class="tag"><span class="dot" style="background:var(--accent)"></span>{s.timeline} typical</span>
+            <span class="tag whitespace-nowrap"><span class="dot" style="background:var(--accent)"></span>{s.timeline} typical</span>
           </div>
         </div>
       </article>
     ))}
   </div>
 
-  <section class="mt-20 md:mt-40">
+  <!-- What every engagement includes: de-carded columns -->
+  <section class="mt-20 md:mt-32">
     <div class="section-head"><span class="section-index">§ +</span><span class="section-kicker">What every engagement includes</span></div>
-    <div class="grid gap-5 sm:grid-cols-3">
+    <div class="grid gap-8 sm:grid-cols-3">
       {includes.map((x) => (
-        <div class="card p-8 text-center reveal-on-scroll">
+        <div class="border-t border-ink pt-5 reveal-on-scroll">
           <div class="font-serif text-3xl text-accent mb-3">{x.t}</div>
           <p class="text-inkSoft leading-relaxed">{x.d}</p>
         </div>

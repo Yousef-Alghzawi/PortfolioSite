@@ -21,9 +21,9 @@ const summary = [
     </p>
   </header>
 
-  <div class="grid gap-4 sm:grid-cols-3 mb-16 md:mb-20">
+  <div class="grid gap-8 sm:grid-cols-3 mb-16 md:mb-20">
     {summary.map((x) => (
-      <div class="card p-7 text-center">
+      <div class="border-t border-ink pt-5">
         <div class="stat-number !text-5xl">{x.v}</div>
         <p class="mono-label mt-3">{x.d}</p>
       </div>
