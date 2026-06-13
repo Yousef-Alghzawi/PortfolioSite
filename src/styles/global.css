@@ -16,18 +16,31 @@
   --line:         #D9D2C1; /* hairline rules / borders */
   --line-strong:  #C5BCA6;
 
-  /* Signal accents: warm orange + complementary blue */
-  --accent:    #BC511A;    /* burnt orange: primary spark */
-  --accent-2:  #D9692E;    /* brighter orange: hovers */
-  --blue:      #1B5A78;    /* deep blue: complementary accent */
-  --blue-2:    #2B7DA3;    /* brighter blue */
-  --signal:    #1B5A78;    /* blue status dots */
-  --grad:      linear-gradient(110deg, #BC511A 0%, #1B5A78 100%);
+  /* Monochrome emphasis (ink shades only) */
+  --accent:    #1A1813;
+  --accent-2:  #46423A;
+  --signal:    #6E6A5E;
 
-  --shadow: 24px 32px 60px -36px rgba(26, 24, 19, 0.35);
+  --grid-line: rgba(26, 24, 19, 0.05);
+  --shadow: 24px 32px 60px -36px rgba(26, 24, 19, 0.32);
+}
 
-  /* Symbol-field tuning (read by JS) */
-  --field-ink: 26, 24, 19;
+/* ===================== DARK THEME (monochrome) ===================== */
+[data-theme="dark"] {
+  --paper:        #15130E;
+  --paper-raised: #201D17;
+  --paper-sunken: #0F0D09;
+  --ink:          #ECE6D8;
+  --ink-soft:     #B7B1A3;
+  --ink-muted:    #8A8475;
+  --ink-faint:    #5A554A;
+  --line:         #322E26;
+  --line-strong:  #47423A;
+  --accent:       #ECE6D8;
+  --accent-2:     #B7B1A3;
+  --signal:       #8A8475;
+  --grid-line:    rgba(236, 230, 216, 0.05);
+  --shadow: 24px 32px 60px -36px rgba(0, 0, 0, 0.6);
 }
 
 * { box-sizing: border-box; }
@@ -161,10 +174,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
   white-space: nowrap;
 }
 .section-kicker {
@@ -195,8 +205,9 @@ a { color: inherit; text-decoration: none; }
   will-change: transform;
 }
 .btn-primary:hover, .btn-primary:focus-visible {
-  background: var(--grad);
-  border-color: transparent;
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
   transform: translate3d(0,-2px,0);
 }
 .btn-primary svg { transition: transform 0.3s ease; }
@@ -420,8 +431,8 @@ a { color: inherit; text-decoration: none; }
 .field-fallback {
   position: absolute; inset: 0; z-index: -3;
   background-image:
-    linear-gradient(to right, rgba(26,24,19,0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(26,24,19,0.04) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -436,8 +447,8 @@ a { color: inherit; text-decoration: none; }
   content: '';
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(26,24,19,0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(26,24,19,0.045) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 44px 44px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 25%, transparent 78%);
           mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 25%, transparent 78%);
@@ -516,7 +527,67 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
 }
 .back-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
-.back-to-top:hover { background: var(--accent); }
+.back-to-top:hover { background: var(--accent); color: var(--paper); }
+
+/* ---------------------------------------------------------------------
+   THEME TOGGLE
+   --------------------------------------------------------------------- */
+.theme-toggle {
+  position: fixed; bottom: 1.75rem; left: 1.75rem;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--paper-raised); color: var(--ink);
+  border: 1px solid var(--line-strong);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 90;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+.theme-toggle:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+/* ---------------------------------------------------------------------
+   SCROLL PATH — top progress bar + section rail
+   --------------------------------------------------------------------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 70;
+  background: var(--line); pointer-events: none;
+}
+.scroll-progress-fill {
+  height: 100%; width: 100%; background: var(--ink);
+  transform: scaleX(0); transform-origin: 0 50%; will-change: transform;
+}
+
+.scroll-rail { display: none; }
+@media (min-width: 1200px) {
+  .scroll-rail {
+    position: fixed; top: 50%; right: 22px; transform: translateY(-50%);
+    z-index: 40; display: flex; flex-direction: column; justify-content: space-between;
+    height: min(46vh, 420px);
+  }
+  .rail-track, .rail-fill { position: absolute; right: 4px; top: 4px; bottom: 4px; width: 1px; }
+  .rail-track { background: var(--line); }
+  .rail-fill {
+    background: var(--ink); transform-origin: 50% 0; transform: scaleY(0);
+    will-change: transform; transition: transform 0.1s linear;
+  }
+  .rail-dot {
+    position: relative; width: 10px; height: 10px; margin-left: auto;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rail-dot::after {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    border: 1px solid var(--ink-muted); background: var(--paper);
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .rail-dot:hover::after { border-color: var(--ink); }
+  .rail-dot.active::after { background: var(--ink); border-color: var(--ink); transform: scale(1.4); }
+  .rail-label {
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%) translateX(6px);
+    font-family: "Space Mono", monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--ink-muted); white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .rail-dot:hover .rail-label, .rail-dot.active .rail-label { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .rail-dot.active .rail-label { color: var(--ink); }
+}
 
 /* ---------------------------------------------------------------------
    FOCUS / A11Y

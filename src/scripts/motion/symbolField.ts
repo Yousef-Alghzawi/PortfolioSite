@@ -26,9 +26,18 @@ interface Cell {
   flash: number;  // transient brightness from a "recompute" flicker
 }
 
-const INK = [26, 24, 19];      // --ink
-const ACCENT = [188, 81, 26];  // --accent (orange)
-const BLUE = [27, 90, 120];    // --blue (gradient partner)
+// Read the current --ink colour so the field adapts to light/dark themes.
+function readInk(): [number, number, number] {
+  try {
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+    const m = v.match(/^#?([0-9a-fA-F]{6})$/);
+    if (m) {
+      const n = parseInt(m[1], 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+  } catch { /* noop */ }
+  return [26, 24, 19];
+}
 
 export function initSymbolField(host: HTMLElement): () => void {
   const canvas = host.querySelector<HTMLCanvasElement>('.symbol-field');
@@ -38,6 +47,7 @@ export function initSymbolField(host: HTMLElement): () => void {
 
   const finePointer = window.matchMedia('(pointer: fine)').matches;
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  let ink = readInk();
 
   // Grid sizing — clamp total cells for performance.
   let cellW = 24;
@@ -91,8 +101,6 @@ export function initSymbolField(host: HTMLElement): () => void {
       };
     }
   }
-
-  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
   let raf = 0;
   let last = 0;
@@ -155,16 +163,8 @@ export function initSymbolField(host: HTMLElement): () => void {
         if (alpha < 0.015) continue;
         if (alpha > 0.92) alpha = 0.92;
 
-        // Colour: ink, lerping toward an orange->blue gradient (by x) under the lens.
-        const gx = w > 0 ? cx / w : 0.5;
-        const tr = lerp(ACCENT[0], BLUE[0], gx);
-        const tg = lerp(ACCENT[1], BLUE[1], gx);
-        const tb = lerp(ACCENT[2], BLUE[2], gx);
-        const tint = prox * 0.85;
-        const cr = lerp(INK[0], tr, tint);
-        const cg = lerp(INK[1], tg, tint);
-        const cb = lerp(INK[2], tb, tint);
-        ctx!.fillStyle = `rgba(${cr | 0},${cg | 0},${cb | 0},${alpha.toFixed(3)})`;
+        // Monochrome: glyphs are ink; proximity only raises alpha + magnifies.
+        ctx!.fillStyle = `rgba(${ink[0]},${ink[1]},${ink[2]},${alpha.toFixed(3)})`;
 
         if (prox > 0.02) {
           const scale = 1 + prox * 0.55;
@@ -210,6 +210,9 @@ export function initSymbolField(host: HTMLElement): () => void {
   };
   window.addEventListener('resize', onResize);
 
+  const onTheme = () => { ink = readInk(); };
+  window.addEventListener('themechange', onTheme);
+
   // Pause when the hero scrolls out of view.
   const io = new IntersectionObserver(
     (entries) => { running = entries[0]?.isIntersecting ?? true; },
@@ -224,6 +227,7 @@ export function initSymbolField(host: HTMLElement): () => void {
     cancelAnimationFrame(raf);
     clearTimeout(resizeT);
     window.removeEventListener('resize', onResize);
+    window.removeEventListener('themechange', onTheme);
     window.removeEventListener('pointermove', onMove);
     host.removeEventListener('pointerleave', onLeave);
     io.disconnect();

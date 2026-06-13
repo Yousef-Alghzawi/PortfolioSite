@@ -113,8 +113,9 @@ export function initNav(reduced: boolean): () => void {
       localStorage.setItem('portfolio-theme', theme);
       document.querySelector('.theme-icon-sun')?.classList.toggle('hidden', theme === 'light');
       document.querySelector('.theme-icon-moon')?.classList.toggle('hidden', theme !== 'light');
+      window.dispatchEvent(new Event('themechange'));
     };
-    apply(document.documentElement.getAttribute('data-theme') || 'dark');
+    apply(document.documentElement.getAttribute('data-theme') || 'light');
     on(themeToggle, 'click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       apply(current === 'light' ? 'dark' : 'light');
