@@ -45,7 +45,7 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 6rem; }
 
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -408,6 +408,9 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   overflow: hidden;
   isolation: isolate;
+  /* Top padding >= header height so centered content never slips under the
+     fixed header (the hero grows for tall content, pinning the top here). */
+  padding: 6rem 0 3rem;
 }
 .symbol-field {
   position: absolute;
