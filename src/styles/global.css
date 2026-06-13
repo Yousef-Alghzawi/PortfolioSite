@@ -539,6 +539,34 @@ body { animation: pageEnter 0.4s ease both; }
 @keyframes vtIn { from { opacity: 0; transform: translateY(10px); } }
 
 /* ---------------------------------------------------------------------
+   MOBILE REFINEMENTS — native-app feel (scoped ≤640px; desktop untouched)
+   --------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Fitted typography */
+  .display-hero { font-size: clamp(2.3rem, 9.5vw, 3rem); line-height: 0.98; letter-spacing: -0.02em; }
+  .display-section { font-size: clamp(1.85rem, 7.5vw, 2.5rem); line-height: 1.05; letter-spacing: -0.015em; }
+  .display-sub { font-size: clamp(1.3rem, 5.5vw, 1.7rem); }
+  .stat-number { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+  .lead { font-size: 1.05rem; line-height: 1.55; }
+  .eyebrow { font-size: 0.66rem; letter-spacing: 0.24em; }
+
+  /* Tighter editorial rhythm */
+  .section-head { margin-bottom: 1.5rem; padding-top: 1rem; gap: 0.65rem; }
+  .marquee-item { font-size: 1.5rem; padding: 0 0.9rem; gap: 0.9rem; }
+  .card { border-radius: 16px; }
+
+  /* Hero fills the visible viewport without the address-bar jump */
+  .hero { min-height: 90svh; }
+
+  /* Edit rows: comfortable stacked spacing */
+  .edit-row { padding: 1.25rem 0; }
+
+  /* Case-study prev/next stacks */
+  .case-foot { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .case-foot a { padding: 0.85rem 0; }
+}
+
+/* ---------------------------------------------------------------------
    REDUCED MOTION
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
