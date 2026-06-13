@@ -6,7 +6,7 @@ export const withBase = (path: string): string =>
 export const site = {
   name: 'Yousef Alghzawi',
   role: 'Clinical Biostatistician',
-  tagline: 'Statistical analysis your reviewers can trust.',
+  tagline: 'Biostatistics for high-impact clinical research.',
   email: 'yaalghzawi23@med.just.edu.jo',
   linkedin: 'https://www.linkedin.com/in/yousef-alghzawi/',
   researchgate: 'https://www.researchgate.net/profile/Yousef-Alghzawi-2/research',
