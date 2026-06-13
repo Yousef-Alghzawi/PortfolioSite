@@ -1,7 +1,266 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
-import raw from '../../_migrated/work/survey-analysis.html?raw';
+
+const figures = [
+  { src: '/assets/projects/cross-sectional-prevalence/plots/chart-women.png', caption: 'Weighted prevalence — women' },
+  { src: '/assets/projects/cross-sectional-prevalence/plots/chart-children.png', caption: 'Weighted prevalence — children' },
+  { src: '/assets/projects/survey-analysis/plots/forest-heard.jpg', caption: 'Subgroup summary — awareness' },
+  { src: '/assets/projects/survey-analysis/plots/forest-prefer.jpg', caption: 'Subgroup summary — preference' },
+];
+
+const cleaning = `# ============================================
+# SURVEY DESIGN SETUP
+# ============================================
+library(srvyr)
+library(survey)
+library(dplyr)
+library(forcats)
+
+# Load multi-cycle nationally representative survey data
+survey_data <- readr::read_rds("data/survey_analysis_ready.rds")
+
+# --- Construct complex survey design object ---
+make_design <- function(df, weight = "WEIGHT_COMBINED", nest = TRUE) {
+  wt <- rlang::sym(weight)
+  df %>%
+    filter(!is.na(.data[[weight]]),
+           !is.na(PSU_VAR),
+           !is.na(STRATA_VAR)) %>%
+    srvyr::as_survey_design(
+      ids     = PSU_VAR,
+      strata  = STRATA_VAR,
+      weights = !!wt,
+      nest    = nest
+    )
+}
+
+design_srvyr <- make_design(survey_data, weight = "WEIGHT_COMBINED")
+
+# --- Classify participants into 9 mutually exclusive exposure groups ---
+survey_data <- survey_data %>%
+  mutate(
+    current_count = product_a_current + product_b_current +
+                    product_c_current + product_d_current +
+                    product_e_current + product_f_current,
+    exposure_group = case_when(
+      never_exposed == 1                              ~ "never_exposed",
+      former_only   == 1                              ~ "former_only",
+      current_count == 1 & product_a_current == 1     ~ "exclusive_product_a",
+      current_count == 1 & product_b_current == 1     ~ "exclusive_product_b",
+      current_count == 1 & product_c_current == 1     ~ "exclusive_product_c",
+      current_count == 1 & product_d_current == 1     ~ "exclusive_product_d",
+      current_count == 1 & product_e_current == 1     ~ "exclusive_product_e",
+      current_count == 1 & product_f_current == 1     ~ "exclusive_product_f",
+      current_count >= 2                              ~ "poly_product",
+      TRUE                                            ~ NA_character_
+    ),
+    exposure_group = factor(
+      exposure_group,
+      levels = c("never_exposed", "former_only",
+                 "exclusive_product_a", "exclusive_product_b",
+                 "exclusive_product_c", "exclusive_product_d",
+                 "exclusive_product_e", "exclusive_product_f",
+                 "poly_product")
+    )
+  ) %>%
+  filter(!is.na(exposure_group))`;
+
+const analysis = `# ============================================
+# PRIMARY SURVEY-WEIGHTED MODELS
+# ============================================
+
+# --- Reusable survey logistic regression wrapper ---
+run_svy_logit <- function(design, outcome,
+                          exposure   = "exposure_group",
+                          covariates = character(),
+                          reference  = "never_exposed") {
+  n_obs <- nrow(design$variables)
+
+  design <- design %>%
+    mutate(!!exposure := forcats::fct_relevel(
+      .data[[exposure]], reference
+    ))
+
+  rhs  <- c(exposure, covariates)
+  form <- as.formula(paste(outcome, "~", paste(rhs, collapse = " + ")))
+
+  model <- survey::svyglm(form, design = design,
+                           family = quasibinomial())
+
+  broom::tidy(model, conf.int = TRUE, exponentiate = TRUE) %>%
+    filter(term != "(Intercept)") %>%
+    mutate(
+      exposure_level = stringr::str_remove(term, paste0("^", exposure)),
+      outcome   = outcome,
+      reference = reference,
+      n         = n_obs
+    ) %>%
+    select(outcome, term, exposure_level,
+           estimate, conf.low, conf.high, p.value,
+           reference, n)
+}
+
+# --- Reusable survey linear regression wrapper ---
+run_svy_linear <- function(design, outcome,
+                           exposure   = "exposure_group",
+                           covariates = character(),
+                           reference  = "never_exposed") {
+  n_obs <- nrow(design$variables)
+
+  design <- design %>%
+    mutate(!!exposure := forcats::fct_relevel(
+      .data[[exposure]], reference
+    ))
+
+  rhs  <- c(exposure, covariates)
+  form <- as.formula(paste(outcome, "~", paste(rhs, collapse = " + ")))
+
+  model <- survey::svyglm(form, design = design)
+
+  broom::tidy(model, conf.int = TRUE, exponentiate = FALSE) %>%
+    filter(term != "(Intercept)") %>%
+    mutate(
+      exposure_level = stringr::str_remove(term, paste0("^", exposure)),
+      outcome   = outcome,
+      reference = reference,
+      n         = n_obs
+    ) %>%
+    select(outcome, term, exposure_level,
+           estimate, conf.low, conf.high, p.value,
+           reference, n)
+}
+
+# --- Run primary binary outcome models ---
+binary_outcomes <- c("outcome_1", "outcome_2", "outcome_3",
+                     "outcome_4", "outcome_5", "outcome_6")
+
+core_covars <- c("age", "sex", "race_eth", "educ",
+                 "income_ratio", "alcohol_status", "physical_activity")
+
+purrr::walk(binary_outcomes, function(outcome) {
+  res <- run_svy_logit(
+    design     = design_srvyr,
+    outcome    = outcome,
+    exposure   = "exposure_group",
+    covariates = core_covars,
+    reference  = "never_exposed"
+  )
+  readr::write_csv(res, file.path("output",
+                                  paste0("model_", outcome, ".csv")))
+})
+
+# --- Run primary continuous outcome models ---
+continuous_outcomes <- c("outcome_cont_1", "outcome_cont_2",
+                         "outcome_cont_3")
+
+purrr::walk(continuous_outcomes, function(outcome) {
+  res <- run_svy_linear(
+    design     = design_srvyr,
+    outcome    = outcome,
+    exposure   = "exposure_group",
+    covariates = core_covars,
+    reference  = "never_exposed"
+  )
+  readr::write_csv(res, file.path("output",
+                                  paste0("model_", outcome, ".csv")))
+})`;
+
+const plotting = `# ============================================
+# SUBGROUP & SENSITIVITY ANALYSIS
+# ============================================
+
+# --- Subgroup: Stratified by sex ---
+for (s in c("male", "female")) {
+  d_sub <- design_srvyr %>% filter(sex == s)
+
+  purrr::walk(binary_outcomes, function(outcome) {
+    res <- run_svy_logit(d_sub, outcome, covariates = core_covars)
+    readr::write_csv(res, file.path(
+      "output", paste0("sub_sex_", s, "_", outcome, ".csv")
+    ))
+  })
+}
+
+# --- Subgroup: Stratified by age band ---
+for (band in c("18_39", "40_59", "60_plus")) {
+  d_sub <- design_srvyr %>% filter(age_band == band)
+
+  purrr::walk(binary_outcomes, function(outcome) {
+    res <- run_svy_logit(d_sub, outcome, covariates = core_covars)
+    readr::write_csv(res, file.path(
+      "output", paste0("sub_age_", band, "_", outcome, ".csv")
+    ))
+  })
+}
+
+# --- Sensitivity: Alternative exposure definition (5-day threshold) ---
+flag_any <- function(df, vars) {
+  available <- intersect(vars, names(df))
+  if (length(available) == 0) return(rep(0L, nrow(df)))
+  df %>%
+    transmute(flag = rowSums(
+      across(all_of(available),
+             ~ as.integer(coalesce(as.numeric(.x), 0) > 0)),
+      na.rm = TRUE) > 0
+    ) %>%
+    pull(flag) %>%
+    as.integer()
+}
+
+# Reclassify using stricter 5-day window
+survey_5d <- survey_data %>%
+  mutate(
+    product_a_5d = flag_any(., c("ITEM_A01", "ITEM_A02")),
+    product_b_5d = flag_any(., c("ITEM_B01", "ITEM_B02")),
+    product_c_5d = flag_any(., c("ITEM_C01", "ITEM_C02")),
+    product_d_5d = flag_any(., c("ITEM_D01", "ITEM_D02", "ITEM_D03")),
+    product_e_5d = flag_any(., c("ITEM_E01")),
+    product_f_5d = flag_any(., c("ITEM_F01", "ITEM_F02")),
+    count_5d = product_a_5d + product_b_5d + product_c_5d +
+               product_d_5d + product_e_5d + product_f_5d,
+    exposure_group_5d = case_when(
+      never_exposed == 1                          ~ "never_exposed",
+      former_only   == 1                          ~ "former_only",
+      count_5d == 1 & product_a_5d == 1           ~ "exclusive_product_a",
+      count_5d == 1 & product_b_5d == 1           ~ "exclusive_product_b",
+      count_5d == 1 & product_c_5d == 1           ~ "exclusive_product_c",
+      count_5d == 1 & product_d_5d == 1           ~ "exclusive_product_d",
+      count_5d == 1 & product_e_5d == 1           ~ "exclusive_product_e",
+      count_5d == 1 & product_f_5d == 1           ~ "exclusive_product_f",
+      count_5d >= 2                               ~ "poly_product",
+      TRUE                                        ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(exposure_group_5d))
+
+# --- Sensitivity: Exclude pre-existing conditions ---
+survey_excl <- survey_data %>%
+  filter(pre_existing_condition == 0)
+
+design_excl <- make_design(survey_excl)
+
+purrr::walk(binary_outcomes, function(outcome) {
+  res <- run_svy_logit(design_excl, outcome, covariates = core_covars)
+  readr::write_csv(res, file.path(
+    "output", paste0("sens_excl_", outcome, ".csv")
+  ))
+})`;
+
+const code = [
+  { id: 'code-cleaning', label: 'Survey Design & Exposure Classification', code: cleaning },
+  { id: 'code-analysis', label: 'Survey-Weighted Models', code: analysis },
+  { id: 'code-plotting', label: 'Subgroup & Sensitivity Analysis', code: plotting },
+];
 ---
-<CaseStudyLayout title="Complex Survey Analysis – Yousef Alghzawi" description="Case study: NHANES multi-cycle weighted analysis with nine exposure groups." headerImage="/assets/projects/cross-sectional-prevalence/plots/chart-women.png">
-  <Fragment set:html={raw} />
-</CaseStudyLayout>
+<CaseStudyLayout
+  title="Complex Survey Prevalence"
+  description="Case study: design-weighted prevalence estimation across multiple exposure groups with survey-adjusted variance and subgroup summaries."
+  field="Epidemiology · Survey"
+  status="Methods Showcase"
+  problem="Multiple exposure products are increasingly used in combination, but comparative health-impact data across exclusive and poly-use groups remains fragmented, motivating a nationally representative analysis."
+  approach="Build a complex survey design object from multi-cycle data with sampling weights, strata, and PSU clusters, then fit survey-weighted logistic and linear regression across nine mutually exclusive exposure groups, with stratified subgroup and sensitivity analyses."
+  outcome="Produces design-weighted, survey-adjusted effect estimates and confidence intervals for each exposure group, plus subgroup summaries by sex and age band and sensitivity checks under alternative exposure definitions."
+  figures={figures}
+  code={code}
+  prev={{ slug: 'network-meta-analysis', title: 'Bayesian Network Meta-Analysis' }}
+/>

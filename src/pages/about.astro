@@ -1,7 +1,126 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import raw from '../_migrated/about.html?raw';
+import { withBase, methodGroups, reportingStandards, affiliations } from '../data/site';
+
+const impact = [
+  { v: '21.7', d: 'JACC' },
+  { v: '20.3', d: 'Blood (ASH)' },
+  { v: '2.1', d: 'Clin. Neurology & Neurosurgery' },
+];
+const focus = [
+  { t: 'Clinical Trial Analysis', d: 'Primary and secondary endpoint analysis for RCTs, including survival analysis and mixed-effects models.' },
+  { t: 'Evidence Synthesis', d: 'Systematic reviews and meta-analyses using random-effects models and publication-bias evaluation.' },
+  { t: 'Reproducible Analysis', d: 'Fully documented workflows in R with complete audit trails and version control.' },
+  { t: 'Publication-Grade Output', d: 'Tables, figures, and methods text designed to address reviewer concerns before they arise.' },
+];
+const software = [
+  { t: 'Primary Analysis', items: ['R / RStudio', 'SPSS', 'PostgreSQL'] },
+  { t: 'Key R Packages', items: ['tidyverse, ggplot2', 'survival, cmprsk', 'meta, metafor', 'lme4, tableone'] },
+  { t: 'Reporting & Review', items: ['R Markdown', 'PRISMA Flow Generator', 'Joinpoint, RevMan'] },
+];
 ---
-<Layout title="About – Yousef Alghzawi" description="Background, expertise, and qualifications of Yousef Alghzawi, Clinical Biostatistician." mainClass="flex-1 lg:ml-[280px] px-6 md:px-10 py-10">
-  <Fragment set:html={raw} />
+<Layout
+  title="About — Yousef Alghzawi"
+  description="Background, expertise, and qualifications of Yousef Alghzawi, Clinical Biostatistician."
+>
+  <header class="mb-20 md:mb-24">
+    <p class="eyebrow mb-5">Clinical Research Profile</p>
+    <h1 class="display-section max-w-[16ch]">Yousef Alghzawi</h1>
+    <p class="lead mt-5 text-inkMuted">Clinical Biostatistician · Amman, Jordan</p>
+  </header>
+
+  <section class="grid lg:grid-cols-[1.45fr_0.55fr] gap-12 lg:gap-16 items-start mb-28 md:mb-40">
+    <div class="space-y-6 lead">
+      <p>I provide statistical analysis and methodological consultation for clinical research teams preparing manuscripts for peer-reviewed publication. My work focuses on ensuring studies withstand rigorous editorial and statistical review.</p>
+      <p>My approach prioritizes <span class="text-ink font-medium">methodological transparency</span>, <span class="text-ink font-medium">reproducible workflows</span>, and strict adherence to established reporting guidelines. Every analysis is designed not just to answer the research question, but to survive peer review.</p>
+      <p>I work primarily with clinician-researchers, academic medical centers, and research teams who understand that statistical rigor is the foundation of publishable, impactful science.</p>
+      <p>My publications span <span class="text-ink font-medium">interventional cardiology</span> (JACC), <span class="text-ink font-medium">hematologic oncology</span> (Blood/ASH), <span class="text-ink font-medium">neurology</span>, and <span class="text-ink font-medium">cardiovascular surgery</span> — giving me cross-specialty fluency to anticipate the statistical expectations of different editorial boards.</p>
+    </div>
+    <figure class="reveal-on-scroll">
+      <img src={withBase('/assets/PersonalPhoto.jpg')} width="640" height="800" alt="Yousef Alghzawi"
+        loading="lazy" class="w-full object-cover rounded-2xl border border-line" data-parallax="20" />
+      <figcaption class="mono-label mt-4 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-signal"></span>Yousef Alghzawi</figcaption>
+    </figure>
+  </section>
+
+  <!-- Affiliations -->
+  <section class="mb-28 md:mb-40">
+    <div class="section-head"><span class="section-index">§ 01</span><span class="section-kicker">Institutional affiliations</span></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {affiliations.map((a) => (
+        <div class="card !bg-white flex items-center justify-center p-6 h-28" title={a.name}>
+          <img src={withBase(a.img)} alt={a.name} class="max-h-14 max-w-[82%] object-contain" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Publication impact -->
+  <section class="mb-28 md:mb-40">
+    <div class="section-head"><span class="section-index">§ 02</span><span class="section-kicker">Publication impact</span></div>
+    <h2 class="display-section mb-12 max-w-[20ch]" data-split-reveal>Where my statistics get published.</h2>
+    <div class="grid gap-8 sm:grid-cols-3">
+      {impact.map((x) => (
+        <div class="reveal-on-scroll border-t border-ink pt-5">
+          <div class="stat-number"><span data-target={x.v} data-decimals="1">0</span></div>
+          <p class="mono-label mt-3">Impact Factor</p>
+          <p class="text-inkSoft mt-1 leading-snug">{x.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Methodological focus -->
+  <section class="mb-28 md:mb-40">
+    <div class="section-head"><span class="section-index">§ 03</span><span class="section-kicker">Methodological focus</span></div>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {focus.map((f) => (
+        <div class="card p-7 md:p-8 reveal-on-scroll">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-signal mb-5"></span>
+          <h3 class="font-serif text-2xl mb-3">{f.t}</h3>
+          <p class="text-inkSoft leading-relaxed">{f.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Statistical methods -->
+  <section class="mb-28 md:mb-40">
+    <div class="section-head"><span class="section-index">§ 04</span><span class="section-kicker">Statistical methods</span></div>
+    <h2 class="display-section mb-12 max-w-[18ch]" data-split-reveal>Methods I apply in peer-reviewed work.</h2>
+    <div class="grid gap-10 md:grid-cols-2">
+      {methodGroups.map((g) => (
+        <div>
+          <p class="mono-label text-accent mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>{g.label}</p>
+          <div class="flex flex-wrap gap-2">
+            {g.items.map((it) => (<span class="tag">{it}</span>))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Reporting standards -->
+  <section class="mb-28 md:mb-40">
+    <div class="section-head"><span class="section-index">§ 05</span><span class="section-kicker">Reporting standards</span></div>
+    <h2 class="display-section mb-10 max-w-[18ch]" data-split-reveal>Every project follows the right guideline.</h2>
+    <div class="flex flex-wrap gap-3">
+      {reportingStandards.map((s) => (<span class="tag !text-sm px-5 py-2.5">{s}</span>))}
+    </div>
+  </section>
+
+  <!-- Software -->
+  <section>
+    <div class="section-head"><span class="section-index">§ 06</span><span class="section-kicker">Software &amp; tools</span></div>
+    <div class="grid gap-5 sm:grid-cols-3">
+      {software.map((s) => (
+        <div class="card p-7 reveal-on-scroll">
+          <h3 class="font-serif text-xl mb-4 pb-3 border-b border-line">{s.t}</h3>
+          <ul class="space-y-2.5 text-inkSoft">
+            {s.items.map((i) => (<li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-accent"></span>{i}</li>))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
 </Layout>

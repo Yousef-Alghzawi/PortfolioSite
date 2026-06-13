@@ -138,12 +138,14 @@ export function initSymbolField(host: HTMLElement): () => void {
         let ox = 0;
         let oy = 0;
         if (d2 < R2) {
-          const f = 1 - Math.sqrt(d2) / R;
+          const dist = Math.sqrt(d2);
+          const f = 1 - dist / R;
           prox = f * f;
-          const push = prox * 7;
-          const inv = d2 > 1 ? 1 / Math.sqrt(d2) : 0;
-          ox = dx * inv * push;
-          oy = dy * inv * push;
+          const inv = dist > 1 ? 1 / dist : 0;
+          const push = prox * 10;  // radial scatter
+          const swirl = prox * 9;  // tangential vortex (matches the reference)
+          ox = dx * inv * push - dy * inv * swirl;
+          oy = dy * inv * push + dx * inv * swirl;
         }
 
         if (cell.flash > 0) cell.flash *= 0.9;
@@ -160,9 +162,10 @@ export function initSymbolField(host: HTMLElement): () => void {
         ctx!.fillStyle = `rgba(${cr | 0},${cg | 0},${cb | 0},${alpha.toFixed(3)})`;
 
         if (prox > 0.02) {
-          const scale = 1 + prox * 0.5;
+          const scale = 1 + prox * 0.55;
           ctx!.save();
           ctx!.translate(cx + ox, cy + oy);
+          ctx!.rotate(prox * 0.6);
           ctx!.scale(scale, scale);
           ctx!.fillText(cell.ch, 0, 0);
           ctx!.restore();
