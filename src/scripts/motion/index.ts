@@ -9,6 +9,7 @@ import { initParallax } from './parallax';
 import { initMarquee } from './marquee';
 import { initScrollPath } from './scrollPath';
 import { initHGallery } from './hGallery';
+import { initRiver } from './river';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,6 +34,7 @@ export function initMotion(): void {
     cleanups.push(initMarquee(reduced));
     cleanups.push(initScrollPath());
     cleanups.push(initHGallery(reduced));
+    cleanups.push(initRiver(reduced));
   });
 
   // Living symbol field (code-split; skipped under reduced motion — the

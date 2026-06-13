@@ -2,26 +2,23 @@
 import Layout from '../layouts/Layout.astro';
 import { withBase, projects, publications, services, process, faqs, tools } from '../data/site';
 
-const marqueeItems = [
-  'JACC', 'Blood · ASH', 'Meta-Analysis', 'Survival Analysis', 'Bayesian NMA',
-  'Mixed Models', 'Competing Risks', 'Reproducible R', 'PRISMA 2020', 'Cox Models',
-];
 const homePublications = publications.slice(0, 4);
 ---
 
 <Layout mainClass="w-full">
-  <!-- SECTION PATH RAIL (desktop) -->
-  <nav class="scroll-rail" aria-label="Section navigation">
-    <span class="rail-track"></span>
-    <span class="rail-fill" id="rail-fill"></span>
-    <a href="#home" class="rail-dot" data-rail-dot="home"><span class="rail-label">Intro</span></a>
-    <a href="#why-me" class="rail-dot" data-rail-dot="why-me"><span class="rail-label">Why me</span></a>
-    <a href="#services" class="rail-dot" data-rail-dot="services"><span class="rail-label">Services</span></a>
-    <a href="#work" class="rail-dot" data-rail-dot="work"><span class="rail-label">Work</span></a>
-    <a href="#publications" class="rail-dot" data-rail-dot="publications"><span class="rail-label">Papers</span></a>
-    <a href="#process" class="rail-dot" data-rail-dot="process"><span class="rail-label">Process</span></a>
-    <a href="#faq" class="rail-dot" data-rail-dot="faq"><span class="rail-label">FAQ</span></a>
-  </nav>
+  <!-- SYMBOL RIVER (wide screens): flowing wayfinder down the left gutter -->
+  <div class="river">
+    <canvas class="river-canvas" aria-hidden="true"></canvas>
+    <nav class="river-nav" aria-label="Section navigation">
+      <a href="#home" class="river-dot" data-rail-dot="home" style="top:7.1%"><span class="node"></span><span class="river-label">Intro</span></a>
+      <a href="#why-me" class="river-dot" data-rail-dot="why-me" style="top:21.4%"><span class="node"></span><span class="river-label">Standard</span></a>
+      <a href="#services" class="river-dot" data-rail-dot="services" style="top:35.7%"><span class="node"></span><span class="river-label">Services</span></a>
+      <a href="#work" class="river-dot" data-rail-dot="work" style="top:50%"><span class="node"></span><span class="river-label">Work</span></a>
+      <a href="#publications" class="river-dot" data-rail-dot="publications" style="top:64.3%"><span class="node"></span><span class="river-label">Papers</span></a>
+      <a href="#process" class="river-dot" data-rail-dot="process" style="top:78.6%"><span class="node"></span><span class="river-label">Process</span></a>
+      <a href="#faq" class="river-dot" data-rail-dot="faq" style="top:92.9%"><span class="node"></span><span class="river-label">FAQ</span></a>
+    </nav>
+  </div>
 
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home" data-symbol-field aria-label="Introduction">
@@ -46,13 +43,6 @@ const homePublications = publications.slice(0, 4);
           <a href="#work" class="btn-ghost">See my work</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== MARQUEE ===================== -->
-  <section class="marquee-shell py-5" data-marquee data-marquee-speed="48" aria-hidden="true">
-    <div class="marquee-track">
-      {marqueeItems.map((item) => (<span class="marquee-item">{item}</span>))}
     </div>
   </section>
 
