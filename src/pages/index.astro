@@ -10,6 +10,19 @@ const homePublications = publications.slice(0, 4);
 ---
 
 <Layout mainClass="w-full">
+  <!-- SECTION PATH RAIL (desktop) -->
+  <nav class="scroll-rail" aria-label="Section navigation">
+    <span class="rail-track"></span>
+    <span class="rail-fill" id="rail-fill"></span>
+    <a href="#home" class="rail-dot" data-rail-dot="home"><span class="rail-label">Intro</span></a>
+    <a href="#why-me" class="rail-dot" data-rail-dot="why-me"><span class="rail-label">Why me</span></a>
+    <a href="#services" class="rail-dot" data-rail-dot="services"><span class="rail-label">Services</span></a>
+    <a href="#work" class="rail-dot" data-rail-dot="work"><span class="rail-label">Work</span></a>
+    <a href="#publications" class="rail-dot" data-rail-dot="publications"><span class="rail-label">Papers</span></a>
+    <a href="#process" class="rail-dot" data-rail-dot="process"><span class="rail-label">Process</span></a>
+    <a href="#faq" class="rail-dot" data-rail-dot="faq"><span class="rail-label">FAQ</span></a>
+  </nav>
+
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home" data-symbol-field aria-label="Introduction">
     <canvas class="symbol-field" aria-hidden="true"></canvas>
@@ -33,9 +46,6 @@ const homePublications = publications.slice(0, 4);
           </a>
           <a href="#work" class="btn-ghost">See case studies</a>
         </div>
-        <p class="notation hero-rise d4 text-sm mt-10 md:mt-14">
-          HR 0.72 (95% CI 0.58 to 0.89) &nbsp;·&nbsp; p &lt; 0.001 &nbsp;·&nbsp; I² = 42%
-        </p>
       </div>
     </div>
   </section>
@@ -139,9 +149,9 @@ const homePublications = publications.slice(0, 4);
         {projects.map((p, i) => (
           <article class={`card overflow-hidden reveal-on-scroll group ${i === 0 ? 'md:col-span-2' : ''}`}>
             <a href={withBase(`/work/${p.slug}`)} class={`block h-full ${i === 0 ? 'md:grid md:grid-cols-2 md:items-stretch' : ''}`}>
-              <div class="relative overflow-hidden bg-paperSunken border-b border-line aspect-[16/10] md:aspect-[16/9]">
+              <div class="relative overflow-hidden bg-white border-b border-line aspect-[16/10] md:aspect-[16/9]">
                 <img src={withBase(p.img)} alt={p.title} loading="lazy"
-                  class="absolute inset-0 w-full h-full object-cover object-top mix-blend-multiply group-hover:scale-[1.03] transition-transform duration-700" />
+                  class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700" />
               </div>
               <div class="p-7 md:p-9 flex flex-col">
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -150,7 +160,6 @@ const homePublications = publications.slice(0, 4);
                 </div>
                 <h3 class="font-serif text-2xl md:text-3xl leading-tight group-hover:text-accent transition-colors">{p.title}</h3>
                 <p class="text-inkSoft leading-relaxed mt-3 measure">{p.blurb}</p>
-                <p class="notation text-xs mt-auto pt-6">{p.metric}</p>
               </div>
             </a>
           </article>
