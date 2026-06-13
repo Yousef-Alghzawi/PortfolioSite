@@ -27,7 +27,8 @@ interface Cell {
 }
 
 const INK = [26, 24, 19];      // --ink
-const ACCENT = [106, 60, 153]; // --accent
+const ACCENT = [188, 81, 26];  // --accent (orange)
+const BLUE = [27, 90, 120];    // --blue (gradient partner)
 
 export function initSymbolField(host: HTMLElement): () => void {
   const canvas = host.querySelector<HTMLCanvasElement>('.symbol-field');
@@ -154,11 +155,15 @@ export function initSymbolField(host: HTMLElement): () => void {
         if (alpha < 0.015) continue;
         if (alpha > 0.92) alpha = 0.92;
 
-        // Colour: ink, lerping toward accent for cells under the lens.
+        // Colour: ink, lerping toward an orange->blue gradient (by x) under the lens.
+        const gx = w > 0 ? cx / w : 0.5;
+        const tr = lerp(ACCENT[0], BLUE[0], gx);
+        const tg = lerp(ACCENT[1], BLUE[1], gx);
+        const tb = lerp(ACCENT[2], BLUE[2], gx);
         const tint = prox * 0.85;
-        const cr = lerp(INK[0], ACCENT[0], tint);
-        const cg = lerp(INK[1], ACCENT[1], tint);
-        const cb = lerp(INK[2], ACCENT[2], tint);
+        const cr = lerp(INK[0], tr, tint);
+        const cg = lerp(INK[1], tg, tint);
+        const cb = lerp(INK[2], tb, tint);
         ctx!.fillStyle = `rgba(${cr | 0},${cg | 0},${cb | 0},${alpha.toFixed(3)})`;
 
         if (prox > 0.02) {

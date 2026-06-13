@@ -2,7 +2,6 @@
 import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
-import Cursor from '../components/Cursor.astro';
 import { site, withBase } from '../data/site';
 import '../styles/global.css';
 
@@ -14,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = `${site.name} — ${site.role}`,
-  description = 'Yousef Alghzawi — Clinical Biostatistician. Publication-grade statistical analysis, meta-analysis, and trial strategy for high-impact clinical research.',
+  title = `${site.name} · ${site.role}`,
+  description = 'Yousef Alghzawi, Clinical Biostatistician. Publication-grade statistical analysis, meta-analysis, and trial strategy for high-impact clinical research.',
   ogImage = 'assets/og-image.jpg',
   mainClass = 'w-full max-w-page mx-auto px-[clamp(1.25rem,4vw,3rem)] pt-32 md:pt-36 pb-24',
 } = Astro.props;
@@ -68,7 +67,7 @@ const year = new Date().getFullYear();
         <h2 class="display-section max-w-[16ch] mb-10">
           Let's get your statistics <em>published.</em>
         </h2>
-        <a href={withBase('/apply')} class="btn-primary" data-cursor="apply">
+        <a href={withBase('/apply')} class="btn-primary">
           Apply to work with me
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
@@ -77,19 +76,17 @@ const year = new Date().getFullYear();
 
         <div class="mt-20 pt-8 border-t border-line grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div class="space-y-2">
-            <a href={`mailto:${site.email}`} class="font-mono text-sm link-underline" data-cursor="email">{site.email}</a>
+            <a href={`mailto:${site.email}`} class="font-mono text-sm link-underline">{site.email}</a>
             <p class="font-mono text-xs text-inkMuted">{site.location} · β · σ · HR · 95% CI · p&lt;0.001</p>
           </div>
           <div class="flex items-center gap-6 font-mono text-xs uppercase tracking-widest text-inkMuted">
-            <a href={site.linkedin} target="_blank" rel="noopener" class="hover:text-ink transition-colors" data-cursor="linkedin">LinkedIn</a>
-            <a href={site.researchgate} target="_blank" rel="noopener" class="hover:text-ink transition-colors" data-cursor="research">ResearchGate</a>
+            <a href={site.linkedin} target="_blank" rel="noopener" class="hover:text-ink transition-colors">LinkedIn</a>
+            <a href={site.researchgate} target="_blank" rel="noopener" class="hover:text-ink transition-colors">ResearchGate</a>
           </div>
         </div>
         <p class="font-mono text-[0.7rem] text-inkMuted mt-10">© {year} {site.name}. All rights reserved.</p>
       </div>
     </footer>
-
-    <Cursor />
 
     <button id="back-to-top" class="back-to-top" aria-label="Back to top">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

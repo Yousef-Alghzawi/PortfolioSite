@@ -9,7 +9,7 @@ const summary = [
 ];
 ---
 <Layout
-  title="Publications — Yousef Alghzawi"
+  title="Publications · Yousef Alghzawi"
   description="Peer-reviewed publications with statistical analysis by Yousef Alghzawi."
 >
   <header class="mb-16 md:mb-20 max-w-4xl">
@@ -32,7 +32,7 @@ const summary = [
 
   <div>
     {publications.map((pub) => (
-      <a href={pub.href} target="_blank" rel="noopener noreferrer" class="edit-row group" data-cursor="read">
+      <a href={pub.href} target="_blank" rel="noopener noreferrer" class="edit-row group">
         <span class="font-mono text-xs text-accent uppercase tracking-widest leading-relaxed">
           {pub.venue}{pub.impact ? ` · ${pub.impact}` : ''}
         </span>
