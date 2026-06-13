@@ -19,22 +19,22 @@ const homePublications = publications.slice(0, 4);
     <div class="w-full max-w-page mx-auto px-[clamp(1.25rem,4vw,3rem)]">
       <div class="max-w-[20ch] md:max-w-none">
         <p class="eyebrow hero-rise d0 mb-7">Clinical Biostatistician · Amman, Jordan</p>
-        <h1 class="display-hero hero-rise d1 max-w-[14ch]">Data is a <em>living</em> thing.</h1>
-        <p class="lead hero-rise d2 mt-9 max-w-[52ch]">
-          I turn clinical data into publication-grade evidence that survives peer review —
-          meta-analyses, survival models, and trial statistics for high-impact journals.
+        <h1 class="display-hero hero-rise d1 max-w-[16ch]">Statistics that <em>survive</em> peer review.</h1>
+        <p class="lead hero-rise d2 mt-9 max-w-[54ch]">
+          I run the statistical analysis behind your manuscript: rigorous, reproducible, and built to
+          satisfy the toughest reviewers. You stay focused on the science; I make sure the numbers hold.
         </p>
         <div class="hero-rise d3 mt-11 flex flex-wrap items-center gap-4">
-          <a href={withBase('/apply')} class="btn-primary" data-cursor="apply">
+          <a href={withBase('/apply')} class="btn-primary">
             Apply to work with me
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </a>
-          <a href="#work" class="btn-ghost" data-cursor="scroll">See selected work</a>
+          <a href="#work" class="btn-ghost">See case studies</a>
         </div>
         <p class="notation hero-rise d4 text-sm mt-14">
-          HR = 0.72 [0.58–0.89] &nbsp;·&nbsp; p &lt; 0.001 &nbsp;·&nbsp; I² = 42%
+          HR 0.72 (95% CI 0.58 to 0.89) &nbsp;·&nbsp; p &lt; 0.001 &nbsp;·&nbsp; I² = 42%
         </p>
       </div>
     </div>
@@ -50,11 +50,11 @@ const homePublications = publications.slice(0, 4);
   <!-- ===================== BODY ===================== -->
   <div class="max-w-page mx-auto px-[clamp(1.25rem,4vw,3rem)] space-y-28 md:space-y-44 py-28 md:py-40">
 
-    <!-- MANIFESTO -->
+    <!-- COMMITMENT -->
     <section class="max-w-4xl">
-      <p class="eyebrow mb-7">Manifesto</p>
+      <p class="eyebrow mb-7">My commitment</p>
       <p class="display-section reveal-on-scroll">
-        We believe in the beauty of <em>uncertainty</em> — and the discipline of quantifying it.
+        Methodology comes first. Always, <em>even when the data is inconvenient.</em>
       </p>
     </section>
 
@@ -65,10 +65,10 @@ const homePublications = publications.slice(0, 4);
           <span class="section-index">§ 01</span>
           <span class="section-kicker">Why researchers choose me</span>
         </div>
-        <h2 class="display-section max-w-[18ch]" data-split-reveal>Every result a signal, every method defensible.</h2>
+        <h2 class="display-section max-w-[16ch]" data-split-reveal>Proof, not promises.</h2>
         <p class="lead mt-8 measure">
-          Every manuscript I have contributed statistical analysis to has been accepted for publication —
-          each with documented, reproducible R code and a complete audit trail.
+          Every manuscript I have supported with statistical analysis has been accepted for publication,
+          each backed by documented, reproducible R code and an audit trail you can hand to any reviewer.
         </p>
         <div class="grid grid-cols-3 gap-6 mt-12">
           <div class="reveal-on-scroll">
@@ -90,7 +90,7 @@ const homePublications = publications.slice(0, 4);
           alt="Portrait of Yousef Alghzawi" loading="lazy"
           class="w-full object-cover rounded-2xl border border-line max-h-[540px]" data-parallax="30" />
         <figcaption class="mono-label mt-4 flex items-center gap-2">
-          <span class="inline-block w-2 h-2 rounded-full bg-signal"></span>Yousef Alghzawi — Biostatistician
+          <span class="inline-block w-2 h-2 rounded-full bg-signal"></span>Yousef Alghzawi, Biostatistician
         </figcaption>
       </figure>
     </section>
@@ -101,15 +101,15 @@ const homePublications = publications.slice(0, 4);
         <div>
           <div class="section-head !mb-6">
             <span class="section-index">§ 02</span>
-            <span class="section-kicker">Signature engagements</span>
+            <span class="section-kicker">What I deliver</span>
           </div>
           <h2 class="display-section" data-split-reveal>How I work.</h2>
         </div>
-        <a href={withBase('/services')} class="link-underline font-mono text-sm" data-cursor="services">All services →</a>
+        <a href={withBase('/services')} class="link-underline font-mono text-sm">All services →</a>
       </div>
       <div class="grid gap-5 md:grid-cols-2">
         {services.map((s) => (
-          <a href={withBase('/services')} class="card p-7 md:p-9 reveal-on-scroll group" data-cursor="view">
+          <a href={withBase('/services')} class="card p-7 md:p-9 reveal-on-scroll group">
             <div class="flex items-center justify-between mb-6">
               <span class="font-mono text-xs text-accent tracking-widest">{s.code}</span>
               <div class="flex flex-wrap gap-2 justify-end">
@@ -137,7 +137,7 @@ const homePublications = publications.slice(0, 4);
       </div>
       <div class="grid gap-6 md:grid-cols-2">
         {projects.map((p, i) => (
-          <article class={`card overflow-hidden reveal-on-scroll group ${i === 0 ? 'md:col-span-2' : ''}`} data-cursor="view study">
+          <article class={`card overflow-hidden reveal-on-scroll group ${i === 0 ? 'md:col-span-2' : ''}`}>
             <a href={withBase(`/work/${p.slug}`)} class={`block h-full ${i === 0 ? 'md:grid md:grid-cols-2 md:items-stretch' : ''}`}>
               <div class="relative overflow-hidden bg-paperSunken border-b border-line aspect-[16/10] md:aspect-[16/9]">
                 <img src={withBase(p.img)} alt={p.title} loading="lazy"
@@ -174,11 +174,11 @@ const homePublications = publications.slice(0, 4);
           </div>
           <h2 class="display-section" data-split-reveal>Published evidence.</h2>
         </div>
-        <a href={withBase('/publications')} class="link-underline font-mono text-sm" data-cursor="all">All publications →</a>
+        <a href={withBase('/publications')} class="link-underline font-mono text-sm">All publications →</a>
       </div>
       <div>
         {homePublications.map((pub) => (
-          <a href={pub.href} target="_blank" rel="noopener noreferrer" class="edit-row group" data-cursor="read">
+          <a href={pub.href} target="_blank" rel="noopener noreferrer" class="edit-row group">
             <span class="font-mono text-xs text-accent uppercase tracking-widest">{pub.venue}</span>
             <span>
               <span class="font-serif text-xl md:text-2xl leading-snug group-hover:text-accent transition-colors block">{pub.title}</span>
@@ -234,9 +234,9 @@ const homePublications = publications.slice(0, 4);
       <div class="max-w-3xl">
         {faqs.map((f) => (
           <details class="border-t border-line last:border-b">
-            <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6" data-cursor="">
+            <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
               <span class="font-serif text-xl md:text-2xl leading-snug pr-4">{f.q}</span>
-              <svg class="w-5 h-5 text-inkMuted shrink-0 mt-1.5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg class="w-5 h-5 text-inkMuted shrink-0 mt-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </summary>

@@ -35,7 +35,7 @@ const {
 const meta = [field, venue, year].filter(Boolean);
 ---
 <Layout
-  title={`${title} — Yousef Alghzawi`}
+  title={`${title} · Yousef Alghzawi`}
   description={description}
   mainClass="w-full max-w-[1120px] mx-auto px-[clamp(1.25rem,4vw,3rem)] pt-28 md:pt-32 pb-24"
 >
@@ -48,7 +48,7 @@ const meta = [field, venue, year].filter(Boolean);
       <div class="flex flex-wrap items-center gap-4 mt-7">
         {status && (<span class="tag"><span class="dot" style="background:var(--accent)"></span>{status}</span>)}
         {doiHref && (
-          <a href={doiHref} target="_blank" rel="noopener noreferrer" class="link-underline font-mono text-sm" data-cursor="read">
+          <a href={doiHref} target="_blank" rel="noopener noreferrer" class="link-underline font-mono text-sm">
             {doiLabel ?? 'Read publication'} ↗
           </a>
         )}
@@ -116,7 +116,7 @@ const meta = [field, venue, year].filter(Boolean);
             <h2 id="publication" class="font-serif text-3xl mb-6">Publication</h2>
             <div class="pub-callout flex flex-wrap items-center justify-between gap-4">
               <p class="text-inkSoft max-w-[40ch]">{doiLabel ?? 'Read the full publication.'}</p>
-              <a href={doiHref} target="_blank" rel="noopener noreferrer" class="btn-ghost" data-cursor="read">
+              <a href={doiHref} target="_blank" rel="noopener noreferrer" class="btn-ghost">
                 Read publication ↗
               </a>
             </div>
@@ -127,8 +127,8 @@ const meta = [field, venue, year].filter(Boolean);
 
     <!-- Prev / next -->
     <footer class="case-foot flex items-center justify-between gap-4">
-      {prev ? (<a href={withBase(`/work/${prev.slug}`)} data-cursor="prev">← {prev.title}</a>) : (<span></span>)}
-      {next ? (<a href={withBase(`/work/${next.slug}`)} class="text-right" data-cursor="next">{next.title} →</a>) : (<span></span>)}
+      {prev ? (<a href={withBase(`/work/${prev.slug}`)}>← {prev.title}</a>) : (<span></span>)}
+      {next ? (<a href={withBase(`/work/${next.slug}`)} class="text-right">{next.title} →</a>) : (<span></span>)}
     </footer>
   </div>
 </Layout>

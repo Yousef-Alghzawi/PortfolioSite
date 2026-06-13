@@ -1,7 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initSmoothScroll } from './smoothScroll';
-import { initCursor } from './cursor';
 import { initNav } from './nav';
 import { initFaq } from './faq';
 import { initCounters } from './counters';
@@ -30,7 +29,6 @@ export function initMotion(): void {
     cleanups.push(initReveals(reduced));
     cleanups.push(initParallax(reduced));
     cleanups.push(initMarquee(reduced));
-    if (!reduced) cleanups.push(initCursor());
   });
 
   // Living symbol field (code-split; skipped under reduced motion — the

@@ -2,32 +2,32 @@
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 
 const figures = [
-  { src: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20A.jpg', caption: 'Pooled mortality — Technique A (Freeman–Tukey)' },
-  { src: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20B.jpg', caption: 'Pooled mortality — Technique B' },
-  { src: '/assets/projects/meta-analysis-proportions/plots/forest-thrombosis-Technique%20A.jpg', caption: 'Pooled thrombosis — Technique A' },
-  { src: '/assets/projects/meta-analysis-proportions/plots/forest-thrombosis-Technique%20B.jpg', caption: 'Pooled thrombosis — Technique B' },
+  { src: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20A.jpg', caption: 'Pooled mortality - Technique A (Freeman-Tukey)' },
+  { src: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20B.jpg', caption: 'Pooled mortality - Technique B' },
+  { src: '/assets/projects/meta-analysis-proportions/plots/forest-thrombosis-Technique%20A.jpg', caption: 'Pooled thrombosis - Technique A' },
+  { src: '/assets/projects/meta-analysis-proportions/plots/forest-thrombosis-Technique%20B.jpg', caption: 'Pooled thrombosis - Technique B' },
 ];
 
-const cleaning = `# ── Libraries ───────────────────────────────────────────────
+const cleaning = `# -- Libraries -----------------------------------------------
 library(readxl)
 library(dplyr)
 library(meta)
 library(metafor)
 
-# ── Load extracted data ────────────────────────────────────
+# -- Load extracted data ------------------------------------
 dat <- read_excel("data/study_extract.xlsx", sheet = "Main")
 
-# ── Prepare proportion outcome: Approach A ─────────────────
+# -- Prepare proportion outcome: Approach A -----------------
 prop_a <- dat %>%
   filter(arm == "A", !is.na(outcome_1_event), !is.na(outcome_1_total)) %>%
   mutate(
     events = as.integer(outcome_1_event),
     total  = as.integer(outcome_1_total),
-    label  = paste0(year, " – ", study_id)
+    label  = paste0(year, " - ", study_id)
   ) %>%
   arrange(year)
 
-# ── Proportion pooling with Freeman-Tukey PFT ──────────────
+# -- Proportion pooling with Freeman-Tukey PFT --------------
 meta_prop_a <- metaprop(
   event = prop_a$events,
   n     = prop_a$total,
@@ -37,17 +37,17 @@ meta_prop_a <- metaprop(
   method.tau = "DL",    # DerSimonian-Laird τ²
   random = TRUE,
   fixed  = FALSE,
-  title  = "Outcome 1 – Approach A"
+  title  = "Outcome 1 - Approach A"
 )
 summary(meta_prop_a)
 
-# ── Proportion pooling: Approach B ─────────────────────────
+# -- Proportion pooling: Approach B -------------------------
 prop_b <- dat %>%
   filter(arm == "B", !is.na(outcome_1_event), !is.na(outcome_1_total)) %>%
   mutate(
     events = as.integer(outcome_1_event),
     total  = as.integer(outcome_1_total),
-    label  = paste0(year, " – ", study_id)
+    label  = paste0(year, " - ", study_id)
   ) %>%
   arrange(year)
 
@@ -60,13 +60,13 @@ meta_prop_b <- metaprop(
   method.tau = "DL",
   random = TRUE,
   fixed  = FALSE,
-  title  = "Outcome 1 – Approach B"
+  title  = "Outcome 1 - Approach B"
 )
 
-# ── Continuous outcome: metamean() with MRAW ───────────────
+# -- Continuous outcome: metamean() with MRAW ---------------
 cont_a <- dat %>%
   filter(arm == "A", !is.na(mean_val), !is.na(sd_val)) %>%
-  mutate(label = paste0(year, " – ", study_id))
+  mutate(label = paste0(year, " - ", study_id))
 
 meta_mean_a <- metamean(
   n    = cont_a$n,
@@ -77,11 +77,11 @@ meta_mean_a <- metamean(
   method.tau = "REML",
   random = TRUE,
   fixed  = FALSE,
-  title  = "Continuous Outcome – Approach A"
+  title  = "Continuous Outcome - Approach A"
 )
 summary(meta_mean_a)`;
 
-const analysis = `# ── Forest plot: Proportion outcome ─────────────────────────
+const analysis = `# -- Forest plot: Proportion outcome -------------------------
 png("results/forest_prop_approach_a.png", width = 1920, height = 1080, res = 140)
 forest(meta_prop_a,
        leftcols  = c("studlab", "event", "n"),
@@ -102,7 +102,7 @@ forest(meta_prop_b,
        col.diamond = "#CEDC57")
 dev.off()
 
-# ── Forest plot: Continuous outcome ────────────────────────
+# -- Forest plot: Continuous outcome ------------------------
 png("results/forest_mean_approach_a.png", width = 1920, height = 1080, res = 140)
 forest(meta_mean_a,
        leftcols  = c("studlab", "n", "mean", "sd"),
@@ -111,23 +111,23 @@ forest(meta_mean_a,
        print.I2   = TRUE)
 dev.off()
 
-# ── Heterogeneity summary ─────────────────────────────────
-cat("Approach A – Proportion:\\n")
+# -- Heterogeneity summary ---------------------------------
+cat("Approach A - Proportion:\\n")
 cat("  I² =", meta_prop_a$I2, "\\n")
 cat("  τ² =", meta_prop_a$tau2, "\\n")
 cat("  Q  =", meta_prop_a$Q, " p =", meta_prop_a$pval.Q, "\\n\\n")
 
-cat("Approach B – Proportion:\\n")
+cat("Approach B - Proportion:\\n")
 cat("  I² =", meta_prop_b$I2, "\\n")
 cat("  τ² =", meta_prop_b$tau2, "\\n")
 cat("  Q  =", meta_prop_b$Q, " p =", meta_prop_b$pval.Q, "\\n\\n")
 
-cat("Approach A – Continuous:\\n")
+cat("Approach A - Continuous:\\n")
 cat("  I² =", meta_mean_a$I2, "\\n")
 cat("  τ² =", meta_mean_a$tau2, "\\n")
 cat("  Q  =", meta_mean_a$Q, " p =", meta_mean_a$pval.Q, "\\n")`;
 
-const plotting = `# ── Funnel plot: Approach A proportion ──────────────────────
+const plotting = `# -- Funnel plot: Approach A proportion ----------------------
 png("results/funnel_prop_a.png", width = 1200, height = 900, res = 140)
 funnel(meta_prop_a,
        xlab = "Proportion (Freeman-Tukey)",
@@ -135,7 +135,7 @@ funnel(meta_prop_a,
        cex.studlab = 0.7)
 dev.off()
 
-# ── Egger regression test for funnel asymmetry ─────────────
+# -- Egger regression test for funnel asymmetry -------------
 # Convert metaprop to metafor rma object for Egger test
 rma_prop_a <- rma(
   yi = meta_prop_a$TE,
@@ -148,7 +148,7 @@ cat("Egger regression test:\\n")
 cat("  z =", egger_result$zval, "\\n")
 cat("  p =", egger_result$pval, "\\n")
 
-# ── Trim-and-fill analysis ────────────────────────────────
+# -- Trim-and-fill analysis --------------------------------
 tf_result <- trimfill(rma_prop_a)
 cat("\\nTrim-and-fill:\\n")
 cat("  Imputed studies:", tf_result$k0, "\\n")
@@ -161,7 +161,7 @@ funnel(tf_result,
        main = "Trim-and-Fill Funnel Plot")
 dev.off()
 
-# ── Funnel plot: Approach B proportion ─────────────────────
+# -- Funnel plot: Approach B proportion ---------------------
 png("results/funnel_prop_b.png", width = 1200, height = 900, res = 140)
 funnel(meta_prop_b,
        xlab = "Proportion (Freeman-Tukey)",
@@ -176,7 +176,7 @@ rma_prop_b <- rma(
 )
 
 egger_b <- regtest(rma_prop_b, model = "lm")
-cat("\\nApproach B – Egger test:\\n")
+cat("\\nApproach B - Egger test:\\n")
 cat("  z =", egger_b$zval, "  p =", egger_b$pval, "\\n")
 
 tf_b <- trimfill(rma_prop_b)
@@ -190,7 +190,7 @@ const code = [
 ---
 <CaseStudyLayout
   title="Stent vs. Frozen Elephant Trunk"
-  description="Case study: proportion meta-analysis with the Freeman–Tukey transformation comparing surgical techniques in Type A aortic dissection. Published in The Thoracic & Cardiovascular Surgeon."
+  description="Case study: proportion meta-analysis with the Freeman-Tukey transformation comparing surgical techniques in Type A aortic dissection. Published in The Thoracic & Cardiovascular Surgeon."
   field="Thoracic Surgery · Proportions"
   venue="Thoracic & CV Surgeon"
   year="2025"
@@ -198,7 +198,7 @@ const code = [
   doiHref="https://www.thieme-connect.de/products/ejournals/abstract/10.1055/a-2737-6653"
   doiLabel="Thoracic & CV Surgeon: Stent versus Trunk in Type A Dissection"
   problem="Pooling event rates and proportions across studies comparing stent grafting versus frozen elephant trunk in Type A aortic dissection, where studies varied in sample size and reported outcomes, with sparse and zero-event data requiring specialized methods."
-  approach="Random-effects proportion pooling with metaprop() using the Freeman–Tukey double-arcsine (PFT) transformation and Clopper–Pearson exact intervals, continuous-outcome pooling via metamean() (MRAW, REML), heterogeneity assessment (I², τ², Q), and publication-bias evaluation through funnel plots, Egger regression, and trim-and-fill."
+  approach="Random-effects proportion pooling with metaprop() using the Freeman-Tukey double-arcsine (PFT) transformation and Clopper-Pearson exact intervals, continuous-outcome pooling via metamean() (MRAW, REML), heterogeneity assessment (I², τ², Q), and publication-bias evaluation through funnel plots, Egger regression, and trim-and-fill."
   outcome="Published in The Thoracic and Cardiovascular Surgeon. The analysis provided comparative effectiveness data for surgical decision-making, and the methodology section required no revision during peer review."
   figures={figures}
   code={code}

@@ -6,7 +6,7 @@ export const withBase = (path: string): string =>
 export const site = {
   name: 'Yousef Alghzawi',
   role: 'Clinical Biostatistician',
-  tagline: 'Publication-grade statistics for clinical research.',
+  tagline: 'Statistical analysis your reviewers can trust.',
   email: 'yaalghzawi23@med.just.edu.jo',
   linkedin: 'https://www.linkedin.com/in/yousef-alghzawi/',
   researchgate: 'https://www.researchgate.net/profile/Yousef-Alghzawi-2/research',
@@ -37,9 +37,9 @@ export const projects: Project[] = [
     field: 'Hematologic Oncology · Survival',
     title: 'Second Transplant Survival Outcomes',
     blurb:
-      'Competing-risks survival analysis of second hematopoietic cell transplantation, with stratified Cox models and relapse-vs-mortality decomposition.',
+      'Competing-risks survival analysis of second hematopoietic cell transplantation, with stratified Cox models that separate relapse from non-relapse mortality.',
     status: 'Published · Blood (ASH)',
-    metric: 'HR · KM · Fine–Gray',
+    metric: 'HR · KM · Fine-Gray',
     img: '/assets/projects/stratified-cox/plots/os-adjusted.png',
   },
   {
@@ -47,7 +47,7 @@ export const projects: Project[] = [
     field: 'Vascular Surgery · Meta-Analysis',
     title: 'Multi-Outcome Binary Meta-Analysis',
     blurb:
-      'Six binary outcomes pooled with DerSimonian–Laird random effects, leave-one-out sensitivity, Baujat influence diagnostics, and country subgroups.',
+      'Six binary outcomes pooled with DerSimonian-Laird random effects, plus leave-one-out sensitivity, Baujat influence diagnostics, and country subgroups.',
     status: 'Under Review',
     metric: '6 outcomes · I² · LOO',
     img: '/assets/projects/meta-analysis-binary/plots/forest-mortality.png',
@@ -57,9 +57,9 @@ export const projects: Project[] = [
     field: 'Thoracic Surgery · Proportions',
     title: 'Stent vs. Frozen Elephant Trunk',
     blurb:
-      'Proportion meta-analysis with the Freeman–Tukey double-arcsine transformation for mortality and thrombosis across surgical techniques in Type A dissection.',
+      'Proportion meta-analysis using the Freeman-Tukey double-arcsine transformation for mortality and thrombosis across surgical techniques in Type A dissection.',
     status: 'Published · Thoracic & CV Surgeon',
-    metric: 'Freeman–Tukey · pooled %',
+    metric: 'Freeman-Tukey · pooled %',
     img: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20A.jpg',
   },
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     field: 'Evidence Synthesis · NMA',
     title: 'Bayesian Network Meta-Analysis',
     blurb:
-      'Dual-framework (frequentist + Bayesian) network meta-analysis with MCMC estimation, SUCRA treatment ranking, and consistency checks.',
+      'Dual-framework (frequentist and Bayesian) network meta-analysis with MCMC estimation, SUCRA treatment ranking, and consistency checks.',
     status: 'Methods Showcase',
     metric: 'MCMC · SUCRA · ranking',
     img: '/assets/projects/meta-analysis-continuous/plots/forest-plot-1.png',
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     field: 'Epidemiology · Survey',
     title: 'Complex Survey Prevalence',
     blurb:
-      'Design-weighted prevalence estimation across multiple exposure groups, with survey-adjusted variance and subgroup forest summaries.',
+      'Design-weighted prevalence estimation across multiple exposure groups, with survey-adjusted variance and subgroup summaries.',
     status: 'Methods Showcase',
     metric: 'weighted · design-adjusted',
     img: '/assets/projects/cross-sectional-prevalence/plots/chart-women.png',
@@ -164,56 +164,56 @@ export const services: Service[] = [
     code: 'S/01',
     title: 'Publication-Grade Analysis',
     summary:
-      'Raw data to publication-ready manuscript with defensible methods. I handle the entire pipeline — cleaning, modeling, figures, methods text, and reviewer response.',
+      'From raw data to a submission-ready manuscript. I run the full statistical pipeline and document every step, so your methods section is airtight and your results hold up under review.',
     deliverables: [
-      'Statistical Analysis Plan aligned with design',
-      'Primary & secondary endpoint analysis',
-      'Publication-ready tables & high-res figures',
-      'Reproducible R code & methods text',
+      'Statistical Analysis Plan aligned with your design',
+      'Primary and secondary endpoint analysis',
+      'Publication-ready tables and high-resolution figures',
+      'Reproducible R code and methods text',
     ],
-    timeline: '2–4 weeks',
+    timeline: '2 to 4 weeks',
     idealFor: ['RCTs', 'Cohort', 'Cross-Sectional'],
   },
   {
     code: 'S/02',
     title: 'Systematic Review & Meta-Analysis',
     summary:
-      'Rigorous evidence synthesis following PRISMA 2020. I handle statistical pooling, heterogeneity, and bias analysis while you focus on clinical interpretation.',
+      'Rigorous evidence synthesis that follows PRISMA 2020 to the letter. I handle the pooling, heterogeneity, and bias analysis; you get a result reviewers trust.',
     deliverables: [
-      'PROSPERO-ready protocol & search strategy',
+      'PROSPERO-ready protocol and search strategy',
       'Random-effects analysis (I², Q, τ²)',
-      'Publication-quality forest & funnel plots',
-      'Subgroup, sensitivity & bias analysis',
+      'Publication-quality forest and funnel plots',
+      'Subgroup, sensitivity, and bias analysis',
     ],
-    timeline: '1–3 weeks',
+    timeline: '1 to 3 weeks',
     idealFor: ['Systematic Review', 'Meta-Analysis', 'NMA'],
   },
   {
     code: 'S/03',
-    title: 'Clinical Trial Statistical Strategy',
+    title: 'Trial Statistical Strategy',
     summary:
-      'Strategic planning before you enroll a single patient. Ensure your study is powered correctly and your analysis plan is robust against reviewer scrutiny.',
+      'Get the statistics right before you enroll a single patient. Proper power, clean endpoints, and an analysis plan that satisfies grant reviewers and journals alike.',
     deliverables: [
-      'Sample size & power calculations',
+      'Sample-size and power calculations',
       'Statistical Analysis Plan',
-      'Endpoint definition & randomization scheme',
+      'Endpoint definitions and randomization scheme',
       'Mock tables for grant applications',
     ],
-    timeline: '1–2 weeks',
+    timeline: '1 to 2 weeks',
     idealFor: ['RCTs', 'Grants', 'Protocol'],
   },
   {
     code: 'S/04',
     title: 'Methods Audit & Risk Assessment',
     summary:
-      'An independent statistical peer review before submission. Identify and fix the methodological weaknesses that lead to desk rejection.',
+      'An independent statistical review before you submit. I find the methodological weaknesses that trigger desk rejection and tell you exactly how to fix them.',
     deliverables: [
       'Line-by-line methods review',
-      'Reviewer risk assessment report',
-      'Specific recommendations for improvement',
+      'Reviewer risk-assessment report',
+      'Specific, actionable recommendations',
       'Pre-written responses to likely objections',
     ],
-    timeline: '2–3 weeks',
+    timeline: '2 to 3 weeks',
     idealFor: ['Pre-Submission', 'Resubmission'],
   },
 ];
@@ -221,20 +221,20 @@ export const services: Service[] = [
 // --- Process -------------------------------------------------------------
 export const process = [
   { n: '01', t: 'Submit Inquiry', d: 'Share your study type, data status, and target journal. I assess fit within 48 hours.' },
-  { n: '02', t: 'Scoping Call', d: 'We discuss your research question, endpoints, and reviewer expectations. I draft an analysis plan.' },
+  { n: '02', t: 'Scoping Call', d: 'We align on your research question, endpoints, and reviewer expectations. I draft an analysis plan.' },
   { n: '03', t: 'Analysis & Deliverables', d: 'Full statistical analysis with tables, figures, methods text, and reproducible R code.' },
-  { n: '04', t: 'Review & Revisions', d: 'You review the output. I incorporate feedback and prepare the work for submission.' },
-  { n: '05', t: 'Post-Submission Support', d: 'Reviewer queries on statistics? I draft point-by-point responses and run additional analyses.' },
+  { n: '04', t: 'Review & Revisions', d: 'You review the output. I incorporate your feedback and prepare the work for submission.' },
+  { n: '05', t: 'Post-Submission Support', d: 'Reviewer queries on the statistics? I draft point-by-point responses and run any extra analyses.' },
 ];
 
 // --- FAQ -----------------------------------------------------------------
 export const faqs = [
-  { q: 'Do you offer authorship or acknowledgment?', a: 'My role is typically acknowledged in the methods section or author list depending on the level of contribution. We discuss this upfront during scoping.' },
-  { q: 'How do you handle data confidentiality?', a: 'I sign NDAs and data-handling agreements before any data transfer. All datasets are stored on encrypted drives and deleted on completion unless otherwise agreed. I am also experienced with de-identified data.' },
-  { q: 'What if reviewers question the statistical methods?', a: 'Post-submission support is included. I draft point-by-point statistical responses to reviewer queries and run any additional sensitivity or subgroup analyses they request. My goal is that the statistics never become the reason for rejection.' },
-  { q: 'Can you work with my existing dataset and analysis?', a: 'Yes. I can audit existing analyses, clean and restructure datasets, or start from raw data. I work with SPSS (.sav), Excel, CSV, REDCap exports, or SQL databases.' },
-  { q: 'What is the typical timeline for a project?', a: 'Most original-research projects take 2–4 weeks and meta-analyses 1–3 weeks. Timeline depends on dataset complexity, number of endpoints, and revision cycles. I provide a specific estimate during scoping.' },
-  { q: 'Do you help with study design, or only analysis?', a: 'Both. I offer pre-study consultation including sample size calculations, endpoint definitions, and design review. I can join at any stage — from protocol development to post-hoc analysis.' },
+  { q: 'How do you protect my data and confidentiality?', a: 'I sign an NDA and a data-handling agreement before any data is transferred. Datasets are stored encrypted and deleted on completion unless we agree otherwise. I am equally comfortable working with fully de-identified data.' },
+  { q: 'What if reviewers question the statistical methods?', a: 'Post-submission support is included. I draft point-by-point statistical responses and run any additional sensitivity or subgroup analyses reviewers request. My standard is simple: the statistics will not be why your paper is rejected.' },
+  { q: 'How do you handle authorship and acknowledgment?', a: 'My role is acknowledged in the methods section or the author list depending on the level of contribution. We agree on this in writing, upfront, during scoping. No surprises.' },
+  { q: 'Can you work with my existing dataset and analysis?', a: 'Yes. I can audit an existing analysis, clean and restructure your dataset, or start from raw data. I work with SPSS (.sav), Excel, CSV, REDCap exports, and SQL databases.' },
+  { q: 'What is the typical timeline for a project?', a: 'Most original-research projects take 2 to 4 weeks and meta-analyses 1 to 3 weeks. The estimate depends on dataset complexity, number of endpoints, and revision cycles. You get a specific timeline during scoping.' },
+  { q: 'Do you help with study design, or only the analysis?', a: 'Both. I offer pre-study consultation including sample-size calculations, endpoint definitions, and design review, and I can join at any stage from protocol development to post-hoc analysis.' },
 ];
 
 // --- Tooling / methods (about) ------------------------------------------
@@ -244,10 +244,10 @@ export const tools = [
 ];
 
 export const methodGroups = [
-  { label: 'Survival & Time-to-Event', items: ['Kaplan–Meier', 'Cox Proportional Hazards', 'Stratified Cox', 'Competing Risks (Fine–Gray)', 'Joinpoint Regression', 'Log-Rank'] },
-  { label: 'Meta-Analysis & Synthesis', items: ['Random-Effects (DerSimonian–Laird)', 'Fixed-Effects (Mantel–Haenszel)', 'Network Meta-Analysis', 'Subgroup & Sensitivity', 'Publication Bias (Egger, Begg)', 'Rare Events (Peto OR)', 'Leave-One-Out', 'Heterogeneity (I², Q)'] },
+  { label: 'Survival & Time-to-Event', items: ['Kaplan-Meier', 'Cox Proportional Hazards', 'Stratified Cox', 'Competing Risks (Fine-Gray)', 'Joinpoint Regression', 'Log-Rank'] },
+  { label: 'Meta-Analysis & Synthesis', items: ['Random-Effects (DerSimonian-Laird)', 'Fixed-Effects (Mantel-Haenszel)', 'Network Meta-Analysis', 'Subgroup & Sensitivity', 'Publication Bias (Egger, Begg)', 'Rare Events (Peto OR)', 'Leave-One-Out', 'Heterogeneity (I², Q)'] },
   { label: 'Regression & Modeling', items: ['Logistic Regression', 'Linear Regression', 'Mixed-Effects Models', 'Ordinal Regression', 'Multivariable Adjustment', 'Bootstrap Validation'] },
-  { label: 'Descriptive & Epidemiological', items: ['Cross-Sectional', 'Survey-Weighted', 'Prevalence Estimation', 'Chi-Square / Fisher', 't-test / Mann–Whitney', 'ANOVA / Kruskal–Wallis'] },
+  { label: 'Descriptive & Epidemiological', items: ['Cross-Sectional', 'Survey-Weighted', 'Prevalence Estimation', 'Chi-Square / Fisher', 't-test / Mann-Whitney', 'ANOVA / Kruskal-Wallis'] },
 ];
 
 export const reportingStandards = ['CONSORT', 'STROBE', 'PRISMA', 'TRIPOD', 'MOOSE', 'RECORD'];
