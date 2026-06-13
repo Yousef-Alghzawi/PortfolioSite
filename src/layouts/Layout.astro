@@ -1,9 +1,9 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import Sidebar from '../components/Sidebar.astro';
+import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
 import Cursor from '../components/Cursor.astro';
-import { site } from '../data/site';
+import { site, withBase } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
@@ -14,10 +14,10 @@ interface Props {
 }
 
 const {
-  title = `${site.name} – ${site.role}`,
-  description = 'Yousef Alghzawi – Clinical Biostatistician specializing in clinical trials, evidence synthesis, and publication-grade reporting.',
+  title = `${site.name} — ${site.role}`,
+  description = 'Yousef Alghzawi — Clinical Biostatistician. Publication-grade statistical analysis, meta-analysis, and trial strategy for high-impact clinical research.',
   ogImage = 'assets/og-image.jpg',
-  mainClass = 'flex-1 lg:ml-[280px] px-4 md:px-12 py-8 md:py-12',
+  mainClass = 'w-full max-w-page mx-auto px-[clamp(1.25rem,4vw,3rem)] pt-32 md:pt-36 pb-24',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,74 +38,61 @@ const year = new Date().getFullYear();
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta name="theme-color" content="#F2EEE4" />
 
     <title>{title}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
     <ClientRouter />
-
-    <script is:inline>
-      // Apply stored theme before paint to avoid flash.
-      (() => {
-        try {
-          const t = localStorage.getItem('portfolio-theme') || 'dark';
-          document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {}
-      })();
-    </script>
   </head>
 
-  <body class="font-sans text-white gradient-bg min-h-screen">
-    <div class="min-h-screen flex flex-col lg:flex-row">
-      <MobileMenu />
-      <Sidebar />
+  <body class="font-sans">
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
-      <main class={`min-w-0 ${mainClass}`} id="main-content">
-        <slot />
+    <Header />
+    <MobileMenu />
 
-        <footer
-          class="px-5 md:px-10 py-10 border-t border-white/5 mt-16 glass-sidebar rounded-tl-[32px] rounded-tr-[32px]">
-          <div
-            class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-uiGray text-sm">
-            <p>© <span id="year">{year}</span> {site.name}. All rights reserved.</p>
-            <div class="flex items-center gap-4">
-              <a href={`mailto:${site.email}`} class="footer-link" aria-label="Email" data-cursor="email">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                  <path d="M4 6h16v12H4z" /><path d="M4 6l8 6 8-6" />
-                </svg>
-              </a>
-              <a href={site.linkedin} class="footer-link" aria-label="LinkedIn" target="_blank" rel="noopener" data-cursor="linkedin">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                  <path d="M6.5 9.5v9" /><path d="M6.5 5.5a.5.5 0 11.001 1.001A.5.5 0 016.5 5.5" />
-                  <path d="M11 9.5v9" /><path d="M11 13.5c0-1.49 1.18-2.7 2.64-2.7S16.5 12 16.5 13.5v5" />
-                </svg>
-              </a>
-            </div>
+    <main class={mainClass} id="main-content">
+      <slot />
+    </main>
+
+    <footer class="border-t border-ink mt-24">
+      <div class="max-w-page mx-auto px-[clamp(1.25rem,4vw,3rem)] py-20 md:py-28">
+        <p class="eyebrow mb-6">Have a manuscript in progress?</p>
+        <h2 class="display-section max-w-[16ch] mb-10">
+          Let's get your statistics <em>published.</em>
+        </h2>
+        <a href={withBase('/apply')} class="btn-primary" data-cursor="apply">
+          Apply to work with me
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+
+        <div class="mt-20 pt-8 border-t border-line grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+          <div class="space-y-2">
+            <a href={`mailto:${site.email}`} class="font-mono text-sm link-underline" data-cursor="email">{site.email}</a>
+            <p class="font-mono text-xs text-inkMuted">{site.location} · β · σ · HR · 95% CI · p&lt;0.001</p>
           </div>
-        </footer>
-      </main>
-    </div>
+          <div class="flex items-center gap-6 font-mono text-xs uppercase tracking-widest text-inkMuted">
+            <a href={site.linkedin} target="_blank" rel="noopener" class="hover:text-ink transition-colors" data-cursor="linkedin">LinkedIn</a>
+            <a href={site.researchgate} target="_blank" rel="noopener" class="hover:text-ink transition-colors" data-cursor="research">ResearchGate</a>
+          </div>
+        </div>
+        <p class="font-mono text-[0.7rem] text-inkMuted mt-10">© {year} {site.name}. All rights reserved.</p>
+      </div>
+    </footer>
 
     <Cursor />
 
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme">
-      <svg class="theme-icon-sun w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="4" stroke-width="2" />
-        <path stroke-linecap="round" stroke-width="2" d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-      </svg>
-      <svg class="theme-icon-moon w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-      </svg>
-    </button>
-
     <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
       </svg>
     </button>

@@ -1,7 +1,314 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
-import raw from '../../_migrated/work/tevar-zone-ma.html?raw';
+
+const figures = [
+  { src: '/assets/projects/meta-analysis-binary/plots/forest-mortality.png', caption: 'Forest plot — 30-day mortality' },
+  { src: '/assets/projects/meta-analysis-binary/plots/forest-stroke.png', caption: 'Forest plot — stroke' },
+  { src: '/assets/projects/meta-analysis-binary/plots/forest-sci.png', caption: 'Forest plot — spinal cord ischemia' },
+  { src: '/assets/projects/meta-analysis-binary/plots/forest-endoleak.png', caption: 'Forest plot — endoleak' },
+  { src: '/assets/projects/meta-analysis-rare-events/plots/sensitivity-analysis.png', caption: 'Leave-one-out sensitivity analysis' },
+];
+
+const cleaning = `# ── Libraries ─────────────────────────────────────────────
+library(readxl)
+library(dplyr)
+library(meta)
+library(metafor)
+
+# ── Load extracted data ──────────────────────────────────
+dat <- read_excel("data/study_extract.xlsx", sheet = "Main")
+
+# ── Prepare outcome 1 ───────────────────────────────────
+oc1 <- dat %>%
+  filter(!is.na(outcome_1_ctrl), !is.na(outcome_1_intv)) %>%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = round(a_n * as.numeric(outcome_1_ctrl) / 100),
+    b_e = round(b_n * as.numeric(outcome_1_intv) / 100),
+    a_e = pmax(pmin(a_e, a_n), 0),
+    b_e = pmax(pmin(b_e, b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %>%
+  arrange(year)
+
+# ── Random-effects meta-analysis: outcome 1 ──────────────
+meta_oc1 <- metabin(
+  event.e = oc1$a_e, n.e = oc1$a_n,     # Approach A
+  event.c = oc1$b_e, n.c = oc1$b_n,     # Approach B
+  studlab = oc1$label,
+  sm          = "OR",
+  method      = "Inverse",
+  method.tau  = "DL",       # DerSimonian-Laird tau²
+  hakn        = TRUE,       # Hartung-Knapp CI adjustment
+  random      = TRUE,
+  incr        = 0.5,        # continuity correction for zero cells
+  allstudies  = TRUE
+)
+summary(meta_oc1)
+
+# ── Prepare & run outcome 2 ─────────────────────────────
+oc2 <- dat %>%
+  filter(!is.na(outcome_2_ctrl), !is.na(outcome_2_intv)) %>%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_2_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_2_intv) / 100), b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %>%
+  arrange(year)
+
+meta_oc2 <- metabin(
+  event.e = oc2$a_e, n.e = oc2$a_n,
+  event.c = oc2$b_e, n.c = oc2$b_n,
+  studlab    = oc2$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+
+# ── Prepare & run outcome 3 (high heterogeneity) ────────
+oc3 <- dat %>%
+  filter(!is.na(outcome_3_ctrl), !is.na(outcome_3_intv)) %>%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_3_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_3_intv) / 100), b_n), 0),
+    label = paste0(year, " – ", study_id)
+  ) %>%
+  arrange(year)
+
+meta_oc3 <- metabin(
+  event.e = oc3$a_e, n.e = oc3$a_n,
+  event.c = oc3$b_e, n.c = oc3$b_n,
+  studlab    = oc3$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+# I² > 80% — requires sensitivity analyses (Section 2)
+
+# ── Repeat for outcomes 4–6 (same structure) ────────────
+# [outcomes 4-6 follow identical preparation and metabin() calls]
+
+# ── Forest plots ────────────────────────────────────────
+png("results/forest_outcome_1.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc1,
+       leftcols  = c("studlab", "event.e", "n.e", "event.c", "n.c"),
+       leftlabs  = c("Study (Year)", "A events", "A N", "B events", "B N"),
+       print.tau2 = TRUE,
+       print.I2   = TRUE)
+dev.off()
+
+png("results/forest_outcome_2.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc2, print.tau2 = TRUE, print.I2 = TRUE)
+dev.off()
+
+png("results/forest_outcome_3.png", width = 1920, height = 1080, res = 140)
+forest(meta_oc3, print.tau2 = TRUE, print.I2 = TRUE)
+dev.off()`;
+
+const analysis = `# ── (A) Fixed vs. Random effects — outcome 1 ────────────
+meta_oc1_fixed <- metabin(
+  event.e    = oc1$a_e, n.e = oc1$a_n,
+  event.c    = oc1$b_e, n.c = oc1$b_n,
+  studlab    = oc1$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = FALSE,
+  comb.fixed = TRUE
+)
+
+# Compare pooled estimates
+cat("Outcome 1 — Fixed OR:", exp(meta_oc1_fixed$TE.fixed), "\\n")
+cat("Outcome 1 — Random OR:", exp(meta_oc1$TE.random), "\\n")
+
+# ── Fixed vs. Random — outcome 3 (high I²) ──────────────
+meta_oc3_fixed <- metabin(
+  event.e    = oc3$a_e, n.e = oc3$a_n,
+  event.c    = oc3$b_e, n.c = oc3$b_n,
+  studlab    = oc3$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = FALSE,
+  comb.fixed = TRUE
+)
+
+cat("Outcome 3 — Fixed OR:", exp(meta_oc3_fixed$TE.fixed), "\\n")
+cat("Outcome 3 — Random OR:", exp(meta_oc3$TE.random), "\\n")
+
+# ── (B) Leave-One-Out via metainf() — outcome 1 ────────
+loo_oc1 <- metainf(meta_oc1)
+
+png("results/sensitivity/LOO_outcome_1.png", width = 1920, height = 1080, res = 140)
+forest(loo_oc1,
+       common    = FALSE,
+       random    = TRUE,
+       backtransf = TRUE,
+       print.I2  = TRUE,
+       print.tau2 = TRUE)
+dev.off()
+
+# ── Leave-One-Out — outcome 3 (most heterogeneous) ─────
+loo_oc3 <- metainf(meta_oc3)
+
+png("results/sensitivity/LOO_outcome_3.png", width = 1920, height = 1080, res = 140)
+forest(loo_oc3,
+       common    = FALSE,
+       random    = TRUE,
+       backtransf = TRUE,
+       print.I2  = TRUE,
+       print.tau2 = TRUE)
+dev.off()
+
+# ── (C) Baujat influence diagnostics — outcome 3 ───────
+# X-axis: contribution to overall heterogeneity (Q)
+# Y-axis: influence on pooled result
+png("results/sensitivity/baujat_outcome_3.png", width = 1200, height = 900, res = 140)
+baujat(meta_oc3)
+dev.off()
+
+png("results/sensitivity/baujat_outcome_5.png", width = 1200, height = 900, res = 140)
+baujat(meta_oc5)
+dev.off()
+
+# ── (D) Size-restricted sensitivity — outcome 1 ────────
+# Include only studies with per-arm N >= 40
+oc1_large <- oc1 %>% filter(a_n >= 40, b_n >= 40)
+
+meta_oc1_large <- metabin(
+  event.e    = oc1_large$a_e, n.e = oc1_large$a_n,
+  event.c    = oc1_large$b_e, n.c = oc1_large$b_n,
+  studlab    = oc1_large$label,
+  sm         = "OR",
+  method     = "Inverse",
+  method.tau = "DL",
+  hakn       = TRUE,
+  random     = TRUE,
+  incr       = 0.5,
+  allstudies = TRUE
+)
+
+cat("Outcome 1 (all studies) OR:", exp(meta_oc1$TE.random),
+    " k =", meta_oc1$k, "\\n")
+cat("Outcome 1 (N >= 40) OR:", exp(meta_oc1_large$TE.random),
+    " k =", meta_oc1_large$k, "\\n")`;
+
+const plotting = `# ── Subgroup by country — outcome 1 ──────────────────────
+oc1_sub <- dat %>%
+  filter(!is.na(outcome_1_ctrl), !is.na(outcome_1_intv), !is.na(country)) %>%
+  mutate(
+    a_n = as.numeric(arm_a_n),
+    b_n = as.numeric(arm_b_n),
+    a_e = pmax(pmin(round(a_n * as.numeric(outcome_1_ctrl) / 100), a_n), 0),
+    b_e = pmax(pmin(round(b_n * as.numeric(outcome_1_intv) / 100), b_n), 0),
+    label  = paste0(year, " – ", study_id),
+    region = as.factor(country)
+  ) %>%
+  arrange(year)
+
+meta_oc1_country <- metabin(
+  event.e = oc1_sub$a_e, n.e = oc1_sub$a_n,
+  event.c = oc1_sub$b_e, n.c = oc1_sub$b_n,
+  studlab = oc1_sub$label,
+  data    = oc1_sub,
+  sm      = "OR",
+  method  = "Inverse",
+  method.tau       = "DL",
+  method.random.ci = "HK",        # Hartung-Knapp
+  random     = TRUE,
+  fixed      = FALSE,
+  incr       = 0.5,
+  allstudies = TRUE,
+  subgroup   = oc1_sub$region,    # stratification variable
+  print.subgroup.name = TRUE
+)
+
+# ── Subgroup forest plot with interaction test ───────────
+png("results/subgroup/forest_country_outcome_1.png",
+    width = 1600, height = 1100, res = 130)
+forest(meta_oc1_country,
+       comb.fixed      = FALSE,
+       comb.random     = TRUE,
+       overall         = TRUE,
+       overall.hetstat = TRUE,
+       test.subgroup   = TRUE,
+       leftcols  = c("studlab", "event.e", "n.e", "event.c", "n.c"),
+       leftlabs  = c("Study", "A ev", "A N", "B ev", "B N"))
+dev.off()
+
+# ── Extract subgroup-difference p-value ──────────────────
+p_interaction <- meta_oc1_country$pval.Q.subgroup
+cat("Subgroup interaction p-value:", p_interaction, "\\n")
+
+# ── Subgroup summary table ──────────────────────────────
+subgroup_summary <- data.frame(
+  Subgroup = levels(oc1_sub$region),
+  k   = as.numeric(table(oc1_sub$region)),
+  OR  = exp(meta_oc1_country$TE.random.w),
+  LCL = exp(meta_oc1_country$lower.random.w),
+  UCL = exp(meta_oc1_country$upper.random.w)
+)
+
+overall_row <- data.frame(
+  Subgroup = "Overall",
+  k   = meta_oc1_country$k,
+  OR  = exp(meta_oc1_country$TE.random),
+  LCL = exp(meta_oc1_country$lower.random),
+  UCL = exp(meta_oc1_country$upper.random)
+)
+
+write.csv(rbind(subgroup_summary, overall_row),
+          "results/subgroup/subgroup_outcome_1.csv", row.names = FALSE)
+
+# ── [Repeat subgroup analysis for outcomes 2–6] ─────────
+
+# ── Master summary across all 6 outcomes ─────────────────
+summary_all <- data.frame(
+  Outcome = c("outcome_1", "outcome_2", "outcome_3",
+              "outcome_4", "outcome_5", "outcome_6"),
+  k  = c(meta_oc1$k, meta_oc2$k, meta_oc3$k,
+         meta_oc4$k, meta_oc5$k, meta_oc6$k),
+  OR = c(exp(meta_oc1$TE.random), exp(meta_oc2$TE.random),
+         exp(meta_oc3$TE.random), exp(meta_oc4$TE.random),
+         exp(meta_oc5$TE.random), exp(meta_oc6$TE.random)),
+  I2_pct = c(meta_oc1$I2, meta_oc2$I2, meta_oc3$I2,
+             meta_oc4$I2, meta_oc5$I2, meta_oc6$I2)
+)
+
+write.csv(summary_all, "results/summary_all_outcomes.csv",
+          row.names = FALSE)`;
+
+const code = [
+  { id: 'code-cleaning', label: 'Data Preparation & Binary Meta-Analysis', code: cleaning },
+  { id: 'code-analysis', label: 'Sensitivity Analyses & Influence Diagnostics', code: analysis },
+  { id: 'code-plotting', label: 'Country Subgroup Analysis & Summary Tables', code: plotting },
+];
 ---
-<CaseStudyLayout title="Multi-Outcome Binary Meta-Analysis – Yousef Alghzawi" description="Case study: six binary outcomes with DerSimonian–Laird, leave-one-out sensitivity, Baujat influence, and country subgroups." headerImage="/assets/projects/meta-analysis-binary/plots/forest-mortality.png">
-  <Fragment set:html={raw} />
-</CaseStudyLayout>
+<CaseStudyLayout
+  title="Multi-Outcome Binary Meta-Analysis"
+  description="Case study: a six-outcome binary meta-analysis in vascular surgery with DerSimonian–Laird random effects, leave-one-out sensitivity, and Baujat influence diagnostics."
+  field="Vascular Surgery · Meta-Analysis"
+  status="Under Review"
+  problem="Comparing two surgical approaches for a thoracic vascular condition across six binary outcomes, with studies spanning multiple countries and several outcomes exhibiting substantial heterogeneity (I² > 80%)."
+  approach="Random-effects meta-analysis with metabin() using inverse-variance weighting, DerSimonian–Laird τ² estimation, Hartung-Knapp CI adjustment, and continuity correction for zero-event cells, supported by leave-one-out (metainf), Baujat influence diagnostics, size-restricted refits, and country subgroup analysis with interaction testing."
+  outcome="Under peer review. The multi-outcome framework with comprehensive sensitivity analyses provided robust comparative effectiveness evidence, reporting all six outcomes with I², τ², and pooled OR (95% CI)."
+  figures={figures}
+  code={code}
+  prev={{ slug: 'cns-hematology', title: 'Survival Outcomes Following Second HCT' }}
+  next={{ slug: 'fet-article', title: 'Stent vs. Frozen Elephant Trunk' }}
+/>

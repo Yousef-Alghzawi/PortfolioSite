@@ -8,8 +8,6 @@ import { initCounters } from './counters';
 import { initReveals } from './reveals';
 import { initParallax } from './parallax';
 import { initMarquee } from './marquee';
-import { initScrolly } from './scrolly';
-import { initHGallery } from './hGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,17 +16,6 @@ let generation = 0;
 let ctx: gsap.Context | null = null;
 
 const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function webglCapable(): boolean {
-  if (!window.matchMedia('(pointer: fine)').matches) return false;
-  if ((navigator.hardwareConcurrency || 0) < 4) return false;
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl') || c.getContext('experimental-webgl'));
-  } catch {
-    return false;
-  }
-}
 
 export function initMotion(): void {
   destroyMotion();
@@ -43,44 +30,26 @@ export function initMotion(): void {
     cleanups.push(initReveals(reduced));
     cleanups.push(initParallax(reduced));
     cleanups.push(initMarquee(reduced));
-    cleanups.push(initScrolly(reduced));
-    cleanups.push(initHGallery(reduced));
     if (!reduced) cleanups.push(initCursor());
   });
 
-  const canDoWebGL = !reduced && webglCapable();
-
-  // Living-data hero (code-split).
-  const heroEl = document.querySelector<HTMLElement>('[data-hero-webgl]');
-  if (heroEl) {
-    const fallback = heroEl.querySelector<HTMLElement>('.hero-fallback');
-    if (canDoWebGL) {
-      import('./heroWebGL').then(({ initHeroWebGL }) => {
-        if (gen !== generation) return;
-        const dispose = initHeroWebGL(heroEl);
-        if (fallback) fallback.style.opacity = '0';
-        cleanups.push(() => {
-          dispose();
-          if (fallback) fallback.style.opacity = '';
-        });
-      }).catch(() => {});
-    }
+  // Living symbol field (code-split; skipped under reduced motion — the
+  // static CSS fallback texture shows instead).
+  const fieldHost = document.querySelector<HTMLElement>('[data-symbol-field]');
+  if (fieldHost && !reduced) {
+    import('./symbolField').then(({ initSymbolField }) => {
+      if (gen !== generation) return;
+      cleanups.push(initSymbolField(fieldHost));
+    }).catch(() => {});
   }
 
-  // Fluid-distortion case-study headers (code-split).
-  if (canDoWebGL) {
-    document.querySelectorAll<HTMLElement>('[data-fluid-header]').forEach((el) => {
-      import('./fluidHeader').then(({ initFluidHeader }) => {
-        if (gen !== generation) return;
-        const dispose = initFluidHeader(el);
-        const fb = el.querySelector<HTMLElement>('.fluid-fallback');
-        if (fb) fb.style.opacity = '0';
-        cleanups.push(() => {
-          dispose();
-          if (fb) fb.style.opacity = '';
-        });
-      }).catch(() => {});
-    });
+  // Header shadow on scroll.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    cleanups.push(() => window.removeEventListener('scroll', onScroll));
   }
 
   // Settle layout, then sync ScrollTrigger.

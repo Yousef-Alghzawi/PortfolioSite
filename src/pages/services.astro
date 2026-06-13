@@ -1,7 +1,62 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import raw from '../_migrated/services.html?raw';
+import { services } from '../data/site';
+
+const includes = [
+  { t: 'NDA', d: 'Full confidentiality agreement signed before any data is shared.' },
+  { t: 'R Code', d: 'Reproducible, documented code delivered with every analysis.' },
+  { t: 'Revisions', d: 'Post-submission support for reviewer queries at no extra cost.' },
+];
 ---
-<Layout title="Services – Yousef Alghzawi" description="Statistical services for clinical research: publication analysis, meta-analysis, trial strategy, and methods audits." mainClass="flex-1 lg:ml-[280px] px-4 md:px-10 py-8 md:py-10">
-  <Fragment set:html={raw} />
+<Layout
+  title="Services — Yousef Alghzawi"
+  description="Statistical services for clinical research: publication analysis, meta-analysis, trial strategy, and methods audits."
+>
+  <header class="mb-20 md:mb-24 max-w-4xl">
+    <p class="eyebrow mb-5">Signature Engagements</p>
+    <h1 class="display-section mb-7">Services.</h1>
+    <p class="lead">
+      Publication-ready statistical work that withstands peer review. Whether you need a complete
+      analysis or an independent audit, the goal is the same: your statistics should never be the
+      reason for rejection.
+    </p>
+  </header>
+
+  <div class="space-y-6">
+    {services.map((s) => (
+      <article class="card p-8 md:p-12 reveal-on-scroll">
+        <div class="grid lg:grid-cols-[5rem_1fr] gap-6 lg:gap-12">
+          <div class="font-mono text-sm text-accent tracking-widest pt-2">{s.code}</div>
+          <div>
+            <div class="flex flex-wrap gap-2 mb-5">
+              {s.idealFor.map((t) => (<span class="tag">{t}</span>))}
+            </div>
+            <h2 class="font-serif text-3xl md:text-[2.6rem] leading-tight mb-4">{s.title}</h2>
+            <p class="lead measure mb-9">{s.summary}</p>
+            <p class="mono-label mb-4">Key deliverables</p>
+            <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-2.5 mb-9 max-w-2xl">
+              {s.deliverables.map((d) => (
+                <li class="flex items-start gap-3 text-inkSoft leading-snug">
+                  <span class="mt-2 w-1.5 h-1.5 rounded-full bg-signal shrink-0"></span>{d}
+                </li>
+              ))}
+            </ul>
+            <span class="tag"><span class="dot" style="background:var(--accent)"></span>{s.timeline} typical</span>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <section class="mt-28 md:mt-40">
+    <div class="section-head"><span class="section-index">§ +</span><span class="section-kicker">What every engagement includes</span></div>
+    <div class="grid gap-5 sm:grid-cols-3">
+      {includes.map((x) => (
+        <div class="card p-8 text-center reveal-on-scroll">
+          <div class="font-serif text-3xl text-accent mb-3">{x.t}</div>
+          <p class="text-inkSoft leading-relaxed">{x.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
 </Layout>

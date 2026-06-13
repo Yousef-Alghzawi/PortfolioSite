@@ -3,23 +3,29 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte,md,mdx}'],
   theme: {
     fontFamily: {
-      // Editorial display serif for expressive headlines (new)
       serif: ['"Fraunces"', 'Georgia', 'serif'],
-      // Existing heading font retained for migrated pages
-      display: ['"Space Mono"', 'monospace'],
+      display: ['"Fraunces"', 'Georgia', 'serif'],
       sans: ['"Inter"', 'sans-serif'],
       mono: ['"Space Mono"', 'monospace'],
     },
     extend: {
       colors: {
-        slatebase: '#524E53',
-        slateDeep: '#2A282B',
-        uiGray: '#D6CBDA',
-        // Consolidated to match styles.css --orange (#8650AB)
-        brandOrange: '#8650AB',
-        brandOrange2: '#9B65C0',
-        brandGreen: '#CEDC57',
-        brandGreen2: '#E1EB8D',
+        // "Data is a living thing" — warm paper + ink, with restrained accents.
+        paper: '#F2EEE4',
+        paperRaised: '#FBF9F3',
+        paperSunken: '#E8E1D1',
+        ink: '#1A1813',
+        inkSoft: '#46423A',
+        inkMuted: '#6E6A5E',
+        inkFaint: '#9A9489',
+        line: '#D9D2C1',
+        lineStrong: '#C5BCA6',
+        accent: '#6A3C99',
+        accent2: '#8650AB',
+        signal: '#5F6B1B',
+      },
+      maxWidth: {
+        page: '1240px',
       },
     },
   },

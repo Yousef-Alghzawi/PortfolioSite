@@ -4,22 +4,132 @@ import { withBase } from '../data/site';
 import '../styles/project.css';
 import 'prismjs/themes/prism-tomorrow.css';
 
+interface Figure { src: string; caption: string; }
+interface CodeSection { id: string; label: string; code: string; }
+interface CaseNav { slug: string; title: string; }
+
 interface Props {
-  title?: string;
+  title: string;
   description?: string;
-  headerImage?: string;
+  field: string;
+  venue?: string;
+  year?: string;
+  status?: string;
+  doiHref?: string;
+  doiLabel?: string;
+  problem: string;
+  approach: string;
+  outcome: string;
+  figures?: Figure[];
+  code?: CodeSection[];
+  prev?: CaseNav;
+  next?: CaseNav;
 }
-const { title, description, headerImage } = Astro.props;
-const headerSrc = headerImage ? withBase(headerImage) : null;
+
+const {
+  title, description, field, venue, year, status,
+  doiHref, doiLabel, problem, approach, outcome,
+  figures = [], code = [], prev, next,
+} = Astro.props;
+
+const meta = [field, venue, year].filter(Boolean);
 ---
-<Layout title={title} description={description} mainClass="flex-1 lg:ml-[280px] px-6 md:px-10 py-10">
+<Layout
+  title={`${title} — Yousef Alghzawi`}
+  description={description}
+  mainClass="w-full max-w-[1120px] mx-auto px-[clamp(1.25rem,4vw,3rem)] pt-28 md:pt-32 pb-24"
+>
   <div data-case-study>
-    {headerSrc && (
-      <div class="fluid-header mb-12" data-fluid-header={headerSrc} aria-hidden="true">
-        <img class="fluid-fallback" src={headerSrc} alt="" loading="eager" />
+    <a href={withBase('/#work')} class="case-back mb-10">← All work</a>
+
+    <header class="mb-16">
+      <p class="mono-label mb-5">{meta.join('  ·  ')}</p>
+      <h1 class="display-section max-w-[20ch]">{title}</h1>
+      <div class="flex flex-wrap items-center gap-4 mt-7">
+        {status && (<span class="tag"><span class="dot" style="background:var(--accent)"></span>{status}</span>)}
+        {doiHref && (
+          <a href={doiHref} target="_blank" rel="noopener noreferrer" class="link-underline font-mono text-sm" data-cursor="read">
+            {doiLabel ?? 'Read publication'} ↗
+          </a>
+        )}
       </div>
-    )}
-    <slot />
+    </header>
+
+    <div class="grid lg:grid-cols-[170px_1fr] gap-12 lg:gap-16">
+      <!-- TOC -->
+      <aside class="hidden lg:block">
+        <div class="toc-card">
+          <p class="toc-title">Contents</p>
+          <nav id="toc" aria-label="On this page"></nav>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="min-w-0 space-y-20">
+        <!-- Overview -->
+        <section>
+          <h2 id="overview" class="font-serif text-3xl mb-8">Overview</h2>
+          <div class="grid gap-8 sm:grid-cols-3">
+            <div class="brief-card"><p class="lbl">Problem</p><p class="text-inkSoft leading-relaxed text-[15px]">{problem}</p></div>
+            <div class="brief-card"><p class="lbl">Approach</p><p class="text-inkSoft leading-relaxed text-[15px]">{approach}</p></div>
+            <div class="brief-card"><p class="lbl">Outcome</p><p class="text-inkSoft leading-relaxed text-[15px]">{outcome}</p></div>
+          </div>
+        </section>
+
+        <!-- Figures -->
+        {figures.length > 0 && (
+          <section>
+            <h2 id="figures" class="font-serif text-3xl mb-8">Figures</h2>
+            <div class="grid gap-6 sm:grid-cols-2">
+              {figures.map((f) => (
+                <figure class="figure-card">
+                  <img src={withBase(f.src)} alt={f.caption} loading="lazy" />
+                  <figcaption>{f.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Code -->
+        {code.length > 0 && (
+          <section>
+            <h2 id="code" class="font-serif text-3xl mb-8">Reproducible R Code</h2>
+            {code.map((sec, i) => (
+              <div class="code-block">
+                <div class="code-head">
+                  <span class="num">{i + 1}</span>
+                  <h3>{sec.label}</h3>
+                </div>
+                <div class="code-wrap">
+                  <button type="button" class="copy-btn" data-copy={`#${sec.id}`} aria-label="Copy code">Copy</button>
+                  <pre class="language-r"><code id={sec.id} class="language-r">{sec.code}</code></pre>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- Publication -->
+        {doiHref && (
+          <section>
+            <h2 id="publication" class="font-serif text-3xl mb-6">Publication</h2>
+            <div class="pub-callout flex flex-wrap items-center justify-between gap-4">
+              <p class="text-inkSoft max-w-[40ch]">{doiLabel ?? 'Read the full publication.'}</p>
+              <a href={doiHref} target="_blank" rel="noopener noreferrer" class="btn-ghost" data-cursor="read">
+                Read publication ↗
+              </a>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+
+    <!-- Prev / next -->
+    <footer class="case-foot flex items-center justify-between gap-4">
+      {prev ? (<a href={withBase(`/work/${prev.slug}`)} data-cursor="prev">← {prev.title}</a>) : (<span></span>)}
+      {next ? (<a href={withBase(`/work/${next.slug}`)} class="text-right" data-cursor="next">{next.title} →</a>) : (<span></span>)}
+    </footer>
   </div>
 </Layout>
 
