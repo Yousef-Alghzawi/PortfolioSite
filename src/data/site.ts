@@ -153,6 +153,7 @@ export const publications: Publication[] = [
 export interface Service {
   code: string;
   title: string;
+  tagline: string;
   summary: string;
   deliverables: string[];
   timeline: string;
@@ -163,6 +164,7 @@ export const services: Service[] = [
   {
     code: 'S/01',
     title: 'Publication-Grade Analysis',
+    tagline: 'Raw data to a submission-ready paper.',
     summary:
       'From raw data to a submission-ready manuscript. I run the full statistical pipeline and document every step, so your methods section is airtight and your results hold up under review.',
     deliverables: [
@@ -177,6 +179,7 @@ export const services: Service[] = [
   {
     code: 'S/02',
     title: 'Systematic Review & Meta-Analysis',
+    tagline: 'PRISMA-compliant evidence synthesis.',
     summary:
       'Rigorous evidence synthesis that follows PRISMA 2020 to the letter. I handle the pooling, heterogeneity, and bias analysis; you get a result reviewers trust.',
     deliverables: [
@@ -191,6 +194,7 @@ export const services: Service[] = [
   {
     code: 'S/03',
     title: 'Trial Statistical Strategy',
+    tagline: 'Power and plan before you enroll.',
     summary:
       'Get the statistics right before you enroll a single patient. Proper power, clean endpoints, and an analysis plan that satisfies grant reviewers and journals alike.',
     deliverables: [
@@ -205,6 +209,7 @@ export const services: Service[] = [
   {
     code: 'S/04',
     title: 'Methods Audit & Risk Assessment',
+    tagline: 'An independent check before you submit.',
     summary:
       'An independent statistical review before you submit. I find the methodological weaknesses that trigger desk rejection and tell you exactly how to fix them.',
     deliverables: [
@@ -220,11 +225,11 @@ export const services: Service[] = [
 
 // --- Process -------------------------------------------------------------
 export const process = [
-  { n: '01', t: 'Submit Inquiry', d: 'Share your study type, data status, and target journal. I assess fit within 48 hours.' },
-  { n: '02', t: 'Scoping Call', d: 'We align on your research question, endpoints, and reviewer expectations. I draft an analysis plan.' },
-  { n: '03', t: 'Analysis & Deliverables', d: 'Full statistical analysis with tables, figures, methods text, and reproducible R code.' },
-  { n: '04', t: 'Review & Revisions', d: 'You review the output. I incorporate your feedback and prepare the work for submission.' },
-  { n: '05', t: 'Post-Submission Support', d: 'Reviewer queries on the statistics? I draft point-by-point responses and run any extra analyses.' },
+  { n: '01', t: 'Submit Inquiry', d: 'Tell me your study and target journal.' },
+  { n: '02', t: 'Scoping Call', d: 'We align on endpoints and a plan.' },
+  { n: '03', t: 'Analysis', d: 'Full analysis, figures, and reproducible code.' },
+  { n: '04', t: 'Revisions', d: 'You review; I refine for submission.' },
+  { n: '05', t: 'Reviewer Support', d: 'I answer the statistical queries.' },
 ];
 
 // --- FAQ -----------------------------------------------------------------
