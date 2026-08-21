@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description"
-        content="Case study: frequentist and Bayesian network meta-analysis of intravenous alteplase beyond 4.5 hours for ischemic stroke." />
-    <title>Case Study: Thrombolysis After the Window Closes | Yousef Alghzawi</title>
+        content="Case study: network meta-analysis of a fragmented evidence base with disconnected components." />
+    <title>Case Study: The Network That Wasn't Connected | Yousef Alghzawi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -96,99 +96,100 @@
 
                 <header>
                     <div class="flex flex-wrap items-center gap-3 mb-4">
-                        <span class="case-meta">Stroke Neurology</span>
+                        <span class="case-meta">Anonymized Clinical Field</span>
                         <span class="text-uiGray">&bull;</span>
                         <span class="case-meta">Network Meta-Analysis</span>
                         <span class="text-uiGray">&bull;</span>
-                        <span class="status-badge">Published &middot; Int J Neuroscience 2026</span>
+                        <span class="status-badge">Manuscript In Preparation &middot; Details Masked</span>
                     </div>
-                    <h1 class="font-display text-3xl md:text-4xl leading-tight">Thrombolysis After the Window Closes</h1>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight">The Network That Wasn't Connected</h1>
                     <div class="flex flex-wrap gap-2 mt-6">
                         <span class="method-tag">netmeta</span>
-                        <span class="method-tag">gemtc + MCMC</span>
-                        <span class="method-tag">GRADE</span>
-                        <span class="method-tag">Treatment Ranking</span>
-                        <span class="method-tag">Arm-Level QC</span>
+                        <span class="method-tag">Component Analysis</span>
+                        <span class="method-tag">Island Pooling</span>
+                        <span class="method-tag">Tau-Squared Rescue</span>
+                        <span class="method-tag">Wan Conversion</span>
                     </div>
                 </header>
 
                 <section>
-                    <p class="hook">The 4.5-hour thrombolysis window leaves many stroke patients on the wrong side of the clock. The trials that pushed past it used different doses and different selection rules, and they disagree.</p>
-                    <p class="prose-block mt-4">No single pairwise comparison could answer whether late alteplase helps and at what dose. The dosing regimens had never all met in one trial, so the comparison had to run through a network.</p>
+                    <p class="hook">The treatments existed. The comparisons didn't. Half the evidence network floated as an island that no path from the reference arm could reach.</p>
+                    <p class="prose-block mt-4">A network meta-analysis assumes you can walk from any treatment to any other through shared comparisons. This evidence base broke that assumption, and the project is unpublished, so the treatments stay masked. The repair strategy is the story.</p>
                 </section>
 
                 <section>
                     <p class="section-title">How the problem became a design</p>
                     <div class="flow" role="img" aria-label="Flow from clinical question to answer">
-                        <div class="flow-step"><p class="k">Clinical question</p><p class="v">Beyond 4.5 hours, does alteplase still help, and does the dose matter?</p></div>
+                        <div class="flow-step"><p class="k">Clinical question</p><p class="v">Rank several therapies for one condition when few of them were ever trialed head to head</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The evidence</p><p class="v">Late-window and wake-up stroke RCTs with inconsistent arms and doses</p></div>
+                        <div class="flow-step"><p class="k">The evidence</p><p class="v">A sparse set of trials forming two disconnected islands, plus medians where means were needed</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The design</p><p class="v">One network, estimated twice: frequentist and Bayesian, with GRADE certainty on every comparison</p></div>
+                        <div class="flow-step"><p class="k">The design</p><p class="v">Component-wise analysis, pairwise pooling for the islands, and one carefully justified bridge</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The answer</p><p class="v">Functional benefit with a quantified bleeding cost, published with certainty ratings attached</p></div>
+                        <div class="flow-step"><p class="k">The answer</p><p class="v">A defensible ranking within each component, with the bridge tested as a sensitivity, not assumed as fact</p></div>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">The decisions that mattered</p>
                     <div class="decision">
-                        <p class="d">A network, because the doses never met in one trial.</p>
-                        <p class="w">Network meta-analysis borrows strength through the shared control arms, so regimens compared only indirectly still get an estimate.</p>
+                        <p class="d">Analyze the components separately instead of forcing one network.</p>
+                        <p class="w">Pretending a disconnected network is connected produces estimates with no evidential path behind them. Each component was analyzed as its own network, and the gap was reported as a finding.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">The same network estimated in two frameworks.</p>
-                        <p class="w">The frequentist model ran in netmeta, the Bayesian model in gemtc with MCMC. When two philosophies of inference agree, the result is not an artifact of either.</p>
+                        <p class="d">Island comparisons pooled pairwise with Hartung-Knapp.</p>
+                        <p class="w">Comparisons stranded outside any loop still carry information. They were pooled as conventional pairwise meta-analyses with small-sample-honest intervals.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">GRADE certainty attached to each comparison.</p>
-                        <p class="w">A pooled estimate without a certainty rating invites overconfidence. Clinicians got both the number and how much to trust it.</p>
+                        <p class="d">One sensitivity arm that creates the network's only loop.</p>
+                        <p class="w">A single additional arm, digitized from a published figure, connected the islands and made between-study variance estimable at all, with exactly one degree of freedom. It ran as a sensitivity analysis, clearly labeled, never as the primary.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">Arm-level quality control before any model ran.</p>
-                        <p class="w">Scripted checks on every trial arm caught mislabeled arms and a double-counted trial in the source literature. The model is only as good as the network it sits on.</p>
+                        <p class="d">Wan conversions for studies reporting medians.</p>
+                        <p class="w">Trials that report median and IQR instead of mean and SD were converted with the Wan formulas, with the source values kept inline so every converted number can be traced.</p>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">What this looks like</p>
                     <figure class="rounded-2xl overflow-hidden border border-white/10 bg-[#F4F1E8] p-2">
-                        <img src="assets/projects/alteplase-late/plots/netgraph.png" alt="Illustrative network geometry plot, simulated data"
+                        <img src="assets/projects/disconnected-nma/plots/components.png" alt="Illustrative diagram of a disconnected network with a sensitivity bridge, simulated layout"
                             class="w-full h-auto rounded-xl" loading="lazy" />
                     </figure>
-                    <p class="fig-note">Illustrative network geometry from simulated data: nodes are regimens, edge thickness is the number of trials. The published network is in the International Journal of Neuroscience.</p>
+                    <p class="fig-note">Illustrative geometry: two components that share no comparison, and the dashed sensitivity arm that bridges them. Treatment names are placeholders.</p>
                 </section>
 
                 <section class="code-section">
                     <p class="section-title">The core of it, in R</p>
                     <div class="code-wrap">
-                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># Frequentist side
-pw  &lt;- pairwise(treat, event = events, n = total,
-                studlab = study, data = arms, sm = "RR")
-net &lt;- netmeta(pw, random = TRUE, reference.group = "Control")
-netgraph(net); netrank(net)
+                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># Diagnose the geometry before modeling anything
+nc &lt;- netconnection(treat1, treat2, studlab, data = pw)
+nc$n.subnets                 # &gt; 1 means: stop, redesign
 
-# Bayesian side: same network, different engine
-mtc &lt;- mtc.network(arm_data)
-mod &lt;- mtc.model(mtc, likelihood = "binom", link = "log")
-res &lt;- mtc.run(mod)          # MCMC
-summary(res)
+# Main analysis: each component on its own
+net1 &lt;- netmeta(subset(pw, component == 1), random = TRUE)
+net2 &lt;- netmeta(subset(pw, component == 2), random = TRUE)
 
-# Agreement between the two frameworks is the robustness check.</code></pre>
+# Islands: honest pairwise pooling
+m_isl &lt;- metacont(n.e, mean.e, sd.e, n.c, mean.c, sd.c,
+                  studlab = study, sm = "SMD",
+                  method.random.ci = "HK")
+
+# The bridge runs once, labeled, as sensitivity only.</code></pre>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">Where it landed</p>
-                    <p class="prose-block">Published as <strong>Efficacy, safety and dosing of intravenous alteplase administered beyond 4.5 hours for ischemic stroke: systematic review and meta-analysis</strong> in The International Journal of Neuroscience, March 2026. An independent reproduction audit later re-derived the published estimates exactly.</p>
+                    <p class="prose-block">The manuscript is in preparation and the clinical details stay masked until it is submitted. What this case shows is the judgment call: a fragmented network reported honestly, with the bridge offered as a test instead of smuggled in as an assumption.</p>
                 </section>
 
                 <div class="divider my-8"></div>
 
                 <footer class="border-t border-white/10 pt-10">
                     <nav class="flex items-center justify-between text-sm text-uiGray">
-                        <a href="LVOT_TMVR.html" class="hover:text-white transition-colors">&larr; Previous case study</a>
-                        <a href="Cerebrolysin_Safety.html" class="hover:text-white transition-colors">Next case study &rarr;</a>
+                        <a href="TEVAR_Zone_MA.html" class="hover:text-white transition-colors">&larr; Previous case study</a>
+                        <a href="Survey_Analysis.html" class="hover:text-white transition-colors">Next case study &rarr;</a>
                     </nav>
                 </footer>
 

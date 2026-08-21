@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description"
-        content="Case study: frequentist and Bayesian network meta-analysis of intravenous alteplase beyond 4.5 hours for ischemic stroke." />
-    <title>Case Study: Thrombolysis After the Window Closes | Yousef Alghzawi</title>
+        content="Case study: rare-event safety meta-analysis of cerebrolysin and hemorrhagic transformation in stroke." />
+    <title>Case Study: Cerebrolysin and the Bleeding Question | Yousef Alghzawi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -98,97 +98,101 @@
                     <div class="flex flex-wrap items-center gap-3 mb-4">
                         <span class="case-meta">Stroke Neurology</span>
                         <span class="text-uiGray">&bull;</span>
-                        <span class="case-meta">Network Meta-Analysis</span>
+                        <span class="case-meta">Rare-Event Meta-Analysis</span>
                         <span class="text-uiGray">&bull;</span>
-                        <span class="status-badge">Published &middot; Int J Neuroscience 2026</span>
+                        <span class="status-badge">Published &middot; J Clinical Neurology 2026</span>
                     </div>
-                    <h1 class="font-display text-3xl md:text-4xl leading-tight">Thrombolysis After the Window Closes</h1>
+                    <h1 class="font-display text-3xl md:text-4xl leading-tight">Cerebrolysin and the Bleeding Question</h1>
                     <div class="flex flex-wrap gap-2 mt-6">
-                        <span class="method-tag">netmeta</span>
-                        <span class="method-tag">gemtc + MCMC</span>
-                        <span class="method-tag">GRADE</span>
-                        <span class="method-tag">Treatment Ranking</span>
-                        <span class="method-tag">Arm-Level QC</span>
+                        <span class="method-tag">Hartung-Knapp</span>
+                        <span class="method-tag">Peto OR</span>
+                        <span class="method-tag">Prediction Intervals</span>
+                        <span class="method-tag">Leave-One-Out</span>
+                        <span class="method-tag">Trial Sequential Analysis</span>
                     </div>
                 </header>
 
                 <section>
-                    <p class="hook">The 4.5-hour thrombolysis window leaves many stroke patients on the wrong side of the clock. The trials that pushed past it used different doses and different selection rules, and they disagree.</p>
-                    <p class="prose-block mt-4">No single pairwise comparison could answer whether late alteplase helps and at what dose. The dosing regimens had never all met in one trial, so the comparison had to run through a network.</p>
+                    <p class="hook">Some stroke teams add cerebrolysin after reperfusion therapy. The safety worry is bleeding into the brain.</p>
+                    <p class="prose-block mt-4">Hemorrhagic transformation is uncommon. That is good news for patients and bad news for statistics: with a handful of events per trial, a default random-effects model gives you an answer that looks precise and is not. This analysis was built around that constraint.</p>
                 </section>
 
                 <section>
                     <p class="section-title">How the problem became a design</p>
                     <div class="flow" role="img" aria-label="Flow from clinical question to answer">
-                        <div class="flow-step"><p class="k">Clinical question</p><p class="v">Beyond 4.5 hours, does alteplase still help, and does the dose matter?</p></div>
+                        <div class="flow-step"><p class="k">Clinical question</p><p class="v">Does adjunct cerebrolysin raise the risk of hemorrhagic transformation?</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The evidence</p><p class="v">Late-window and wake-up stroke RCTs with inconsistent arms and doses</p></div>
+                        <div class="flow-step"><p class="k">The evidence</p><p class="v">A small set of trials, each with very few bleeding events</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The design</p><p class="v">One network, estimated twice: frequentist and Bayesian, with GRADE certainty on every comparison</p></div>
+                        <div class="flow-step"><p class="k">The design</p><p class="v">Estimators chosen for sparse binary data, tested against each other</p></div>
                         <span class="flow-arrow">&rarr;</span>
-                        <div class="flow-step"><p class="k">The answer</p><p class="v">Functional benefit with a quantified bleeding cost, published with certainty ratings attached</p></div>
+                        <div class="flow-step"><p class="k">The answer</p><p class="v">A pooled estimate the sparse data can actually support, published and citable</p></div>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">The decisions that mattered</p>
                     <div class="decision">
-                        <p class="d">A network, because the doses never met in one trial.</p>
-                        <p class="w">Network meta-analysis borrows strength through the shared control arms, so regimens compared only indirectly still get an estimate.</p>
+                        <p class="d">Hartung-Knapp intervals instead of the classic Wald-type CI.</p>
+                        <p class="w">With few trials, conventional intervals are too narrow. Hartung-Knapp widens them honestly.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">The same network estimated in two frameworks.</p>
-                        <p class="w">The frequentist model ran in netmeta, the Bayesian model in gemtc with MCMC. When two philosophies of inference agree, the result is not an artifact of either.</p>
+                        <p class="d">Peto odds ratios as the rare-event sensitivity model.</p>
+                        <p class="w">Peto needs no continuity correction, so zero-event arms enter the pool without artificial 0.5 additions that distort sparse data.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">GRADE certainty attached to each comparison.</p>
-                        <p class="w">A pooled estimate without a certainty rating invites overconfidence. Clinicians got both the number and how much to trust it.</p>
+                        <p class="d">Leave-one-out on every outcome.</p>
+                        <p class="w">When one trial can carry half the events, you must know whether the conclusion survives without it. It did.</p>
                     </div>
                     <div class="decision">
-                        <p class="d">Arm-level quality control before any model ran.</p>
-                        <p class="w">Scripted checks on every trial arm caught mislabeled arms and a double-counted trial in the source literature. The model is only as good as the network it sits on.</p>
+                        <p class="d">Trial sequential analysis on top of the pooled result.</p>
+                        <p class="w">A meta-analysis can be underpowered too. TSA asks whether the accumulated evidence has actually reached the information size needed to answer the question, instead of assuming it has.</p>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">What this looks like</p>
                     <figure class="rounded-2xl overflow-hidden border border-white/10 bg-[#F4F1E8] p-2">
-                        <img src="assets/projects/alteplase-late/plots/netgraph.png" alt="Illustrative network geometry plot, simulated data"
+                        <img src="assets/projects/cerebrolysin/plots/rare_event_forest.png" alt="Illustrative rare-event forest plot with prediction interval, simulated data"
                             class="w-full h-auto rounded-xl" loading="lazy" />
                     </figure>
-                    <p class="fig-note">Illustrative network geometry from simulated data: nodes are regimens, edge thickness is the number of trials. The published network is in the International Journal of Neuroscience.</p>
+                    <p class="fig-note">Illustrative figure generated from simulated data. Note the zero-event trial that a naive model would silently drop, and the prediction interval below the diamonds. The real figures live with the journal.</p>
                 </section>
 
                 <section class="code-section">
                     <p class="section-title">The core of it, in R</p>
                     <div class="code-wrap">
-                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># Frequentist side
-pw  &lt;- pairwise(treat, event = events, n = total,
-                studlab = study, data = arms, sm = "RR")
-net &lt;- netmeta(pw, random = TRUE, reference.group = "Control")
-netgraph(net); netrank(net)
+                        <pre class="rounded-xl !bg-[rgba(15,23,42,0.75)] border border-white/5"><code class="language-r"># Primary model: random effects with Hartung-Knapp intervals
+m_hk &lt;- metabin(event.e, n.e, event.c, n.c,
+                studlab = study, sm = "OR",
+                method.tau = "REML",
+                method.random.ci = "HK",
+                prediction = TRUE)
 
-# Bayesian side: same network, different engine
-mtc &lt;- mtc.network(arm_data)
-mod &lt;- mtc.model(mtc, likelihood = "binom", link = "log")
-res &lt;- mtc.run(mod)          # MCMC
-summary(res)
+# Rare-event sensitivity: Peto, no continuity correction
+m_peto &lt;- metabin(event.e, n.e, event.c, n.c,
+                  studlab = study, sm = "OR",
+                  method = "Peto")
 
-# Agreement between the two frameworks is the robustness check.</code></pre>
+# Stability: refit dropping each trial in turn
+metainf(m_hk)
+
+# Then trial sequential analysis on the cumulative evidence,
+# against the required information size for this event rate.</code></pre>
                     </div>
                 </section>
 
                 <section>
                     <p class="section-title">Where it landed</p>
-                    <p class="prose-block">Published as <strong>Efficacy, safety and dosing of intravenous alteplase administered beyond 4.5 hours for ischemic stroke: systematic review and meta-analysis</strong> in The International Journal of Neuroscience, March 2026. An independent reproduction audit later re-derived the published estimates exactly.</p>
+                    <p class="prose-block">Published as <strong>Cerebrolysin and Risk of Hemorrhagic Transformation: A Pooled Analysis of Recent Studies</strong>, Journal of Clinical Neurology, March 2026. The rare-event framework meant the safety conclusion did not depend on any single estimator or any single trial.</p>
                 </section>
 
                 <div class="divider my-8"></div>
 
                 <footer class="border-t border-white/10 pt-10">
                     <nav class="flex items-center justify-between text-sm text-uiGray">
-                        <a href="LVOT_TMVR.html" class="hover:text-white transition-colors">&larr; Previous case study</a>
-                        <a href="Cerebrolysin_Safety.html" class="hover:text-white transition-colors">Next case study &rarr;</a>
+                        <a href="Network_Meta_Analysis.html" class="hover:text-white transition-colors">&larr; Previous case study</a>
+                        <a href="FET_Article.html" class="hover:text-white transition-colors">Next case study &rarr;</a>
                     </nav>
                 </footer>
 
