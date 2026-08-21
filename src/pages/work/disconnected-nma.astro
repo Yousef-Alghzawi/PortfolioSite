@@ -1,0 +1,75 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "The Network That Wasn't Connected",
+  "description": "Network meta-analysis of a fragmented evidence base with disconnected components.",
+  "field": "Anonymized Clinical Field",
+  "venue": "In Preparation",
+  "year": "2026",
+  "status": "Manuscript In Preparation - Details Masked",
+  "hook": "The treatments existed. The comparisons didn't. Half the evidence network floated as an island that no path from the reference arm could reach.",
+  "scenario": "A network meta-analysis assumes you can walk from any treatment to any other through shared comparisons. This evidence base broke that assumption, and the project is unpublished, so the treatments stay masked. The repair strategy is the story.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Rank several therapies for one condition when few were ever trialed head to head"
+    },
+    {
+      "k": "The evidence",
+      "v": "A sparse set of trials forming two disconnected islands, plus medians where means were needed"
+    },
+    {
+      "k": "The design",
+      "v": "Component-wise analysis, pairwise pooling for the islands, and one carefully justified bridge"
+    },
+    {
+      "k": "The answer",
+      "v": "A defensible ranking within each component, with the bridge tested as a sensitivity, not assumed as fact"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "Analyze the components separately instead of forcing one network.",
+      "w": "Pretending a disconnected network is connected produces estimates with no evidential path behind them. Each component was analyzed as its own network, and the gap was reported as a finding."
+    },
+    {
+      "d": "Island comparisons pooled pairwise with Hartung-Knapp.",
+      "w": "Comparisons stranded outside any loop still carry information. They were pooled as conventional pairwise meta-analyses with small-sample-honest intervals."
+    },
+    {
+      "d": "One sensitivity arm that creates the network's only loop.",
+      "w": "A single additional arm, digitized from a published figure, connected the islands and made between-study variance estimable at all, with exactly one degree of freedom. It ran as a labeled sensitivity analysis, never as the primary."
+    },
+    {
+      "d": "Wan conversions for studies reporting medians.",
+      "w": "Trials reporting median and IQR instead of mean and SD were converted with the Wan formulas, with source values kept inline so every converted number can be traced."
+    }
+  ],
+  "problem": "A treatment-ranking question sitting on a network that graph theory says cannot be analyzed as one.",
+  "approach": "Component-wise netmeta, Hartung-Knapp pairwise pooling for stranded comparisons, and a single justified bridging sensitivity.",
+  "outcome": "Manuscript in preparation; clinical details masked until submission. The judgment call is the showcase: a fragmented network reported honestly.",
+  "figures": [
+    {
+      "src": "/assets/projects/disconnected-nma/plots/components.png",
+      "caption": "Illustrative geometry with placeholder treatment names: two components that share no comparison, and the dashed sensitivity arm that bridges them."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-nc",
+      "label": "Diagnose, then design",
+      "code": "# Diagnose the geometry before modeling anything\nnc <- netconnection(treat1, treat2, studlab, data = pw)\nnc$n.subnets                 # more than 1 means: stop, redesign\n\n# Main analysis: each component on its own\nnet1 <- netmeta(subset(pw, component == 1), random = TRUE)\nnet2 <- netmeta(subset(pw, component == 2), random = TRUE)\n\n# Islands: honest pairwise pooling\nm_isl <- metacont(n.e, mean.e, sd.e, n.c, mean.c, sd.c,\n                  studlab = study, sm = \"SMD\",\n                  method.random.ci = \"HK\")\n\n# The bridge runs once, labeled, as sensitivity only."
+    }
+  ],
+  "prev": {
+    "slug": "tevar-zone-ma",
+    "title": "Six Outcomes, One Stable Answer"
+  },
+  "next": {
+    "slug": "survey-analysis",
+    "title": "Thirty-Four Specialists, One Whitespace Bug"
+  }
+};
+---
+<CaseStudyLayout {...page} />

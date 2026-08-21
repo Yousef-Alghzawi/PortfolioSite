@@ -7,6 +7,8 @@ import 'prismjs/themes/prism-tomorrow.css';
 interface Figure { src: string; caption: string; }
 interface CodeSection { id: string; label: string; code: string; }
 interface CaseNav { slug: string; title: string; }
+interface FlowStep { k: string; v: string; }
+interface Decision { d: string; w: string; }
 
 interface Props {
   title: string;
@@ -20,6 +22,10 @@ interface Props {
   problem: string;
   approach: string;
   outcome: string;
+  hook?: string;
+  scenario?: string;
+  flow?: FlowStep[];
+  decisions?: Decision[];
   figures?: Figure[];
   code?: CodeSection[];
   prev?: CaseNav;
@@ -29,6 +35,7 @@ interface Props {
 const {
   title, description, field, venue, year, status,
   doiHref, doiLabel, problem, approach, outcome,
+  hook, scenario, flow = [], decisions = [],
   figures = [], code = [], prev, next,
 } = Astro.props;
 
@@ -66,6 +73,45 @@ const meta = [field, venue, year].filter(Boolean);
 
       <!-- Content -->
       <div class="min-w-0 space-y-20">
+        <!-- The scenario -->
+        {hook && (
+          <section>
+            <h2 id="scenario" class="font-serif text-3xl mb-8">The Scenario</h2>
+            <p class="font-serif text-2xl leading-snug">{hook}</p>
+            {scenario && <p class="text-inkSoft leading-relaxed mt-5 max-w-[65ch]">{scenario}</p>}
+          </section>
+        )}
+
+        <!-- Flow: question to answer -->
+        {flow.length > 0 && (
+          <section>
+            <h2 id="design-path" class="font-serif text-3xl mb-8">From Question to Answer</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {flow.map((s) => (
+                <div class="brief-card">
+                  <p class="lbl">{s.k}</p>
+                  <p class="text-inkSoft leading-relaxed text-[15px]">{s.v}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Design decisions -->
+        {decisions.length > 0 && (
+          <section>
+            <h2 id="decisions" class="font-serif text-3xl mb-8">The Decisions That Mattered</h2>
+            <div class="space-y-7">
+              {decisions.map((dec) => (
+                <div class="border-l-2 pl-5" style="border-color: var(--accent)">
+                  <p class="font-medium">{dec.d}</p>
+                  <p class="text-inkSoft leading-relaxed text-[15px] mt-1">{dec.w}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <!-- Overview -->
         <section>
           <h2 id="overview" class="font-serif text-3xl mb-8">Overview</h2>

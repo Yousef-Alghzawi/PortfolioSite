@@ -1,0 +1,77 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "Keeping the Outflow Open in TMVR",
+  "description": "Comparative proportion meta-analysis of LVOT obstruction prevention techniques in transcatheter mitral valve replacement.",
+  "field": "Structural Cardiology",
+  "venue": "JACC (TCT-30)",
+  "year": "2025",
+  "status": "Published - First Author",
+  "doiHref": "https://www.jacc.org/doi/10.1016/j.jacc.2025.09.079",
+  "doiLabel": "Read in JACC",
+  "hook": "Replacing the mitral valve through a catheter can block the heart's own outflow tract. Several techniques exist to prevent that, and almost no trials compare them.",
+  "scenario": "Each prevention technique lives in its own small case series, so a conventional two-arm meta-analysis was impossible. The comparison had to be built indirectly, from pooled single-arm proportions, technique by technique.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Which LVOT obstruction prevention technique carries the best success and safety profile?"
+    },
+    {
+      "k": "The evidence",
+      "v": "Small single-arm series per technique, extreme event proportions, no head-to-head trials"
+    },
+    {
+      "k": "The design",
+      "v": "Transformed proportion pooling with technique subgroups, plus paired pre and post hemodynamics"
+    },
+    {
+      "k": "The answer",
+      "v": "A structured cross-technique comparison, presented at TCT and published in JACC"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "Freeman-Tukey double arcsine transform for the pooling.",
+      "w": "Proportions near 0 or 100 percent misbehave on the raw scale. The transform stabilizes their variance so small series do not distort the pool."
+    },
+    {
+      "d": "Subgroup pooling by prevention technique.",
+      "w": "With no comparative trials, pooling each technique separately and reading them side by side is the honest version of the comparison clinicians wanted."
+    },
+    {
+      "d": "Paired pre and post analysis of neo-LVOT area and gradients.",
+      "w": "Within-patient change in anatomy and hemodynamics shows the mechanism worked, not just that patients survived."
+    },
+    {
+      "d": "Dual extraction with independent validation.",
+      "w": "Every value was extracted twice and cross-checked before it touched the model. In a literature of small series, one transcription error can move a pooled estimate."
+    }
+  ],
+  "problem": "LVOT obstruction is a feared TMVR complication with several prevention techniques and no comparative trials.",
+  "approach": "Freeman-Tukey proportion meta-analysis with technique subgroups, paired hemodynamic deltas, and dual-validated extraction.",
+  "outcome": "Published as TCT-30 in the Journal of the American College of Cardiology, October 2025, first author.",
+  "figures": [
+    {
+      "src": "/assets/projects/lvoto-tmvr/plots/prop_forest.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-prop",
+      "label": "Subgrouped proportion pooling",
+      "code": "# Pooled proportions, stabilized, grouped by technique\nm <- metaprop(event = events, n = total,\n              studlab = series,\n              sm = \"PFT\",              # Freeman-Tukey double arcsine\n              method.tau = \"DL\",\n              subgroup = technique)\n\nforest(m, xlab = \"Event proportion\")\n\n# Mechanism check: within-patient change after the technique\ndelta <- post_gradient - pre_gradient\nt.test(delta)                          # paired shift in gradients"
+    }
+  ],
+  "prev": {
+    "slug": "sbrt-nsclc",
+    "title": "Radiation or Surgery for Early Lung Cancer?"
+  },
+  "next": {
+    "slug": "network-meta-analysis",
+    "title": "Thrombolysis After the Window Closes"
+  }
+};
+---
+<CaseStudyLayout {...page} />

@@ -1,0 +1,77 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "Cerebrolysin and the Bleeding Question",
+  "description": "Rare-event safety meta-analysis of cerebrolysin and hemorrhagic transformation in stroke.",
+  "field": "Stroke Neurology",
+  "venue": "J Clinical Neurology",
+  "year": "2026",
+  "status": "Published",
+  "doiHref": "https://doi.org/10.3988/jcn.2025.0547",
+  "doiLabel": "Read in JCN",
+  "hook": "Some stroke teams add cerebrolysin after reperfusion therapy. The safety worry is bleeding into the brain.",
+  "scenario": "Hemorrhagic transformation is uncommon. That is good news for patients and bad news for statistics: with a handful of events per trial, a default random-effects model gives an answer that looks precise and is not. This analysis was built around that constraint.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Does adjunct cerebrolysin raise the risk of hemorrhagic transformation?"
+    },
+    {
+      "k": "The evidence",
+      "v": "A small set of trials, each with very few bleeding events"
+    },
+    {
+      "k": "The design",
+      "v": "Estimators chosen for sparse binary data, tested against each other"
+    },
+    {
+      "k": "The answer",
+      "v": "A pooled estimate the sparse data can actually support, published and citable"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "Hartung-Knapp intervals instead of the classic Wald-type CI.",
+      "w": "With few trials, conventional intervals are too narrow. Hartung-Knapp widens them honestly."
+    },
+    {
+      "d": "Peto odds ratios as the rare-event sensitivity model.",
+      "w": "Peto needs no continuity correction, so zero-event arms enter the pool without artificial 0.5 additions that distort sparse data."
+    },
+    {
+      "d": "Leave-one-out on every outcome.",
+      "w": "When one trial can carry half the events, you must know whether the conclusion survives without it. It did."
+    },
+    {
+      "d": "Trial sequential analysis on top of the pooled result.",
+      "w": "A meta-analysis can be underpowered too. TSA asks whether the accumulated evidence has reached the information size the question needs, instead of assuming it has."
+    }
+  ],
+  "problem": "A rare but serious harm signal that default pooling methods handle badly.",
+  "approach": "Hartung-Knapp random effects, Peto rare-event sensitivity, leave-one-out, and trial sequential analysis.",
+  "outcome": "Published in the Journal of Clinical Neurology, March 2026. The safety conclusion did not depend on any single estimator or trial.",
+  "figures": [
+    {
+      "src": "/assets/projects/cerebrolysin/plots/rare_event_forest.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-rare",
+      "label": "Rare-event framework",
+      "code": "# Primary model: random effects with Hartung-Knapp intervals\nm_hk <- metabin(event.e, n.e, event.c, n.c,\n                studlab = study, sm = \"OR\",\n                method.tau = \"REML\",\n                method.random.ci = \"HK\",\n                prediction = TRUE)\n\n# Rare-event sensitivity: Peto, no continuity correction\nm_peto <- metabin(event.e, n.e, event.c, n.c,\n                  studlab = study, sm = \"OR\",\n                  method = \"Peto\")\n\n# Stability: refit dropping each trial in turn\nmetainf(m_hk)\n\n# Then trial sequential analysis on the cumulative evidence."
+    }
+  ],
+  "prev": {
+    "slug": "network-meta-analysis",
+    "title": "Thrombolysis After the Window Closes"
+  },
+  "next": {
+    "slug": "fet-article",
+    "title": "Stent versus Trunk"
+  }
+};
+---
+<CaseStudyLayout {...page} />

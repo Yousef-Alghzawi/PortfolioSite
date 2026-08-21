@@ -1,214 +1,77 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 
-const figures = [
-  { src: '/assets/projects/meta-analysis-continuous/plots/forest-plot-1.png', caption: 'Network forest plot - primary outcome' },
-  { src: '/assets/projects/meta-analysis-continuous/plots/forest-plot-2.png', caption: 'Network forest plot - secondary outcome' },
-];
-
-const cleaning = `# ============================================
-# DATA PREPARATION FOR NMA
-# ============================================
-library(readxl)
-library(netmeta)
-library(meta)
-library(dplyr)
-
-# Load extracted study-level data
-data <- read_excel("data/nma_extraction.xlsx")
-names(data) <- gsub("^\\\\s+|\\\\s+$", "", names(data))
-
-# Clean treatment arm labels (alphanumeric + underscore only)
-data$arm <- gsub("[^a-zA-Z0-9_]", "_", data$arm)
-data$arm <- gsub("__+", "_", data$arm)
-data$arm <- gsub("_$", "", data$arm)
-
-# --- Filter for primary outcome ---
-df_primary <- data[
-  !is.na(data$outcome_1_event) & !is.na(data$outcome_1_total),
-]
-
-# --- Pairwise transformation for frequentist NMA ---
-pw_primary <- pairwise(
-  treat   = arm,
-  event   = outcome_1_event,
-  n       = outcome_1_total,
-  studlab = study_id,
-  data    = df_primary,
-  sm      = "RR"
-)
-
-# Inspect the contrast-level data
-cat("Number of contrasts:", nrow(pw_primary), "\\n")
-cat("Number of studies:", length(unique(pw_primary$studlab)), "\\n")
-cat("Treatments in network:",
-    length(unique(c(pw_primary$treat1, pw_primary$treat2))), "\\n")`;
-
-const analysis = `# ============================================
-# FREQUENTIST NMA (netmeta)
-# ============================================
-
-# Fit random-effects network meta-analysis
-net_primary <- netmeta(
-  pw_primary,
-  reference.group = "Control",
-  common          = FALSE,
-  random          = TRUE,
-  title           = "Primary Outcome: Favorable Response"
-)
-
-# --- Network geometry plot ---
-png("figures/network_plot.png", width = 8, height = 8,
-    units = "in", res = 300)
-netgraph(
-  net_primary,
-  seq        = "optimal",
-  col        = "black",
-  plastic    = FALSE,
-  points     = TRUE,
-  pch        = 21,
-  cex.points = 3,
-  col.points = "black",
-  bg.points  = "gray"
-)
-dev.off()
-
-# --- Forest plot: All treatments vs. Control ---
-png("figures/forest_nma.png", width = 12, height = 8,
-    units = "in", res = 300)
-netmeta:::forest.netmeta(
-  net_primary,
-  sortvar  = TE,
-  xlim     = c(0.1, 10),
-  ref      = "Control",
-  leftlabs = "Treatment",
-  xlab     = "Risk Ratio vs. Control"
-)
-dev.off()
-
-# --- League table (all pairwise comparisons) ---
-league <- netleague(net_primary, random = TRUE, digits = 2)
-print(league)
-
-# --- Sensitivity: Pairwise meta-analysis (direct evidence only) ---
-direct_data <- data[
-  !is.na(data$outcome_1_treatment_event) &
-  !is.na(data$outcome_1_control_event),
-]
-
-meta_direct <- metabin(
-  event.e    = outcome_1_treatment_event,
-  n.e        = outcome_1_treatment_total,
-  event.c    = outcome_1_control_event,
-  n.c        = outcome_1_control_total,
-  studlab    = study_id,
-  data       = direct_data,
-  sm         = "RR",
-  method     = "MH",
-  fixed      = TRUE,
-  random     = TRUE,
-  method.tau = "DL"
-)
-
-# Leave-one-out sensitivity analysis
-if (meta_direct$k > 2) {
-  sens <- metainf(meta_direct, pooled = "random")
-
-  png("figures/sensitivity_loo.png", width = 12, height = 10,
-      units = "in", res = 300)
-  meta::forest(sens, main = "Leave-One-Out Sensitivity Analysis")
-  dev.off()
-}`;
-
-const plotting = `# ============================================
-# BAYESIAN NMA (gemtc + MCMC)
-# ============================================
-library(gemtc)
-
-# --- Prepare arm-level data for gemtc ---
-gemtc_data <- data.frame(
-  study      = df_primary$study_id,
-  treatment  = df_primary$arm,
-  responders = as.integer(df_primary$outcome_1_event),
-  sampleSize = as.integer(df_primary$outcome_1_total)
-)
-
-# --- Create treatment network ---
-network <- mtc.network(data.ab = gemtc_data)
-
-# --- Compile Bayesian model ---
-model <- mtc.model(
-  network,
-  type        = "consistency",
-  likelihood  = "binom",
-  link        = "logit",
-  linearModel = "random",
-  n.chain     = 4
-)
-
-# --- Run MCMC simulation ---
-results <- mtc.run(
-  model,
-  n.adapt = 5000,
-  n.iter  = 20000,
-  thin    = 1
-)
-
-# --- Summary of posterior distributions ---
-summary(results)
-
-# --- Convergence diagnostics ---
-cat("\\n--- Gelman-Rubin Diagnostic ---\\n")
-gelman <- gelman.diag(results)
-print(gelman)
-
-# All point estimates should be < 1.05
-cat("\\nMax Gelman-Rubin R-hat:",
-    max(gelman$psrf[, "Point est."]), "\\n")
-
-# --- Forest plot: Bayesian relative effects ---
-png("figures/bayesian_forest.png", width = 10, height = 8,
-    units = "in", res = 300)
-forest(
-  relative.effect(results, t1 = "Control"),
-  main = "Bayesian NMA: Relative Effects vs. Control"
-)
-dev.off()
-
-# --- Trace plots and density plots ---
-png("figures/mcmc_trace.png", width = 14, height = 10,
-    units = "in", res = 300)
-plot(results)
-dev.off()
-
-# --- Gelman-Rubin convergence plot ---
-png("figures/gelman_plot.png", width = 12, height = 8,
-    units = "in", res = 300)
-gelman.plot(results)
-dev.off()
-
-# --- Treatment ranking (SUCRA-like probabilities) ---
-ranking <- rank.probability(results)
-print(ranking)
-
-cat("\\nAnalysis complete. All outputs saved to figures/ directory.\\n")`;
-
-const code = [
-  { id: 'code-cleaning', label: 'Data Preparation & Pairwise Transformation', code: cleaning },
-  { id: 'code-analysis', label: 'Frequentist Network Meta-Analysis', code: analysis },
-  { id: 'code-plotting', label: 'Bayesian NMA with MCMC', code: plotting },
-];
+const page = {
+  "title": "Thrombolysis After the Window Closes",
+  "description": "Frequentist and Bayesian network meta-analysis of intravenous alteplase beyond 4.5 hours for ischemic stroke.",
+  "field": "Stroke Neurology",
+  "venue": "Int J Neuroscience",
+  "year": "2026",
+  "status": "Published",
+  "doiHref": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+  "doiLabel": "View on ResearchGate",
+  "hook": "The 4.5-hour thrombolysis window leaves many stroke patients on the wrong side of the clock. The trials that pushed past it used different doses and selection rules, and they disagree.",
+  "scenario": "No single pairwise comparison could answer whether late alteplase helps and at what dose. The dosing regimens had never all met in one trial, so the comparison had to run through a network.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Beyond 4.5 hours, does alteplase still help, and does the dose matter?"
+    },
+    {
+      "k": "The evidence",
+      "v": "Late-window and wake-up stroke RCTs with inconsistent arms and doses"
+    },
+    {
+      "k": "The design",
+      "v": "One network, estimated twice: frequentist and Bayesian, with GRADE certainty on every comparison"
+    },
+    {
+      "k": "The answer",
+      "v": "Functional benefit with a quantified bleeding cost, published with certainty ratings attached"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "A network, because the doses never met in one trial.",
+      "w": "Network meta-analysis borrows strength through shared control arms, so regimens compared only indirectly still get an estimate."
+    },
+    {
+      "d": "The same network estimated in two frameworks.",
+      "w": "The frequentist model ran in netmeta, the Bayesian model in gemtc with MCMC. When two philosophies of inference agree, the result is not an artifact of either."
+    },
+    {
+      "d": "GRADE certainty attached to each comparison.",
+      "w": "A pooled estimate without a certainty rating invites overconfidence. Clinicians got both the number and how much to trust it."
+    },
+    {
+      "d": "Arm-level quality control before any model ran.",
+      "w": "Scripted checks on every trial arm caught mislabeled arms and a double-counted trial in the source literature. The model is only as good as the network it sits on."
+    }
+  ],
+  "problem": "Late-window thrombolysis evidence is fragmented across doses and trial designs that never met head to head.",
+  "approach": "Dual-framework network meta-analysis (netmeta and gemtc MCMC) with GRADE and scripted arm-level QC.",
+  "outcome": "Published in The International Journal of Neuroscience, March 2026. An independent reproduction audit later re-derived the published estimates exactly.",
+  "figures": [
+    {
+      "src": "/assets/projects/alteplase-late/plots/netgraph.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-nma",
+      "label": "Two frameworks, one network",
+      "code": "# Frequentist side\npw  <- pairwise(treat, event = events, n = total,\n                studlab = study, data = arms, sm = \"RR\")\nnet <- netmeta(pw, random = TRUE, reference.group = \"Control\")\nnetgraph(net); netrank(net)\n\n# Bayesian side: same network, different engine\nmtc <- mtc.network(arm_data)\nmod <- mtc.model(mtc, likelihood = \"binom\", link = \"log\")\nres <- mtc.run(mod)          # MCMC\nsummary(res)\n\n# Agreement between the two frameworks is the robustness check."
+    }
+  ],
+  "prev": {
+    "slug": "lvoto-tmvr",
+    "title": "Keeping the Outflow Open in TMVR"
+  },
+  "next": {
+    "slug": "cerebrolysin",
+    "title": "Cerebrolysin and the Bleeding Question"
+  }
+};
 ---
-<CaseStudyLayout
-  title="Bayesian Network Meta-Analysis"
-  description="Case study: a dual-framework (frequentist + Bayesian) network meta-analysis with MCMC estimation, SUCRA treatment ranking, and consistency checks."
-  field="Evidence Synthesis · NMA"
-  status="Methods Showcase"
-  problem="Multiple treatment options exist for an acute neurological condition, but direct head-to-head comparisons are sparse. Indirect evidence through a treatment network was needed to rank interventions."
-  approach="A dual-framework network meta-analysis: frequentist random-effects NMA with netmeta (network geometry, forest plots, league table, leave-one-out sensitivity) alongside a Bayesian consistency model fit with gemtc using MCMC (4 chains), with Gelman-Rubin convergence diagnostics and treatment ranking probabilities."
-  outcome="A coherent treatment network combining direct and indirect evidence, yielding relative risk ratios versus control, a full league table of pairwise comparisons, and probabilistic treatment rankings checked across both frameworks."
-  figures={figures}
-  code={code}
-  prev={{ slug: 'fet-article', title: 'Stent vs. Frozen Elephant Trunk' }}
-  next={{ slug: 'survey-analysis', title: 'Complex Survey Prevalence' }}
-/>
+<CaseStudyLayout {...page} />

@@ -33,55 +33,104 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'cns-hematology',
-    field: 'Hematologic Oncology · Survival',
-    title: 'Second Transplant Survival Outcomes',
-    blurb:
-      'Competing-risks survival analysis of second hematopoietic cell transplantation, with stratified Cox models that separate relapse from non-relapse mortality.',
-    status: 'Published · Blood (ASH)',
-    metric: 'HR · KM · Fine-Gray',
-    img: '/assets/projects/stratified-cox/plots/os-adjusted.png',
+    "slug": "cns-hematology",
+    "field": "Hematologic Oncology - Survival",
+    "title": "Is a Second Transplant Worth It?",
+    "blurb": "Relapsed leukemia and lymphoma. Survival modeling that separates what the procedure costs from what the disease takes.",
+    "status": "Published - Blood (ASH), 1st Author",
+    "metric": "Cox - VIF - Harrell's C",
+    "img": "/assets/projects/second-hct/plots/km_simulated.png"
   },
   {
-    slug: 'tevar-zone-ma',
-    field: 'Vascular Surgery · Meta-Analysis',
-    title: 'Multi-Outcome Binary Meta-Analysis',
-    blurb:
-      'Six binary outcomes pooled with DerSimonian-Laird random effects, plus leave-one-out sensitivity, Baujat influence diagnostics, and country subgroups.',
-    status: 'Under Review',
-    metric: '6 outcomes · I² · LOO',
-    img: '/assets/projects/meta-analysis-binary/plots/forest-mortality.png',
+    "slug": "sbrt-nsclc",
+    "field": "Thoracic Oncology - Meta-Regression",
+    "title": "Radiation or Surgery for Early Lung Cancer?",
+    "blurb": "Propensity-matched pooling, with the missing hazard ratios rebuilt from raw event counts.",
+    "status": "ASCO 2026 - 1st Author",
+    "metric": "Parmar HR - meta-regression",
+    "img": "/assets/projects/sbrt-nsclc/plots/metareg_bubble.png"
   },
   {
-    slug: 'fet-article',
-    field: 'Thoracic Surgery · Proportions',
-    title: 'Stent vs. Frozen Elephant Trunk',
-    blurb:
-      'Proportion meta-analysis using the Freeman-Tukey double-arcsine transformation for mortality and thrombosis across surgical techniques in Type A dissection.',
-    status: 'Published · Thoracic & CV Surgeon',
-    metric: 'Freeman-Tukey · pooled %',
-    img: '/assets/projects/meta-analysis-proportions/plots/forest-mortality-Technique%20A.jpg',
+    "slug": "lvoto-tmvr",
+    "field": "Structural Cardiology - Proportions",
+    "title": "Keeping the Outflow Open in TMVR",
+    "blurb": "No head-to-head trials existed, so the comparison was built technique by technique.",
+    "status": "Published - JACC, 1st Author",
+    "metric": "PFT - technique subgroups",
+    "img": "/assets/projects/lvoto-tmvr/plots/prop_forest.png"
   },
   {
-    slug: 'network-meta-analysis',
-    field: 'Evidence Synthesis · NMA',
-    title: 'Bayesian Network Meta-Analysis',
-    blurb:
-      'Dual-framework (frequentist and Bayesian) network meta-analysis with MCMC estimation, SUCRA treatment ranking, and consistency checks.',
-    status: 'Methods Showcase',
-    metric: 'MCMC · SUCRA · ranking',
-    img: '/assets/projects/meta-analysis-continuous/plots/forest-plot-1.png',
+    "slug": "network-meta-analysis",
+    "field": "Stroke Neurology - NMA",
+    "title": "Thrombolysis After the Window Closes",
+    "blurb": "One evidence network, estimated in two statistical frameworks that agreed.",
+    "status": "Published - Int J Neuroscience",
+    "metric": "netmeta - MCMC - GRADE",
+    "img": "/assets/projects/alteplase-late/plots/netgraph.png"
   },
   {
-    slug: 'survey-analysis',
-    field: 'Epidemiology · Survey',
-    title: 'Complex Survey Prevalence',
-    blurb:
-      'Design-weighted prevalence estimation across multiple exposure groups, with survey-adjusted variance and subgroup summaries.',
-    status: 'Methods Showcase',
-    metric: 'weighted · design-adjusted',
-    img: '/assets/projects/cross-sectional-prevalence/plots/chart-women.png',
+    "slug": "cerebrolysin",
+    "field": "Stroke Neurology - Rare Events",
+    "title": "Cerebrolysin and the Bleeding Question",
+    "blurb": "A harm too rare for default models. Rare-event methods, plus a check that the evidence was even big enough.",
+    "status": "Published - J Clinical Neurology",
+    "metric": "HK - Peto - TSA",
+    "img": "/assets/projects/cerebrolysin/plots/rare_event_forest.png"
   },
+  {
+    "slug": "fet-article",
+    "field": "Cardiac Surgery - Proportions",
+    "title": "Stent versus Trunk",
+    "blurb": "Two repairs for a torn aorta, compared through auditable proportion pooling.",
+    "status": "Published - Thorac Cardiovasc Surg",
+    "metric": "Freeman-Tukey - ROBINS-I",
+    "img": "/assets/projects/fet-amds/plots/device_forest.png"
+  },
+  {
+    "slug": "aef-bayesian",
+    "field": "Vascular Surgery - Bayesian",
+    "title": "Pooling the Unpoolable",
+    "blurb": "A Bayesian model that turns case reports into strategy-level survival odds.",
+    "status": "Published - Ann Vasc Surg",
+    "metric": "brms - one-stage binomial",
+    "img": "/assets/projects/aef/plots/posterior_density.png"
+  },
+  {
+    "slug": "seer-cns",
+    "field": "Cancer Epidemiology - Registry",
+    "title": "The Brain Tumor After the Blood Cancer",
+    "blurb": "More than 830,000 registry patients, with death treated as the competing risk it is.",
+    "status": "ASCO 2026 - Paper In Revision",
+    "metric": "SIR - Cox - Fine-Gray",
+    "img": "/assets/projects/seer-cns/plots/cuminc.png"
+  },
+  {
+    "slug": "tevar-zone-ma",
+    "field": "Vascular Surgery - Meta-Analysis",
+    "title": "Six Outcomes, One Stable Answer",
+    "blurb": "A sensitivity framework that demonstrates stability instead of assuming it.",
+    "status": "Under Review",
+    "metric": "HK - LOO - Baujat",
+    "img": "/assets/projects/tevar/plots/baujat.png"
+  },
+  {
+    "slug": "disconnected-nma",
+    "field": "Methods Story - NMA",
+    "title": "The Network That Wasn't Connected",
+    "blurb": "Two evidence islands, and one bridge tested as a sensitivity rather than assumed as fact.",
+    "status": "In Preparation - Masked",
+    "metric": "components - tau2 rescue",
+    "img": "/assets/projects/disconnected-nma/plots/components.png"
+  },
+  {
+    "slug": "survey-analysis",
+    "field": "Methods Story - Exact Inference",
+    "title": "Thirty-Four Specialists, One Whitespace Bug",
+    "blurb": "Exact inference at a small sample size, and the data-quality catch that changed the headline count.",
+    "status": "Delivered - Masked",
+    "metric": "Fisher - McNemar - exact CI",
+    "img": "/assets/projects/exact-survey/plots/exact_ci.png"
+  }
 ];
 
 // --- Publications --------------------------------------------------------
@@ -97,56 +146,112 @@ export interface Publication {
 
 export const publications: Publication[] = [
   {
-    venue: 'JACC',
-    kind: 'Statistical Analysis & Methods',
-    title: 'TCT-30 Comparative Meta-Analysis of LVOTO Prevention Techniques in TMVR',
-    authors: 'Yousef Alghzawi, Hasan Matar, Osama Hammad, Abdallah Aletaywi',
-    href: 'https://www.jacc.org/doi/10.1016/j.jacc.2025.09.079',
-    impact: 'IF 21.7',
-    year: '2025',
+    "venue": "Immunotherapy",
+    "kind": "Meta-Analysis",
+    "title": "The Role of AI in Predicting Immunotherapy Outcomes Based on Gut Microbiota Composition",
+    "authors": "Leen Alhassan, Bassel Alrabadi, et al., incl. Yousef Alghzawi",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
   {
-    venue: 'Blood (ASH)',
-    kind: 'Statistical Analysis',
-    title: 'Survival Outcomes Following Second Hematopoietic Cell Transplantation',
-    authors: 'Yousef Alghzawi, Bara Hammadeh, Nesreen Alhamwi, et al.',
-    href: 'https://ashpublications.org/blood/article/146/Supplement%201/7802/555052',
-    impact: 'IF 20.3',
-    year: '2025',
+    "venue": "Annals of Vascular Surgery",
+    "kind": "Bayesian Meta-Analysis",
+    "title": "Aortoesophageal Fistula: Mending the Lethal Connection",
+    "authors": "Noor Abu Hantash, Hazem El Beyrouti, Yousef Alghzawi, et al.",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
   {
-    venue: 'J. Clinical Neurology',
-    kind: 'Brief Communication',
-    title: 'Cerebrolysin and Risk of Hemorrhagic Transformation: A Pooled Analysis of Recent Studies',
-    authors: 'Bassel Alrabadi, Yousef Alghzawi, Natalie Bandak',
-    href: 'https://doi.org/10.3988/jcn.2025.0547',
-    year: '2025',
+    "venue": "J Clin Oncol (ASCO 2026)",
+    "kind": "Bayesian Network Meta-Analysis",
+    "title": "Open, Laparoscopic, versus Robotic Surgery for Siewert Type II/III Adenocarcinoma",
+    "authors": "Bara Hammadeh, Faizan Sheraz, Yousef Alghzawi, et al.",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
   {
-    venue: 'Clin. Neurology & Neurosurgery',
-    kind: 'Statistical Analysis',
-    title: 'Changing Mortality Trends in Encephalitis, Myelitis, and Encephalomyelitis',
-    authors: 'Bassel Alrabadi, et al., Yousef Alghzawi, Ahmed Z. Obeidat',
-    href: 'https://www.sciencedirect.com/science/article/abs/pii/S0303846725004536',
-    impact: 'IF 2.1',
-    year: '2025',
+    "venue": "J Clin Oncol (ASCO 2026)",
+    "kind": "Registry Epidemiology",
+    "title": "Incidence, Risk Factors, and Survival of Secondary Primary CNS Tumors Following Hematologic Malignancies",
+    "authors": "Bara Hammadeh, Yousef Alghzawi, Dana Tarawneh, et al.",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
   {
-    venue: 'Thoracic & CV Surgeon',
-    kind: 'Meta-Analysis',
-    title: 'Stent versus Trunk in Type A Dissection: Systematic Review and Meta-Analysis',
-    authors: 'Noor Abu Hantash, Abdullah Alzubaidi, Yousef Alghzawi, et al.',
-    href: 'https://www.thieme-connect.de/products/ejournals/abstract/10.1055/a-2737-6653',
-    year: '2025',
+    "venue": "J Clin Oncol (ASCO 2026)",
+    "kind": "Meta-Analysis & Meta-Regression",
+    "title": "SBRT versus Surgery for Early-Stage NSCLC: A Propensity-Matched Meta-Analysis",
+    "authors": "Yousef Alghzawi, Bara Hammadeh, Abdulla Alzibdeh, et al.",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
   {
-    venue: 'J. Cardiology & Heart Failure',
-    kind: 'Statistical Analysis',
-    title: 'Prevalence and Factors of Vasovagal Syncope among Medical Trainees in Jordan',
-    authors: 'Noor Abu Hantash, Yousef Alghzawi, et al.',
-    href: 'https://www.researchgate.net/publication/397785597',
-    year: '2025',
+    "venue": "Int J Neuroscience",
+    "kind": "Network Meta-Analysis",
+    "title": "Efficacy, Safety and Dosing of IV Alteplase Beyond 4.5 Hours for Ischemic Stroke",
+    "authors": "Bassel Alrabadi, Yousef Alghzawi, Hasan Matar, et al.",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2026"
   },
+  {
+    "venue": "J. Clinical Neurology",
+    "kind": "Brief Communication",
+    "title": "Cerebrolysin and Risk of Hemorrhagic Transformation: A Pooled Analysis of Recent Studies",
+    "authors": "Bassel Alrabadi, Yousef Alghzawi, Natalie Bandak",
+    "href": "https://doi.org/10.3988/jcn.2025.0547",
+    "year": "2026"
+  },
+  {
+    "venue": "ACIT 2025",
+    "kind": "Systematic Review",
+    "title": "Digital Health and the Internet of Things in Huntington's Disease Diagnosis and Management",
+    "authors": "Leen Alhassan, Osama Hammad, et al., incl. Yousef Alghzawi",
+    "href": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+    "year": "2025"
+  },
+  {
+    "venue": "Thoracic & CV Surgeon",
+    "kind": "Meta-Analysis",
+    "title": "Stent versus Trunk in Type A Dissection: Systematic Review and Meta-Analysis",
+    "authors": "Noor Abu Hantash, Abdullah Alzubaidi, Yousef Alghzawi, et al.",
+    "href": "https://www.thieme-connect.de/products/ejournals/abstract/10.1055/a-2737-6653",
+    "year": "2025"
+  },
+  {
+    "venue": "JACC",
+    "kind": "Statistical Analysis & Methods",
+    "title": "TCT-30 Comparative Meta-Analysis of LVOTO Prevention Techniques in TMVR",
+    "authors": "Yousef Alghzawi, Hasan Matar, Osama Hammad, Abdallah Aletaywi",
+    "href": "https://www.jacc.org/doi/10.1016/j.jacc.2025.09.079",
+    "year": "2025",
+    "impact": "IF 21.7"
+  },
+  {
+    "venue": "Blood (ASH)",
+    "kind": "Statistical Analysis",
+    "title": "Survival Outcomes Following Second Hematopoietic Cell Transplantation",
+    "authors": "Yousef Alghzawi, Bara Hammadeh, Nesreen Alhamwi, et al.",
+    "href": "https://ashpublications.org/blood/article/146/Supplement%201/7802/555052",
+    "year": "2025",
+    "impact": "IF 20.3"
+  },
+  {
+    "venue": "Clin. Neurology & Neurosurgery",
+    "kind": "Statistical Analysis",
+    "title": "Changing Mortality Trends in Encephalitis, Myelitis, and Encephalomyelitis",
+    "authors": "Bassel Alrabadi, et al., Yousef Alghzawi, Ahmed Z. Obeidat",
+    "href": "https://www.sciencedirect.com/science/article/abs/pii/S0303846725004536",
+    "year": "2025",
+    "impact": "IF 2.1"
+  },
+  {
+    "venue": "J. Cardiology & Heart Failure",
+    "kind": "Statistical Analysis",
+    "title": "Prevalence and Factors of Vasovagal Syncope among Medical Trainees in Jordan",
+    "authors": "Noor Abu Hantash, Yousef Alghzawi, et al.",
+    "href": "https://www.researchgate.net/publication/397785597",
+    "year": "2025"
+  }
 ];
 
 // --- Services ------------------------------------------------------------

@@ -1,0 +1,77 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "The Brain Tumor After the Blood Cancer",
+  "description": "SEER registry analysis of second primary CNS tumors after hematologic malignancies using SIR and competing risks.",
+  "field": "Cancer Epidemiology",
+  "venue": "J Clin Oncol (ASCO 2026)",
+  "year": "2026",
+  "status": "ASCO 2026 - Full Paper In Revision",
+  "doiHref": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+  "doiLabel": "View on ResearchGate",
+  "hook": "Survive a blood cancer, and years later a brain tumor may follow. Coincidence or consequence? A registry of more than 830,000 patients can tell the difference.",
+  "scenario": "The question needed three separate answers: is the incidence truly elevated, which treatments raise it, and what happens to survival once it occurs. Each answer needed a different statistical machine, and the second two needed protection from a subtle trap.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Do hematologic malignancy survivors develop CNS tumors more often than expected, and who is at risk?"
+    },
+    {
+      "k": "The evidence",
+      "v": "SEER 2000 to 2022: linked primaries for more than 830,000 patients"
+    },
+    {
+      "k": "The design",
+      "v": "Standardized incidence ratios, Cox models, and Fine-Gray competing risks, with latency stratified by treatment"
+    },
+    {
+      "k": "The answer",
+      "v": "Quantified excess risk with treatment-specific patterns; ASCO 2026, full paper in revision"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "Standardized incidence ratios against population expectation.",
+      "w": "Raw counts cannot say whether risk is elevated. MP-SIR compares observed CNS tumors with what the general population would produce in the same person-years."
+    },
+    {
+      "d": "Fine-Gray, because death competes with diagnosis.",
+      "w": "Many survivors die before a second tumor can appear. A naive Kaplan-Meier treats them as if they might still develop one and overestimates the risk. Competing-risks regression does not."
+    },
+    {
+      "d": "Latency stratified by prior treatment.",
+      "w": "Radiation and chemotherapy leave different fingerprints in time. Analyzing when the second tumors arrive, by exposure, is what separates consequence from coincidence."
+    },
+    {
+      "d": "The editor pushed on the cohort definition. The revision answered with the data.",
+      "w": "Peer review challenged how linked primaries were defined. The point-by-point response defended and refined the definition rather than papering over it."
+    }
+  ],
+  "problem": "Whether second primary CNS tumors after blood cancers reflect true excess risk, and what drives it.",
+  "approach": "SEER MP-SIR, cause-specific Cox, and Fine-Gray competing-risks regression with treatment-stratified latency.",
+  "outcome": "Presented at ASCO 2026; the full manuscript has completed its first peer-review revision round.",
+  "figures": [
+    {
+      "src": "/assets/projects/seer-cns/plots/cuminc.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-fg",
+      "label": "Two hazards, two questions",
+      "code": "# Cause-specific hazards: Cox on the event of interest\ncox <- coxph(Surv(months, cns_event) ~ age + sex + radiation + chemo,\n             data = cohort)\n\n# Subdistribution hazards: Fine-Gray, death as competitor\nfg <- crr(ftime   = cohort$months,\n          fstatus = cohort$status,     # 1 = CNS tumor, 2 = death\n          cov1    = model.matrix(~ age + sex + radiation + chemo,\n                                 cohort)[, -1])\nsummary(fg)\n\n# Both are reported: they answer different clinical questions."
+    }
+  ],
+  "prev": {
+    "slug": "aef-bayesian",
+    "title": "Pooling the Unpoolable"
+  },
+  "next": {
+    "slug": "tevar-zone-ma",
+    "title": "Six Outcomes, One Stable Answer"
+  }
+};
+---
+<CaseStudyLayout {...page} />

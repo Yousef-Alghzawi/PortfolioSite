@@ -1,0 +1,77 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "Radiation or Surgery for Early Lung Cancer?",
+  "description": "Propensity-matched meta-analysis and meta-regression of SBRT versus surgery in early-stage NSCLC.",
+  "field": "Thoracic Oncology",
+  "venue": "J Clin Oncol (ASCO 2026)",
+  "year": "2026",
+  "status": "Published Abstract - First Author",
+  "doiHref": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+  "doiLabel": "View on ResearchGate",
+  "hook": "Stereotactic radiation or surgery for early-stage lung cancer. Patients ask it plainly; the literature answers it messily.",
+  "scenario": "Direct trials are scarce, and observational comparisons are confounded by who gets offered surgery in the first place. I restricted the evidence to propensity-matched comparisons and rebuilt the missing statistics myself when papers did not report them.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "For operable early NSCLC, does SBRT match surgery on survival and disease control?"
+    },
+    {
+      "k": "The evidence",
+      "v": "Dozens of comparative studies, many without a usable hazard ratio"
+    },
+    {
+      "k": "The design",
+      "v": "Propensity-matched restriction, HR reconstruction from event counts, meta-regression on the differences"
+    },
+    {
+      "k": "The answer",
+      "v": "A pooled comparison across survival and control endpoints, presented at ASCO 2026"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "Only propensity-matched comparisons entered the pool.",
+      "w": "Unmatched cohorts compare healthier surgical patients with sicker radiation patients. Matching at the study level is the closest observational data gets to a fair contest."
+    },
+    {
+      "d": "Hazard ratios reconstructed with the Parmar-Tierney method when unreported.",
+      "w": "Many papers give event counts and totals but no HR. Deriving the log HR and its standard error from what they do report keeps those studies in the evidence instead of discarding them."
+    },
+    {
+      "d": "Meta-regression instead of shrugging at heterogeneity.",
+      "w": "When effects differ across studies, the interesting question is why. Regressing the effect on study-level characteristics turns heterogeneity from a nuisance into a finding."
+    },
+    {
+      "d": "Explicit zero-event handling in the reconstruction.",
+      "w": "Arms with no events break naive formulas. The reconstruction returns a safe missing value rather than a fabricated number, and the analysis records which studies that affected."
+    }
+  ],
+  "problem": "No trials settle SBRT versus surgery in operable early NSCLC, and observational reports often omit the statistics needed for pooling.",
+  "approach": "Propensity-matched restriction, Parmar-Tierney hazard-ratio reconstruction, random-effects pooling, and meta-regression.",
+  "outcome": "Presented at the ASCO 2026 Annual Meeting and published in the Journal of Clinical Oncology supplement, first author.",
+  "figures": [
+    {
+      "src": "/assets/projects/sbrt-nsclc/plots/metareg_bubble.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-parmar",
+      "label": "HR reconstruction and meta-regression",
+      "code": "# When a study reports events and totals but no HR:\n# Parmar/Tierney reconstruction of logHR and its SE\nestimate_HR_from_events <- function(e1, n1, e2, n2) {\n  if (e1 == 0 || e2 == 0) return(c(NA, NA))  # safe, logged, not faked\n  logHR <- log((e1 / n1) / (e2 / n2))\n  seHR  <- sqrt(1 / e1 + 1 / e2)\n  c(logHR, seHR)\n}\n\n# Pool, then ask WHY effects differ\ndat <- escalc(measure = \"RR\", ai = e1, n1i = n1,\n              ci = e2, n2i = n2, data = studies)\nrma(yi, vi, data = dat)                    # pooled effect\nrma(yi, vi, mods = ~ year + median_age,    # meta-regression\n    data = dat)"
+    }
+  ],
+  "prev": {
+    "slug": "cns-hematology",
+    "title": "Is a Second Transplant Worth It?"
+  },
+  "next": {
+    "slug": "lvoto-tmvr",
+    "title": "Keeping the Outflow Open in TMVR"
+  }
+};
+---
+<CaseStudyLayout {...page} />

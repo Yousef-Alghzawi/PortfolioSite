@@ -1,0 +1,77 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const page = {
+  "title": "Pooling the Unpoolable: Aorto-Esophageal Fistula",
+  "description": "Bayesian one-stage meta-analysis of case-level evidence in aorto-esophageal fistula.",
+  "field": "Vascular Surgery",
+  "venue": "Ann Vasc Surg",
+  "year": "2026",
+  "status": "Published",
+  "doiHref": "https://www.researchgate.net/profile/Yousef-Alghzawi-2/research",
+  "doiLabel": "View on ResearchGate",
+  "hook": "An aorto-esophageal fistula connects the body's largest artery to the swallowing tube. It is rare enough that the literature is mostly case reports, and case reports are exactly what standard meta-analysis cannot pool.",
+  "scenario": "The clinical team needed mortality and reintervention estimates per management strategy: stent graft alone, staged repair, open surgery, palliation. The unit of evidence was often a single patient. So the model had to work at the patient level.",
+  "flow": [
+    {
+      "k": "Clinical question",
+      "v": "Which management strategy for this rare fistula carries survivable odds?"
+    },
+    {
+      "k": "The evidence",
+      "v": "Case reports and tiny series: patient-level counts with denominators of one"
+    },
+    {
+      "k": "The design",
+      "v": "A Bayesian one-stage hierarchical binomial model over case-level data, stratified by fistula morphology"
+    },
+    {
+      "k": "The answer",
+      "v": "Strategy-level probability estimates with honest uncertainty, published in Annals of Vascular Surgery"
+    }
+  ],
+  "decisions": [
+    {
+      "d": "A one-stage Bayesian binomial model instead of two-stage pooling.",
+      "w": "Two-stage methods need per-study effect estimates, which single cases cannot give. Modeling the raw counts directly in brms lets every patient contribute without inventing within-study statistics."
+    },
+    {
+      "d": "Hard-stop denominator validation before fitting.",
+      "w": "Hierarchical models shrink silently when denominators are wrong. The pipeline refuses to fit until every count reconciles against its source."
+    },
+    {
+      "d": "Stratification by fistula morphology.",
+      "w": "Type I to type IV fistulas are different surgical problems. Pooling across them would have produced an average of nothing."
+    },
+    {
+      "d": "Provenance you can verify: a registered protocol and hash-stamped deliverables.",
+      "w": "A PROSPERO protocol up front, and SHA256 checksums on the final dataset and outputs, so the analysis that was planned is provably the analysis that shipped."
+    }
+  ],
+  "problem": "A lethal, rare condition whose evidence base is case reports that conventional meta-analysis cannot use.",
+  "approach": "One-stage Bayesian hierarchical binomial modeling of case-level counts, stratified by morphology, with validated denominators.",
+  "outcome": "Published in Annals of Vascular Surgery, June 2026, PROSPERO-registered, with the full audit trail archived alongside the deliverables.",
+  "figures": [
+    {
+      "src": "/assets/projects/aef/plots/posterior_density.png",
+      "caption": "Illustrative figure from simulated data; the real analysis stays with the journal and the clinical team."
+    }
+  ],
+  "code": [
+    {
+      "id": "code-brms",
+      "label": "One-stage Bayesian pooling",
+      "code": "# One-stage: model patient-level counts directly\nfit <- brm(events | trials(n) ~ 1 + (1 | study),\n           family = binomial(),\n           data = cases,            # validated denominators only\n           chains = 4, cores = 4)\n\n# Strategy-level posteriors\nfit_strat <- brm(events | trials(n) ~ 0 + strategy + (1 | study),\n                 family = binomial(), data = cases)\nposterior_summary(fit_strat)   # medians + credible intervals"
+    }
+  ],
+  "prev": {
+    "slug": "fet-article",
+    "title": "Stent versus Trunk"
+  },
+  "next": {
+    "slug": "seer-cns",
+    "title": "The Brain Tumor After the Blood Cancer"
+  }
+};
+---
+<CaseStudyLayout {...page} />
